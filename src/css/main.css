@@ -1,0 +1,14 @@
+/*Archivo para importar los estilos*/
+/*Base*/
+@import './base/variables.css';
+/*Components*/
+@import './components/components.css';
+@import './components/footer.css';
+@import './components/hero.css';
+@import './components/musicPlayer.css';
+@import './components/navbar.css';
+/*Utils*/
+@import './utils/responsive.css';
+@import './utils/animations.css';
+/*Pages*/
+@import './pages/home.css';

@@ -1,0 +1,13 @@
+/* ========================================
+   ANIMACIONES - Orién Pro
+   ======================================== */
+
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; height: 40px; }
+    50% { opacity: 1; height: 60px; }
+}
+
+@keyframes musicPulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(217, 217, 217, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(217, 217, 217, 0.6); }
+}

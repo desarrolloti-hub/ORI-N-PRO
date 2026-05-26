@@ -1,0 +1,108 @@
+/* ========================================
+   FOOTER STYLES - Orién Pro
+   ======================================== */
+
+.orien-footer {
+    background: var(--color-footer);
+    padding: 60px 20px 30px;
+    width: 100%;
+    margin-top: 60px;
+    transform: translateY(20px);
+    opacity: 0.9;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.orien-footer-visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .orien-footer {
+        padding: 80px 50px 30px;
+    }
+}
+
+.orien-footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+@media (min-width: 640px) {
+    .orien-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .orien-footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.orien-footer-col h4 {
+    color: var(--color-light);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.orien-footer-links {
+    list-style: none;
+}
+
+.orien-footer-links li {
+    margin-bottom: 12px;
+}
+
+.orien-footer-links a {
+    color: var(--color-gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.orien-footer-links a:hover {
+    color: var(--color-light);
+    padding-left: 5px;
+}
+
+.orien-social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.orien-social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-gray);
+    color: var(--color-gray);
+    text-decoration: none;
+    transition: var(--transition);
+    border-radius: 4px;
+}
+
+.orien-social-icon:hover {
+    background: var(--color-light);
+    color: var(--color-footer);
+}
+
+.orien-footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(166,166,166,0.2);
+}
+
+.orien-footer-bottom p {
+    color: var(--color-gray);
+    font-size: 0.8rem;
+}

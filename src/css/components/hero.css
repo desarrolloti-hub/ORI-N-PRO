@@ -1,0 +1,144 @@
+/* ========================================
+   HERO SECTION STYLES - Orién Pro
+   ======================================== */
+
+.orien-hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.orien-hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.orien-hero-slide {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.orien-hero-slide.active {
+    left: 0;
+}
+
+.orien-hero-slide.prev {
+    left: 100%;
+}
+
+.orien-slide-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.3);
+}
+
+.slide-1 .orien-slide-image {
+    background-image: url('https://www.exp1.com/wp-content/uploads/sites/7/2020/06/Times-Square-1-1-1024x678.jpg');
+}
+.slide-2 .orien-slide-image {
+    background-image: url('https://www.theknickerbocker.com/content/uploads/2024/02/knb_nyc_landmarks_times_square_1138719689.webp');
+}
+.slide-3 .orien-slide-image {
+    background-image: url('https://www.costar.com/_next/image?url=https%3A%2F%2Fcostar.brightspotcdn.com%2Fdims4%2Fdefault%2F2b1b119%2F2147483647%2Fstrip%2Ftrue%2Fcrop%2F2100x1400%2B0%2B0%2Fresize%2F2100x1400!%2Fquality%2F100%2F%3Furl%3Dhttp%253A%252F%252Fcostar-brightspot.s3.us-east-1.amazonaws.com%252F93%252Fa7%252F663659d84be4afae136a7dc58c1c%252Ftimes-square.jpg&w=3840&q=75');
+}
+
+.orien-slide-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--color-white);
+    max-width: 90%;
+    padding: 20px;
+}
+
+.orien-slide-text h2 {
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+
+.orien-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(26,26,26,0.9) 0%, rgba(26,26,26,0.6) 50%, rgba(26,26,26,0.9) 100%);
+    z-index: 1;
+}
+
+.orien-hero-content {
+    position: relative;
+    z-index: 3;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.orien-cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    color: var(--color-light);
+    text-decoration: none;
+    border: 2px solid var(--color-gray);
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    letter-spacing: 3px;
+    transition: var(--transition);
+    margin-top: 200px;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .orien-cta-button {
+        margin-top: 300px;
+        padding: 18px 50px;
+    }
+}
+
+.orien-cta-button:hover {
+    background: var(--color-light);
+    color: var(--color-dark);
+}
+
+.orien-scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+    cursor: pointer;
+}
+
+.orien-scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--color-gray);
+    margin: 0 auto 10px;
+    animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; height: 40px; }
+    50% { opacity: 1; height: 60px; }
+}

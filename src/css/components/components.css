@@ -1,0 +1,54 @@
+/* ========================================
+   COMPONENTES GENERALES - Orién Pro
+   ======================================== */
+
+/* Secciones generales */
+.orien-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .orien-section {
+        padding: 100px 50px;
+    }
+}
+
+.orien-section-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: var(--color-dark);
+    text-transform: uppercase;
+}
+
+/* Description box base */
+.orien-description-box {
+    background: var(--color-light);
+    padding: 30px 20px;
+    border-radius: 2px;
+    margin-bottom: 60px;
+    border-left: 2px solid var(--color-gray);
+}
+
+@media (min-width: 768px) {
+    .orien-description-box {
+        padding: 50px;
+    }
+}
+
+.orien-description-box p {
+    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.orien-highlight {
+    font-weight: 500;
+    color: var(--color-dark);
+}

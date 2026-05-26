@@ -1,0 +1,101 @@
+/* ========================================
+   RESPONSIVE STYLES - Orién Pro
+   ======================================== */
+
+/* Menú responsive */
+@media screen and (max-width: 768px) {
+    .orien-hamburger {
+        display: flex;
+    }
+    
+    .orien-close {
+        display: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--color-dark);
+        background: transparent;
+        border: none;
+        z-index: 1002;
+    }
+    
+    .orien-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 350px;
+        height: 100vh;
+        background: var(--color-bg);
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 20px;
+        z-index: 1001;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    }
+    
+    .orien-menu.active {
+        display: flex;
+        right: 0;
+    }
+    
+    .orien-menu li a {
+        color: var(--color-dark);
+        font-size: 1.1rem;
+    }
+    
+    .orien-dropdown-content {
+        position: static;
+        background: var(--color-light);
+        padding-left: 20px;
+        display: none;
+        box-shadow: none;
+    }
+    
+    .orien-dropdown.active .orien-dropdown-content {
+        display: block;
+    }
+    
+    .orien-dropdown > a::after {
+        content: ' ▾';
+        display: inline-block;
+    }
+}
+
+/* Music player responsive */
+@media (max-width: 768px) {
+    .orien-music-player {
+        bottom: 20px;
+        right: 20px;
+        padding: 6px 12px 6px 10px;
+    }
+    .orien-music-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+    .orien-music-label {
+        font-size: 0.7rem;
+        padding: 5px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orien-music-player {
+        bottom: 15px;
+        right: 15px;
+        padding: 5px 10px 5px 8px;
+    }
+    .orien-music-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .orien-music-label {
+        display: none;
+    }
+}

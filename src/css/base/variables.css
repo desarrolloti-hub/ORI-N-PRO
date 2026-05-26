@@ -1,0 +1,28 @@
+/* ========================================
+   VARIABLES Y RESET - Orién Pro
+   ======================================== */
+
+:root {
+    --color-bg: #E6E6E6;
+    --color-dark: #333;
+    --color-gray: #A6A6A6;
+    --color-light: #D9D9D9;
+    --color-footer: #162542;
+    --color-white: #fff;
+    --transition: all 0.3s ease;
+    --shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-dark);
+    overflow-x: hidden;
+    width: 100%;
+}
