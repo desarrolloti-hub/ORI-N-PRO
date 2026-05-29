@@ -3,14 +3,26 @@
    ======================================== */
 
 :root {
+    /* Colores base - Solo estos se pueden modificar globalmente */
     --color-bg: #E6E6E6;
-    --color-dark: #333;
+    --color-dark: #333333;
     --color-gray: #A6A6A6;
     --color-light: #D9D9D9;
     --color-footer: #162542;
-    --color-white: #fff;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    
+    /* Colores de acento (usados globalmente) */
+    --color-accent: #ffd700;
+    --color-success: #28a745;
+    --color-error: #dc3545;
+    --color-warning: #ffc107;
+    --color-info: #17a2b8;
+    
+    /* Transiciones y sombras */
     --transition: all 0.3s ease;
-    --shadow: 0 2px 20px rgba(0,0,0,0.1);
+    --shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 * {
