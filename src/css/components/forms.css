@@ -1,0 +1,101 @@
+/* ========================================
+   FORM COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Form group */
+.orien-form-group {
+    margin-bottom: 20px;
+}
+
+/* Label */
+.orien-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-dark);
+}
+
+/* Input base */
+.orien-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: var(--color-light);
+    border: 1px solid var(--color-gray);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.orien-input:focus {
+    outline: none;
+    border-color: var(--color-dark);
+}
+
+/* Textarea */
+.orien-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Select */
+.orien-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    background: var(--color-light);
+    border: 1px solid var(--color-gray);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+/* Checkbox and Radio */
+.orien-checkbox,
+.orien-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.orien-checkbox input,
+.orien-radio input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Filter group (for products page) */
+.orien-filter-group {
+    margin-bottom: 30px;
+}
+
+.orien-filter-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.orien-filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.orien-filter-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.orien-filter-option input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
