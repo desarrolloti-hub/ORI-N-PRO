@@ -1,0 +1,103 @@
+/* ========================================
+   BUTTON COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Button base */
+.orien-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+/* Button variants */
+.orien-btn-primary {
+    background: var(--color-dark);
+    color: var(--color-light);
+    border: 1px solid var(--color-dark);
+}
+
+.orien-btn-primary:hover {
+    background: transparent;
+    color: var(--color-dark);
+}
+
+.orien-btn-secondary {
+    background: transparent;
+    color: var(--color-dark);
+    border: 1px solid var(--color-gray);
+}
+
+.orien-btn-secondary:hover {
+    background: var(--color-dark);
+    color: var(--color-light);
+    border-color: var(--color-dark);
+}
+
+.orien-btn-outline {
+    background: transparent;
+    color: var(--color-dark);
+    border: 1px solid var(--color-dark);
+}
+
+.orien-btn-outline:hover {
+    background: var(--color-dark);
+    color: var(--color-light);
+}
+
+.orien-btn-light {
+    background: var(--color-light);
+    color: var(--color-dark);
+    border: 1px solid var(--color-light);
+}
+
+.orien-btn-light:hover {
+    background: transparent;
+    color: var(--color-light);
+}
+
+/* Button sizes */
+.orien-btn-sm {
+    padding: 8px 20px;
+    font-size: 0.75rem;
+}
+
+.orien-btn-lg {
+    padding: 16px 36px;
+    font-size: 1rem;
+}
+
+/* Button full width */
+.orien-btn-block {
+    width: 100%;
+    display: flex;
+}
+
+/* Button with icon */
+.orien-btn-icon {
+    gap: 8px;
+}
+
+.orien-btn-icon i,
+.orien-btn-icon svg {
+    font-size: 1.1rem;
+}
+
+/* Disabled state */
+.orien-btn:disabled,
+.orien-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
