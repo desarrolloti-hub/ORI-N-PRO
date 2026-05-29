@@ -1,0 +1,90 @@
+/* ========================================
+   CARD COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Card base */
+.orien-card {
+    background: var(--color-light);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.orien-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+/* Card with image */
+.orien-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+/* Card content */
+.orien-card-content {
+    padding: 24px;
+}
+
+.orien-card-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--color-dark);
+}
+
+.orien-card-subtitle {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.orien-card-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Card footer */
+.orien-card-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Card variants */
+.orien-card-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .orien-card-horizontal {
+        flex-direction: column;
+    }
+}
+
+.orien-card-horizontal .orien-card-image {
+    width: 40%;
+    aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 768px) {
+    .orien-card-horizontal .orien-card-image {
+        width: 100%;
+    }
+}
+
+/* Card grid */
+.orien-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
