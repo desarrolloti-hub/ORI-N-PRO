@@ -1,0 +1,61 @@
+/* ========================================
+   BADGE & TAG COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Badge base */
+.orien-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-weight: 400;
+}
+
+/* Badge variants */
+.orien-badge-primary {
+    background: var(--color-dark);
+    color: var(--color-light);
+}
+
+.orien-badge-secondary {
+    background: var(--color-gray);
+    color: var(--color-dark);
+}
+
+.orien-badge-outline {
+    background: transparent;
+    border: 1px solid var(--color-gray);
+    color: var(--color-dark);
+}
+
+.orien-badge-light {
+    background: var(--color-light);
+    color: var(--color-dark);
+}
+
+/* Badge sizes */
+.orien-badge-sm {
+    padding: 2px 8px;
+    font-size: 0.6rem;
+}
+
+.orien-badge-lg {
+    padding: 6px 16px;
+    font-size: 0.8rem;
+}
+
+/* Tag (like product tags) */
+.orien-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 15px;
+    padding: 4px 12px;
+    border: 1px solid var(--color-gray);
+    background: var(--color-bg);
+    border-radius: 2px;
+}
