@@ -1,0 +1,61 @@
+/* src/css/components/alerts.css */
+
+/* ========================================
+   ALERT COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Alert base */
+.orien-alert {
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+
+/* Alert variants */
+.orien-alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    border-left: 3px solid #28a745;
+    color: #155724;
+}
+
+.orien-alert-error {
+    background: rgba(220, 53, 69, 0.1);
+    border-left: 3px solid #dc3545;
+    color: #721c24;
+}
+
+.orien-alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    border-left: 3px solid #ffc107;
+    color: #856404;
+}
+
+.orien-alert-info {
+    background: rgba(23, 162, 184, 0.1);
+    border-left: 3px solid #17a2b8;
+    color: #0c5460;
+}
+
+/* Alert with icon */
+.orien-alert-icon {
+    font-size: 1.2rem;
+}
+
+/* Alert close button */
+.orien-alert-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+.orien-alert-close:hover {
+    opacity: 1;
+}
