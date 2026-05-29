@@ -14,7 +14,7 @@ export const routes = {
         view: "/modules/visitor/home/home.html",
         controller: initHomeController
     },
-    "/productos": {
+    "/products": {
         view: "/modules/visitor/products/products.html",
         controller: null
     },
