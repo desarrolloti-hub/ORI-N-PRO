@@ -1,0 +1,55 @@
+/* ========================================
+   TABLE COMPONENTS - Orién Pro
+   ======================================== */
+
+/* Table container (responsive) */
+.orien-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Table base */
+.orien-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+/* Table header */
+.orien-table thead th {
+    text-align: left;
+    padding: 16px 12px;
+    background: var(--color-dark);
+    color: var(--color-light);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+/* Table body cells */
+.orien-table tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: #555;
+}
+
+/* Table row hover */
+.orien-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* Table striped */
+.orien-table-striped tbody tr:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* Table bordered */
+.orien-table-bordered {
+    border: 1px solid var(--color-gray);
+}
+
+.orien-table-bordered th,
+.orien-table-bordered td {
+    border: 1px solid var(--color-gray);
+}
