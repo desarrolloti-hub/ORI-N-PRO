@@ -1,15 +1,33 @@
+/* src/css/main.css */
+
 /*Archivo para importar los estilos*/
+
 /*Base*/
 @import './base/variables.css';
-/*Components*/
+
+/*Components - Reutilizables */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/badges.css';
+@import './components/modals.css';
+@import './components/tables.css';
+@import './components/alerts.css';
+@import './components/forms.css';
+@import './components/pagination.css';
+@import './components/loaders.css';
+
+/*Components - Específicos del sitio */
 @import './components/components.css';
 @import './components/footer.css';
 @import './components/hero.css';
 @import './components/musicPlayer.css';
 @import './components/navbar.css';
+
 /*Utils*/
-@import './utils/responsive.css';
 @import './utils/animations.css';
-/*Pages*/
-@import './pages/home.css';
-@import './pages/about.css';
+@import './utils/responsive.css';
+
+/*Pages - Visitor */
+@import './pages/visitor/home.css';
+@import './pages/visitor/products.css';
+@import './pages/visitor/about.css';
