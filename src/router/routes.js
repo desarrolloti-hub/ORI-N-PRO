@@ -22,8 +22,8 @@ export const routes = {
         view: "/modules/visitor/services/services.html",
         controller: null
     },
-    "/nosotros": {
-        view: "/modules/visitor/nosotros/nosotros.html",
+    "/about": {
+        view: "/modules/visitor/about/about.html",
         controller: null
     },
     "/contacto": {
