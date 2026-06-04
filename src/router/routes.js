@@ -1,3 +1,5 @@
+/* src/router/routes.js */
+
 /* ========================================
    ROUTES - Definición de rutas - Orién Pro
    ======================================== */
@@ -6,6 +8,7 @@
 import { initHomeController } from '../modules/visitor/home/homeController.js';
 
 export const routes = {
+    // Visitor Routes
     "/": {
         view: "/modules/visitor/home/home.html",
         controller: initHomeController
@@ -30,6 +33,30 @@ export const routes = {
         view: "/modules/visitor/contacto/contacto.html",
         controller: null
     },
+    "/login": {
+        view: "/modules/visitor/login/login.html",
+        controller: null
+    },
+    
+    // Admin Routes
+    "/admin/adminDashboard": {
+        view: "/modules/admin/adminDashboard/adminDashboard.html",
+        controller: null
+    },
+    "/admin/products/productsList": {
+        view: "/modules/admin/products/productsList.html",
+        controller: null
+    },
+    "/admin/products/productsCreate": {
+        view: "/modules/admin/products/productsCreate.html",
+        controller: null
+    },
+    "/admin/products/productsEdit": {
+        view: "/modules/admin/products/productsEdit.html",
+        controller: null
+    },
+    
+    // 404 Error Page
     '/404': {
         view: '/modules/shared/errors/404.html',
         controller: null

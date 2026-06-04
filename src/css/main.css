@@ -7,6 +7,7 @@
 @import './components/buttons.css';
 @import './components/cards.css';
 @import './components/badges.css';
+@import './components/banner.css';
 @import './components/modals.css';
 @import './components/tables.css';
 @import './components/alerts.css';
@@ -29,3 +30,10 @@
 @import './pages/visitor/home.css';
 @import './pages/visitor/products.css';
 @import './pages/visitor/about.css';
+@import './pages/visitor/login.css';
+
+/*Pages - Admin */
+@import './pages/admin/adminDashboard/adminDashboard.css';
+@import './pages/admin/products/productsCreate.css';
+@import './pages/admin/products/productsEdit.css';
+@import './pages/admin/products/productsList.css';

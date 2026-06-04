@@ -1,0 +1,144 @@
+/* ========================================
+   LOGIN PAGE STYLES - Orién Pro
+   ======================================== */
+
+/* Login Hero Banner - Específico de login */
+.orien-login-hero h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: var(--color-light);
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease;
+}
+
+.orien-login-hero p {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: var(--color-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* Login Container */
+.orien-login-container {
+    min-height: calc(100vh - 500px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 80px;
+    background: var(--color-bg);
+}
+
+/* Login Card - Layout específico */
+.orien-login-card {
+    max-width: 480px;
+    width: 100%;
+    background: var(--color-white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-hover);
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+/* Login Header - Específico de login */
+.orien-login-header {
+    background: linear-gradient(135deg, var(--color-dark) 0%, #1a1a2e 100%);
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.orien-login-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2.2rem;
+    color: var(--color-light);
+    transition: var(--transition);
+}
+
+.orien-login-card:hover .orien-login-icon {
+    transform: scale(1.05);
+}
+
+.orien-login-header h2 {
+    color: var(--color-white);
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.orien-login-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+/* Login Body - Solo padding, los estilos de inputs y botones vienen de forms.css y buttons.css */
+.orien-login-body {
+    padding: 40px 35px;
+}
+
+/* NO necesitas redefinir .orien-input ni .orien-btn-primary aquí porque ya vienen de sus componentes */
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orien-login-hero {
+        padding: 60px 20px 40px;
+    }
+    
+    .orien-login-container {
+        padding: 40px 20px 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orien-login-hero {
+        padding: 50px 15px 30px;
+    }
+    
+    .orien-login-hero h1 {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .orien-login-card {
+        margin: 0 15px;
+    }
+    
+    .orien-login-header {
+        padding: 30px 20px;
+    }
+    
+    .orien-login-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    
+    .orien-login-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .orien-login-body {
+        padding: 30px 20px;
+    }
+}

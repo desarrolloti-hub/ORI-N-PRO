@@ -1,0 +1,58 @@
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Lista de productos</h1>
+        <p class="orien-banner-subtitle">Gestión completa de tu catálogo de productos</p>
+    </div>
+</div>
+
+<div class="orien-admin-products-list">
+    <div class="orien-admin-products-container">
+        <div class="orien-admin-list-header">
+            <div class="orien-admin-nav-links">
+                <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+            </div>
+            <a href="/admin/products/productsCreate" class="orien-btn orien-btn-primary" data-link>
+                <i class="fas fa-plus"></i> Add Product
+            </a>
+        </div>
+        
+        <div class="orien-admin-search-bar">
+            <div class="orien-admin-search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" class="orien-input" placeholder="Search products...">
+            </div>
+        </div>
+        
+        <div class="orien-admin-table-container">
+            <table class="orien-admin-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="/assets/images/pantallas3.png" alt="Product" class="orien-admin-table-image"></td>
+                        <td>Pantalla LED P2.976</td>
+                        <td>$2,500 USD</td>
+                        <td class="orien-admin-table-actions">
+                            <a href="/admin/products/productsEdit" class="orien-admin-action-btn edit" data-link>
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="orien-admin-action-btn delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- More rows... -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

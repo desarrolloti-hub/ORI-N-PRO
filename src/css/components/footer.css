@@ -100,9 +100,43 @@
     margin-top: 50px;
     padding-top: 30px;
     border-top: 1px solid rgba(166,166,166,0.2);
+    position: relative;
 }
 
 .orien-footer-bottom p {
     color: var(--color-gray);
     font-size: 0.8rem;
+}
+
+/* Botón de acceso admin */
+.orien-footer-admin {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.orien-admin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-gray);
+    font-size: 0.7rem;
+    text-decoration: none;
+    transition: var(--transition);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.orien-admin-link:hover {
+    color: var(--color-light);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+    .orien-footer-admin {
+        position: static;
+        margin-top: 20px;
+        justify-content: center;
+        display: flex;
+    }
 }

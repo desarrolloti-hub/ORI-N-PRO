@@ -1,0 +1,85 @@
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Registrar productos</h1>
+        <p class="orien-banner-subtitle">Agregar un nuevo producto al catálogo</p>
+    </div>
+</div>
+
+<div class="orien-admin-products-create">
+    <div class="orien-admin-create-container">
+        <div class="orien-admin-create-nav">
+            <a href="/admin/adminDashboard" class="orien-admin-nav-back" data-link>
+                <i class="fas fa-arrow-left"></i> Dashboard
+            </a>
+            <a href="/admin/products/productsList" class="orien-admin-nav-back" data-link>
+                <i class="fas fa-list"></i> Back to List
+            </a>
+        </div>
+        
+        <div class="orien-admin-form-card">
+            <form class="orien-form">
+                <div class="orien-admin-images-section">
+                    <label class="orien-label">Product Images</label>
+                    <div class="orien-admin-images-upload" id="imageUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click or drag to upload images</p>
+                        <input type="file" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="orien-admin-images-preview" id="imagePreview"></div>
+                </div>
+                
+                <div class="orien-form-group">
+                    <label class="orien-label">Product Name</label>
+                    <input type="text" class="orien-input" placeholder="Ej: Pantalla LED P2.976" required>
+                </div>
+                
+                <div class="orien-form-group">
+                    <label class="orien-label">Product Features</label>
+                    <textarea class="orien-input orien-textarea" rows="5" placeholder="Describe las características del producto..."></textarea>
+                </div>
+                
+                <div class="orien-form-group">
+                    <label class="orien-label">Product Price</label>
+                    <input type="text" class="orien-input" placeholder="Ej: $2,500 USD" required>
+                </div>
+                
+                <div class="orien-admin-form-actions">
+                    <a href="/admin/products/productsList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                    <button type="submit" class="orien-btn orien-btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('imageUpload');
+    const fileInput = uploadArea.querySelector('input');
+    const previewContainer = document.getElementById('imagePreview');
+    
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'orien-admin-image-preview-item';
+                previewItem.innerHTML = `
+                    <img src="${event.target.result}" alt="Preview">
+                    <span class="orien-image-remove" style="position:absolute;top:5px;right:5px;width:24px;height:24px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">&times;</span>
+                `;
+                previewContainer.appendChild(previewItem);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+    
+    previewContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('orien-image-remove') || e.target.innerText === '×') {
+            e.target.closest('.orien-admin-image-preview-item').remove();
+        }
+    });
+</script>
