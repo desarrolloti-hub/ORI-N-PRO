@@ -55,7 +55,6 @@ export const routes = {
         view: "/modules/admin/products/productsEdit.html",
         controller: null
     },
-    // Admin Sliders Routes (agregar después de las rutas de products)
     "/admin/sliders/slidersList": {
         view: "/modules/admin/sliders/slidersList.html",
         controller: null
@@ -66,6 +65,18 @@ export const routes = {
     },
     "/admin/sliders/slidersEdit": {
         view: "/modules/admin/sliders/slidersEdit.html",
+        controller: null
+    },
+    "/admin/users/usersList": {
+        view: "/modules/admin/users/usersList.html",
+        controller: null
+    },
+    "/admin/users/usersCreate": {
+        view: "/modules/admin/users/usersCreate.html",
+        controller: null
+    },
+    "/admin/users/usersEdit": {
+        view: "/modules/admin/users/usersEdit.html",
         controller: null
     },
 

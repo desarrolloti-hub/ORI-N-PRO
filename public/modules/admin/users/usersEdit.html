@@ -1,0 +1,117 @@
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Editar Usuario</h1>
+        <p class="orien-banner-subtitle">Modifica la información del usuario</p>
+    </div>
+</div>
+<br>
+<div class="orien-admin-users-edit">
+    <div class="orien-admin-edit-container">
+        <div class="orien-admin-edit-nav">
+            <div class="orien-admin-edit-nav-left">
+                <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+                <a href="/admin/users/usersList" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-list"></i> Back to List
+                </a>
+            </div>
+            <div class="orien-admin-edit-status">
+                <span class="orien-badge orien-badge-outline">ID: USR-002</span>
+                <span class="orien-badge orien-badge-primary">Activo</span>
+            </div>
+        </div>
+        
+        <div class="orien-card">
+            <div class="orien-card-content">
+                <form class="orien-form" id="userForm">
+                    <!-- Información de la cuenta -->
+                    <div class="orien-form-section">
+                        <h3 class="orien-form-section-title">Información de la cuenta</h3>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Correo electrónico</label>
+                            <input type="email" class="orien-input" value="carlos@orienpro.com" required>
+                        </div>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Cambiar contraseña</label>
+                            <input type="password" class="orien-input" placeholder="Nueva contraseña (dejar vacío para mantener)">
+                            <small class="orien-input-hint">Dejar en blanco para mantener la contraseña actual</small>
+                        </div>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Confirmar nueva contraseña</label>
+                            <input type="password" class="orien-input" placeholder="Confirmar nueva contraseña">
+                        </div>
+                    </div>
+                    
+                    <!-- Información personal -->
+                    <div class="orien-form-section">
+                        <h3 class="orien-form-section-title">Información personal</h3>
+                        
+                        <div class="orien-form-row">
+                            <div class="orien-form-group" style="flex: 1;">
+                                <label class="orien-label">Nombre</label>
+                                <input type="text" class="orien-input" value="Carlos" required>
+                            </div>
+                            <div class="orien-form-group" style="flex: 1;">
+                                <label class="orien-label">Apellidos</label>
+                                <input type="text" class="orien-input" value="Rodríguez" required>
+                            </div>
+                        </div>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Teléfono</label>
+                            <input type="tel" class="orien-input" value="+52 55 8765 4321">
+                        </div>
+                    </div>
+                    
+                    <!-- Rol y permisos -->
+                    <div class="orien-form-section">
+                        <h3 class="orien-form-section-title">Rol y permisos</h3>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Rol de usuario</label>
+                            <select class="orien-select">
+                                <option value="viewer">Visualizador - Solo lectura</option>
+                                <option value="editor" selected>Editor - Puede crear y editar contenido</option>
+                                <option value="admin">Administrador - Acceso total</option>
+                            </select>
+                        </div>
+                        
+                        <div class="orien-form-group">
+                            <label class="orien-label">Estado</label>
+                            <div class="orien-radio-group">
+                                <label class="orien-radio">
+                                    <input type="radio" name="status" value="active" checked> Activo
+                                </label>
+                                <label class="orien-radio">
+                                    <input type="radio" name="status" value="inactive"> Inactivo
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Información de auditoría -->
+                    <div class="orien-admin-version-info">
+                        <i class="fas fa-history"></i>
+                        <span>Último acceso: 2024-01-14 09:15</span>
+                        <span class="separator">|</span>
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Usuario creado: 2023-06-10</span>
+                    </div>
+                    
+                    <div class="orien-form-actions">
+                        <button type="button" class="orien-btn orien-btn-outline" id="deleteBtn" style="margin-right: auto; color: #dc3545; border-color: #dc3545;">
+                            <i class="fas fa-trash"></i> Delete User
+                        </button>
+                        <a href="/admin/users/usersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                        <button type="submit" class="orien-btn orien-btn-primary">Update User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

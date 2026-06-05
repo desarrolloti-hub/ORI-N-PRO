@@ -1,0 +1,125 @@
+/* ========================================
+   USERS EDIT - Estilos específicos
+   Los estilos base vienen de forms.css y cards.css
+   ======================================== */
+
+/* Contenedor principal */
+.orien-admin-users-edit {
+    min-height: calc(100vh - 300px);
+    padding: 0 20px 60px;
+}
+
+.orien-admin-edit-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Navegación */
+.orien-admin-edit-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.orien-admin-edit-nav-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.orien-admin-edit-status {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Secciones del formulario */
+.orien-form-section {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.orien-form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.orien-form-section-title {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--color-gray);
+    display: inline-block;
+}
+
+/* Form row */
+.orien-form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Input hint */
+.orien-input-hint {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-gray);
+    margin-top: 5px;
+}
+
+/* Versión info */
+.orien-admin-version-info {
+    font-size: 0.7rem;
+    color: var(--color-gray);
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.orien-admin-version-info i {
+    color: var(--color-dark);
+}
+
+.orien-admin-version-info .separator {
+    color: var(--color-gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orien-admin-users-edit {
+        padding: 0 15px 40px;
+    }
+    
+    .orien-admin-edit-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .orien-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .orien-form-section-title {
+        font-size: 0.9rem;
+    }
+    
+    .orien-admin-version-info {
+        justify-content: flex-start;
+    }
+}

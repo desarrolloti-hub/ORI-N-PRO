@@ -22,5 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Config files with secrets (IGNORAR COMPLETAMENTE)
 /config
 /draw
+config/firebaseConfig.js
+config/firebaseConfig.local.js

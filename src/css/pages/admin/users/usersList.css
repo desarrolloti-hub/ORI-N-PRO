@@ -1,0 +1,74 @@
+/* ========================================
+   USERS LIST - Estilos específicos
+   Los estilos base vienen de tables.css
+   ======================================== */
+
+/* Información de usuario con avatar */
+.orien-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.orien-user-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--color-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.orien-user-avatar i {
+    font-size: 1.5rem;
+    color: var(--color-gray);
+}
+
+/* Filtros */
+.orien-admin-filter {
+    flex-shrink: 0;
+}
+
+.orien-admin-search-bar {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+/* Fecha en tabla */
+.orien-table-date {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orien-admin-search-bar {
+        flex-direction: column;
+    }
+    
+    .orien-admin-filter {
+        width: 100%;
+    }
+    
+    .orien-admin-filter .orien-select {
+        width: 100%;
+    }
+    
+    .orien-user-info {
+        gap: 10px;
+    }
+    
+    .orien-user-avatar {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .orien-user-avatar i {
+        font-size: 1.2rem;
+    }
+}

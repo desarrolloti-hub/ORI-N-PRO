@@ -41,3 +41,6 @@
 @import './pages/admin/sliders/slidersCreate.css';
 @import './pages/admin/sliders/slidersEdit.css';
 @import './pages/admin/sliders/slidersList.css';
+@import './pages/admin/users/usersCreate.css';
+@import './pages/admin/users/usersEdit.css';
+@import './pages/admin/users/usersList.css';

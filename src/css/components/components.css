@@ -4,7 +4,7 @@
 
 /* Secciones generales */
 .orien-section {
-    padding: 60px 20px;
+    padding: 5%;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -12,7 +12,7 @@
 
 @media (min-width: 768px) {
     .orien-section {
-        padding: 100px 50px;
+        padding: 5%;
     }
 }
 
