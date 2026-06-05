@@ -1,10 +1,11 @@
-/* src/router/routes.js */
-
 /* ========================================
    ROUTES - Definición de rutas - Orién Pro
    ======================================== */
 
 // Importar controllers de vistas
+import { initUsersCreateController } from '../modules/admin/users/usersCreateController.js';
+import { initUsersEditController } from '../modules/admin/users/usersEditController.js';
+import { initUsersListController } from '../modules/admin/users/usersListController.js';
 import { initHomeController } from '../modules/visitor/home/homeController.js';
 
 export const routes = {
@@ -69,15 +70,19 @@ export const routes = {
     },
     "/usersList": {
         view: "/modules/admin/users/usersList.html",
-        controller: null
+        controller: initUsersListController
     },
     "/usersCreate": {
         view: "/modules/admin/users/usersCreate.html",
-        controller: null
+        controller: initUsersCreateController
     },
-    "/usersEdit": {
+     "/usersEdit/:uid": {
         view: "/modules/admin/users/usersEdit.html",
-        controller: null
+        controller: (params) => {
+            if (params && params.uid) {
+                initUsersEditController(params.uid);
+            }
+        }
     },
 
     // 404 Error Page

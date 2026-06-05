@@ -26,19 +26,19 @@
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Correo electrónico</label>
-                            <input type="email" class="orien-input" placeholder="usuario@ejemplo.com" required>
+                            <input type="email" name="email" class="orien-input" placeholder="usuario@ejemplo.com" required>
                             <small class="orien-input-hint">Este será el nombre de usuario para iniciar sesión</small>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Contraseña</label>
-                            <input type="password" class="orien-input" placeholder="••••••••" required>
-                            <small class="orien-input-hint">Mínimo 8 caracteres, incluir letras y números</small>
+                            <input type="password" name="password" class="orien-input" placeholder="••••••••" required>
+                            <small class="orien-input-hint">Mínimo 6 caracteres, incluir letras y números</small>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Confirmar contraseña</label>
-                            <input type="password" class="orien-input" placeholder="••••••••" required>
+                            <input type="password" name="confirm_password" class="orien-input" placeholder="••••••••" required>
                         </div>
                     </div>
                     
@@ -49,17 +49,17 @@
                         <div class="orien-form-row">
                             <div class="orien-form-group" style="flex: 1;">
                                 <label class="orien-label">Nombre</label>
-                                <input type="text" class="orien-input" placeholder="Nombre" required>
+                                <input type="text" name="nombre" class="orien-input" placeholder="Nombre" required>
                             </div>
                             <div class="orien-form-group" style="flex: 1;">
                                 <label class="orien-label">Apellidos</label>
-                                <input type="text" class="orien-input" placeholder="Apellidos" required>
+                                <input type="text" name="apellidos" class="orien-input" placeholder="Apellidos" required>
                             </div>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Teléfono</label>
-                            <input type="tel" class="orien-input" placeholder="+52 55 1234 5678">
+                            <input type="tel" name="telefono" class="orien-input" placeholder="+52 55 1234 5678">
                         </div>
                     </div>
                     
@@ -69,7 +69,7 @@
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Rol de usuario</label>
-                            <select class="orien-select">
+                            <select name="cargo" class="orien-select">
                                 <option value="viewer">Visualizador - Solo lectura</option>
                                 <option value="editor">Editor - Puede crear y editar contenido</option>
                                 <option value="admin">Administrador - Acceso total</option>

@@ -1,6 +1,8 @@
+/* src/router/router.js */
+
 /* ========================================
    ROUTER - Orién Pro
-   Sistema de enrutamiento SPA
+   Sistema de enrutamiento SPA con soporte para parámetros
    ======================================== */
 
 import { routes } from './routes.js';
@@ -39,7 +41,42 @@ async function handleRoute() {
     const path = window.location.pathname;
     currentPath = path;
     
-    let route = routes[path];
+    let route = null;
+    let params = {};
+    
+    // Buscar coincidencia exacta primero
+    if (routes[path]) {
+        route = routes[path];
+    } else {
+        // Buscar ruta con parámetros (ej: /usersEdit/:uid)
+        for (const [routePath, routeConfig] of Object.entries(routes)) {
+            if (routePath.includes(':')) {
+                const routeParts = routePath.split('/');
+                const pathParts = path.split('/');
+                
+                if (routeParts.length === pathParts.length) {
+                    let match = true;
+                    const extractedParams = {};
+                    
+                    for (let i = 0; i < routeParts.length; i++) {
+                        if (routeParts[i].startsWith(':')) {
+                            const paramName = routeParts[i].substring(1);
+                            extractedParams[paramName] = pathParts[i];
+                        } else if (routeParts[i] !== pathParts[i]) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    
+                    if (match) {
+                        route = routeConfig;
+                        params = extractedParams;
+                        break;
+                    }
+                }
+            }
+        }
+    }
     
     if (!route) {
         console.warn(`Ruta no encontrada: ${path}`);
@@ -60,16 +97,21 @@ async function handleRoute() {
     // Cargar la vista
     await loadView(route.view);
     
-    // IMPORTANTE: Esperar a que el DOM se actualice antes de inicializar el controller
+    // Esperar a que el DOM se actualice antes de inicializar el controller
     setTimeout(() => {
         // Inicializar controller si existe
-        if (route.controller && typeof route.controller === 'function') {
-            currentController = route.controller();
+        if (route.controller) {
+            if (typeof route.controller === 'function') {
+                // Pasar los parámetros de la ruta
+                currentController = route.controller(params);
+            } else {
+                currentController = route.controller;
+            }
         }
         
         // Disparar evento de cambio de ruta
         const event = new CustomEvent('route:changed', { 
-            detail: { path, route } 
+            detail: { path, route, params } 
         });
         document.dispatchEvent(event);
     }, 100);
@@ -101,7 +143,6 @@ async function loadView(viewPath) {
         
         app.innerHTML = html;
         
-        // Pequeño delay para asegurar que el DOM se actualizó
         setTimeout(() => {
             hideLoader();
         }, 50);

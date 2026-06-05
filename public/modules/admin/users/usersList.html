@@ -19,10 +19,10 @@
     <div class="orien-admin-search-bar">
         <div class="orien-admin-search-input">
             <i class="fas fa-search"></i>
-            <input type="text" class="orien-input" placeholder="Buscar usuarios...">
+            <input type="text" class="orien-input" id="searchUsers" placeholder="Buscar usuarios...">
         </div>
         <div class="orien-admin-filter">
-            <select class="orien-select" style="width: 180px;">
+            <select class="orien-select" id="filterRole" style="width: 180px;">
                 <option value="all">Todos los roles</option>
                 <option value="admin">Administradores</option>
                 <option value="editor">Editores</option>
@@ -30,7 +30,7 @@
             </select>
         </div>
         <div class="orien-admin-filter">
-            <select class="orien-select" style="width: 150px;">
+            <select class="orien-select" id="filterStatus" style="width: 150px;">
                 <option value="all">Todos los estados</option>
                 <option value="active">Activos</option>
                 <option value="inactive">Inactivos</option>
@@ -39,7 +39,7 @@
     </div>
     
     <div class="orien-table-container">
-        <table class="orien-table">
+        <table class="orien-table" id="usersTable">
             <thead>
                 <tr>
                     <th>Usuario</th>
@@ -51,151 +51,13 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Usuario 1 - Admin -->
-                <tr>
-                    <td data-label="Usuario">
-                        <div class="orien-user-info">
-                            <div class="orien-user-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div>
-                                <strong>admin@orienpro.com</strong>
-                                <div class="orien-table-subtitle">ID: USR-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-label="Nombre completo">Administrador del Sistema</td>
-                    <td data-label="Email">admin@orienpro.com</td>
-                    <td data-label="Rol">
-                        <span class="orien-badge orien-badge-primary">Administrador</span>
-                    </td>
-                    <td data-label="Estado">
-                        <span class="orien-badge orien-badge-primary">Activo</span>
-                    </td>
-                    <td data-label="Acciones">
-                        <div class="orien-table-actions">
-                            <a href="/usersEdit" class="orien-btn orien-btn-sm orien-btn-outline" data-link>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline toggle-status" style="color:#28a745; border-color:#28a745;">
-                                <i class="fas fa-toggle-on"></i>
-                            </button>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline" style="color:#dc3545; border-color:#dc3545;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                
-                <!-- Usuario 2 - Editor -->
-                <tr>
-                    <td data-label="Usuario">
-                        <div class="orien-user-info">
-                            <div class="orien-user-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div>
-                                <strong>carlos@orienpro.com</strong>
-                                <div class="orien-table-subtitle">ID: USR-002</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-label="Nombre completo">Carlos Rodríguez</td>
-                    <td data-label="Email">carlos@orienpro.com</td>
-                    <td data-label="Rol">
-                        <span class="orien-badge orien-badge-secondary">Editor</span>
-                    </td>
-                    <td data-label="Estado">
-                        <span class="orien-badge orien-badge-primary">Activo</span>
-                    </td>
-                    <td data-label="Acciones">
-                        <div class="orien-table-actions">
-                            <a href="/usersEdit" class="orien-btn orien-btn-sm orien-btn-outline" data-link>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline toggle-status" style="color:#28a745; border-color:#28a745;">
-                                <i class="fas fa-toggle-on"></i>
-                            </button>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline" style="color:#dc3545; border-color:#dc3545;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                
-                <!-- Usuario 3 - Visualizador inactivo -->
-                <tr>
-                    <td data-label="Usuario">
-                        <div class="orien-user-info">
-                            <div class="orien-user-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div>
-                                <strong>ana@orienpro.com</strong>
-                                <div class="orien-table-subtitle">ID: USR-003</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-label="Nombre completo">Ana Martínez</td>
-                    <td data-label="Email">ana@orienpro.com</td>
-                    <td data-label="Rol">
-                        <span class="orien-badge orien-badge-secondary">Visualizador</span>
-                    </td>
-                    <td data-label="Estado">
-                        <span class="orien-badge orien-badge-secondary">Inactivo</span>
-                    </td>
-                    <td data-label="Acciones">
-                        <div class="orien-table-actions">
-                            <a href="/usersEdit" class="orien-btn orien-btn-sm orien-btn-outline" data-link>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline toggle-status" style="color:#6c757d; border-color:#6c757d;">
-                                <i class="fas fa-toggle-off"></i>
-                            </button>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline" style="color:#dc3545; border-color:#dc3545;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                
-                <!-- Usuario 4 - Editor -->
-                <tr>
-                    <td data-label="Usuario">
-                        <div class="orien-user-info">
-                            <div class="orien-user-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div>
-                                <strong>luis@orienpro.com</strong>
-                                <div class="orien-table-subtitle">ID: USR-004</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-label="Nombre completo">Luis Fernández</td>
-                    <td data-label="Email">luis@orienpro.com</td>
-                    <td data-label="Rol">
-                        <span class="orien-badge orien-badge-secondary">Editor</span>
-                    </td>
-                    <td data-label="Estado">
-                        <span class="orien-badge orien-badge-primary">Activo</span>
-                    </td>
-                    <td data-label="Acciones">
-                        <div class="orien-table-actions">
-                            <a href="/usersEdit" class="orien-btn orien-btn-sm orien-btn-outline" data-link>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline toggle-status" style="color:#28a745; border-color:#28a745;">
-                                <i class="fas fa-toggle-on"></i>
-                            </button>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline" style="color:#dc3545; border-color:#dc3545;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <!-- Los usuarios se cargarán dinámicamente via controller -->
             </tbody>
         </table>
+    </div>
+    
+    <div class="orien-user-stats" id="usersCount">
+        Cargando usuarios...
     </div>
     
     <div class="orien-pagination">

@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="orien-admin-edit-status">
-                <span class="orien-badge orien-badge-outline">ID: USR-002</span>
+                <span class="orien-badge orien-badge-outline" id="userUid">Cargando...</span>
                 <span class="orien-badge orien-badge-primary">Activo</span>
             </div>
         </div>
@@ -32,18 +32,19 @@
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Correo electrónico</label>
-                            <input type="email" class="orien-input" value="carlos@orienpro.com" required>
+                            <input type="email" name="email" class="orien-input" readonly disabled>
+                            <small class="orien-input-hint">El correo no puede ser modificado</small>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Cambiar contraseña</label>
-                            <input type="password" class="orien-input" placeholder="Nueva contraseña (dejar vacío para mantener)">
+                            <input type="password" name="new_password" class="orien-input" placeholder="Nueva contraseña (dejar vacío para mantener)">
                             <small class="orien-input-hint">Dejar en blanco para mantener la contraseña actual</small>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Confirmar nueva contraseña</label>
-                            <input type="password" class="orien-input" placeholder="Confirmar nueva contraseña">
+                            <input type="password" name="confirm_password" class="orien-input" placeholder="Confirmar nueva contraseña">
                         </div>
                     </div>
                     
@@ -54,17 +55,17 @@
                         <div class="orien-form-row">
                             <div class="orien-form-group" style="flex: 1;">
                                 <label class="orien-label">Nombre</label>
-                                <input type="text" class="orien-input" value="Carlos" required>
+                                <input type="text" name="nombre" class="orien-input" placeholder="Nombre" required>
                             </div>
                             <div class="orien-form-group" style="flex: 1;">
                                 <label class="orien-label">Apellidos</label>
-                                <input type="text" class="orien-input" value="Rodríguez" required>
+                                <input type="text" name="apellidos" class="orien-input" placeholder="Apellidos" required>
                             </div>
                         </div>
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Teléfono</label>
-                            <input type="tel" class="orien-input" value="+52 55 8765 4321">
+                            <input type="tel" name="telefono" class="orien-input" placeholder="+52 55 1234 5678">
                         </div>
                     </div>
                     
@@ -74,9 +75,9 @@
                         
                         <div class="orien-form-group">
                             <label class="orien-label">Rol de usuario</label>
-                            <select class="orien-select">
+                            <select name="cargo" class="orien-select">
                                 <option value="viewer">Visualizador - Solo lectura</option>
-                                <option value="editor" selected>Editor - Puede crear y editar contenido</option>
+                                <option value="editor">Editor - Puede crear y editar contenido</option>
                                 <option value="admin">Administrador - Acceso total</option>
                             </select>
                         </div>
@@ -85,7 +86,7 @@
                             <label class="orien-label">Estado</label>
                             <div class="orien-radio-group">
                                 <label class="orien-radio">
-                                    <input type="radio" name="status" value="active" checked> Activo
+                                    <input type="radio" name="status" value="active"> Activo
                                 </label>
                                 <label class="orien-radio">
                                     <input type="radio" name="status" value="inactive"> Inactivo
@@ -94,19 +95,23 @@
                         </div>
                     </div>
                     
+                    <!-- Botones adicionales -->
+                    <div class="orien-form-group orien-form-buttons">
+                        <button type="button" id="changePasswordBtn" class="orien-btn orien-btn-secondary">
+                            <i class="fas fa-key"></i> Cambiar contraseña
+                        </button>
+                        <button type="button" id="deactivateBtn" class="orien-btn orien-btn-outline" style="color: #dc3545; border-color: #dc3545;">
+                            <i class="fas fa-ban"></i> Inactivar usuario
+                        </button>
+                    </div>
+                    
                     <!-- Información de auditoría -->
-                    <div class="orien-admin-version-info">
+                    <div class="orien-admin-version-info" id="auditInfo">
                         <i class="fas fa-history"></i>
-                        <span>Último acceso: 2024-01-14 09:15</span>
-                        <span class="separator">|</span>
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Usuario creado: 2023-06-10</span>
+                        <span>Cargando información...</span>
                     </div>
                     
                     <div class="orien-form-actions">
-                        <button type="button" class="orien-btn orien-btn-outline" id="deleteBtn" style="margin-right: auto; color: #dc3545; border-color: #dc3545;">
-                            <i class="fas fa-trash"></i> Delete User
-                        </button>
                         <a href="/usersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
                         <button type="submit" class="orien-btn orien-btn-primary">Update User</button>
                     </div>
