@@ -1,0 +1,154 @@
+<!-- public/modules/visitor/contact/contact.html -->
+
+<!-- Banner -->
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Contacto</h1>
+        <p class="orien-banner-subtitle">Estamos aquí para ayudarte y responder tus preguntas</p>
+    </div>
+</div>
+
+<div class="orien-contact-section">
+    <div class="orien-contact-container">
+        <!-- Columna izquierda: Información de contacto -->
+        <div class="orien-contact-info">
+            <div class="orien-contact-card">
+                <h2 class="orien-contact-title">Información de Contacto</h2>
+                <p class="orien-contact-description">
+                    ¿Tienes alguna pregunta o necesitas asistencia? Contáctanos a través de cualquiera de nuestros canales.
+                </p>
+                
+                <div class="orien-contact-details">
+                    <!-- Dirección -->
+                    <div class="orien-contact-item">
+                        <div class="orien-contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="orien-contact-text">
+                            <h4>Dirección</h4>
+                            <p>Av. Principal #123, Colonia Centro<br>Ciudad de México, CDMX 06000</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Teléfonos -->
+                    <div class="orien-contact-item">
+                        <div class="orien-contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="orien-contact-text">
+                            <h4>Teléfonos</h4>
+                            <p>+52 (55) 1234 5678<br>+52 (55) 8765 4321</p>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp -->
+                    <div class="orien-contact-item">
+                        <div class="orien-contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="orien-contact-text">
+                            <h4>WhatsApp</h4>
+                            <p>+52 1 55 1234 5678</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="orien-contact-item">
+                        <div class="orien-contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="orien-contact-text">
+                            <h4>Correo Electrónico</h4>
+                            <p>info@orienpro.com<br>ventas@orienpro.com</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Horario -->
+                    <div class="orien-contact-item">
+                        <div class="orien-contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="orien-contact-text">
+                            <h4>Horario de Atención</h4>
+                            <p>Lunes a Viernes: 9:00 - 18:00<br>Sábados: 10:00 - 14:00</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Redes Sociales -->
+                <div class="orien-contact-social">
+                    <h3>Síguenos en redes sociales</h3>
+                    <div class="orien-social-links">
+                        <a href="#" class="orien-social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="orien-social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="orien-social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="orien-social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="orien-social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna derecha: Mapa -->
+        <div class="orien-contact-map">
+            <div class="orien-contact-card">
+                <h2 class="orien-contact-title">Ubicación</h2>
+                <div id="orien-map" class="orien-map-container"></div>
+                <p class="orien-map-note">
+                    <i class="fas fa-map-pin"></i> Estamos ubicados en el corazón de la ciudad
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para el mapa (Leaflet + OpenStreetMap - API gratuita) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Coordenadas de ejemplo (Ciudad de México)
+        const latitude = 19.432608;
+        const longitude = -99.133209;
+        
+        // Inicializar el mapa
+        const map = L.map('orien-map').setView([latitude, longitude], 15);
+        
+        // Cargar tiles de OpenStreetMap (gratuito, sin API key)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19,
+            minZoom: 3
+        }).addTo(map);
+        
+        // Agregar marcador
+        const marker = L.marker([latitude, longitude]).addTo(map);
+        
+        // Popup con información
+        marker.bindPopup(`
+            <strong>Orién Pro</strong><br>
+            Av. Principal #123<br>
+            Ciudad de México
+        `).openPopup();
+        
+        // Redimensionar mapa cuando la ventana cambie
+        window.addEventListener('resize', function() {
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 200);
+        });
+    });
+</script>

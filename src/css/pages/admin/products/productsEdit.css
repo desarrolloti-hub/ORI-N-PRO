@@ -1,112 +1,51 @@
-.orien-admin-products-edit {
-    min-height: calc(100vh - 300px);
-    padding: 60px 20px 60px;
-    background: var(--color-bg);
-}
+/* ========================================
+   PRODUCTS EDIT - Estilos específicos
+   Los estilos base vienen de forms.css y cards.css
+   ======================================== */
 
+/* Contenedor específico de edit */
 .orien-admin-edit-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 5%;
 }
 
-.orien-admin-edit-hero {
-    background: linear-gradient(135deg, var(--color-dark) 0%, #1a1a2e 100%);
-    padding: 40px 20px;
-    margin-bottom: 30px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.orien-admin-edit-hero h1 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 300;
-    letter-spacing: 4px;
-    color: var(--color-light);
-    margin-bottom: 8px;
-}
-
-.orien-admin-edit-hero p {
-    color: var(--color-gray);
-    font-size: 0.85rem;
-}
-
+/* Navegación específica con status */
 .orien-admin-edit-nav {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 30px;
+}
+
+.orien-admin-edit-nav-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
     flex-wrap: wrap;
 }
 
-.orien-admin-edit-card {
-    background: var(--color-white);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: var(--shadow);
-}
-
-.orien-admin-edit-images {
-    margin-bottom: 30px;
-}
-
-.orien-admin-images-gallery {
+.orien-admin-edit-status {
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+    gap: 10px;
+    align-items: center;
 }
 
-.orien-admin-image-item {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    background: var(--color-light);
-    position: relative;
-    overflow: hidden;
-}
-
-.orien-admin-image-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.orien-admin-image-upload {
-    border: 2px dashed var(--color-gray);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.orien-admin-image-upload:hover {
-    border-color: var(--color-dark);
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.orien-admin-edit-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-    margin-top: 30px;
-    padding-top: 20px;
+/* Estilo único para versión info */
+.orien-admin-version-info {
+    font-size: 0.7rem;
+    color: var(--color-gray);
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
-@media (max-width: 768px) {
-    .orien-admin-products-edit {
-        padding: 15px 15px 15px;
-    }
-    
-    .orien-admin-edit-card {
-        padding: 20px;
-    }
-    
-    .orien-admin-edit-actions {
-        flex-direction: column;
-    }
-    
-    .orien-admin-edit-actions .orien-btn {
-        width: 100%;
-    }
+.orien-admin-version-info i {
+    color: var(--color-dark);
 }

@@ -1,26 +1,78 @@
 /* ========================================
    CARD COMPONENTS - Orién Pro
+   Estilo unificado para todas las tarjetas del sistema
    ======================================== */
 
-/* Card base */
+/* Card base - Estilo principal (como .orien-product-card) */
 .orien-card {
-    background: var(--color-light);
-    border-radius: 4px;
+    background: var(--color-white);
+    border-radius: 12px;
     overflow: hidden;
-    transition: var(--transition);
-}
-
-.orien-card:hover {
-    transform: translateY(-5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: var(--shadow);
 }
 
-/* Card with image */
+.orien-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Card image container */
 .orien-card-image {
+    position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
+    background: var(--color-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.orien-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+    background: var(--color-light);
+    padding: 12px;
+}
+
+.orien-card:hover .orien-card-image img {
+    transform: scale(1.03);
+}
+
+/* Card badges */
+.orien-card-badge {
+    position: absolute;
+    top: 15px;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.orien-card-badge-left {
+    left: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    color: var(--color-white);
+}
+
+.orien-card-badge-right {
+    right: 15px;
+}
+
+.orien-card-badge.rental {
+    background: var(--color-success);
+    color: var(--color-white);
+}
+
+.orien-card-badge.sale {
+    background: var(--color-error);
+    color: var(--color-white);
 }
 
 /* Card content */
@@ -29,21 +81,22 @@
 }
 
 .orien-card-title {
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin-bottom: 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
     color: var(--color-dark);
 }
 
 .orien-card-subtitle {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 16px;
+    font-size: 0.75rem;
+    color: var(--color-gray);
+    margin-bottom: 15px;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .orien-card-text {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.6;
     color: #555;
     margin-bottom: 20px;
@@ -51,24 +104,30 @@
 
 /* Card footer */
 .orien-card-footer {
-    padding: 16px 24px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Card variants */
+.orien-card-price {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.orien-card-price small {
+    font-size: 0.7rem;
+    font-weight: normal;
+    color: var(--color-gray);
+}
+
+/* Card horizontal */
 .orien-card-horizontal {
     display: flex;
     flex-direction: row;
-    align-items: center;
-}
-
-@media (max-width: 768px) {
-    .orien-card-horizontal {
-        flex-direction: column;
-    }
+    align-items: stretch;
 }
 
 .orien-card-horizontal .orien-card-image {
@@ -76,7 +135,15 @@
     aspect-ratio: 4 / 3;
 }
 
+.orien-card-horizontal .orien-card-content {
+    flex: 1;
+}
+
 @media (max-width: 768px) {
+    .orien-card-horizontal {
+        flex-direction: column;
+    }
+    
     .orien-card-horizontal .orien-card-image {
         width: 100%;
     }
@@ -85,6 +152,81 @@
 /* Card grid */
 .orien-card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 30px;
+}
+
+@media (max-width: 480px) {
+    .orien-card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .orien-card-content {
+        padding: 18px;
+    }
+    
+    .orien-card-image img {
+        padding: 8px;
+    }
+}
+
+/* Card sizes */
+.orien-card-sm .orien-card-content {
+    padding: 16px;
+}
+
+.orien-card-sm .orien-card-title {
+    font-size: 1rem;
+}
+
+.orien-card-sm .orien-card-text {
+    font-size: 0.8rem;
+}
+
+.orien-card-lg .orien-card-content {
+    padding: 32px;
+}
+
+.orien-card-lg .orien-card-title {
+    font-size: 1.5rem;
+}
+
+/* Admin card (para tabla transformada en tarjetas) */
+.orien-admin-card {
+    margin-bottom: 20px;
+}
+
+.orien-admin-card-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.orien-admin-card-item:last-child {
+    border-bottom: none;
+}
+
+.orien-admin-card-label {
+    font-weight: 600;
+    color: var(--color-dark);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    flex: 1;
+}
+
+.orien-admin-card-value {
+    flex: 2;
+    text-align: right;
+}
+
+.orien-admin-card-value .orien-admin-table-image {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--color-light);
+    padding: 8px;
 }

@@ -5,55 +5,116 @@
         <p class="orien-banner-subtitle">Edita la información del producto</p>
     </div>
 </div>
-
+<br>
 <div class="orien-admin-products-edit">
     <div class="orien-admin-edit-container">
         <div class="orien-admin-edit-nav">
-            <a href="/admin/adminDashboard" class="orien-admin-nav-back" data-link>
-                <i class="fas fa-arrow-left"></i> Dashboard
-            </a>
-            <a href="/admin/products/productsList" class="orien-admin-nav-back" data-link>
-                <i class="fas fa-list"></i> Back to List
-            </a>
+            <div class="orien-admin-edit-nav-left">
+                <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+                <a href="/admin/products/productsList" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-list"></i> Back to List
+                </a>
+            </div>
+            <div class="orien-admin-edit-status">
+                <span class="orien-badge orien-badge-outline">ID: PRD-001</span>
+                <span class="orien-badge orien-badge-primary">Active</span>
+            </div>
         </div>
         
-        <div class="orien-admin-edit-card">
-            <form class="orien-form">
-                <div class="orien-admin-edit-images">
-                    <label class="orien-label">Product Images</label>
-                    <div class="orien-admin-images-gallery" id="imageGallery">
-                        <div class="orien-admin-image-item">
-                            <img src="/assets/images/pantallas3.png" alt="Product Image">
-                            <span class="orien-image-remove" style="position:absolute;top:5px;right:5px;width:24px;height:24px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">&times;</span>
+        <div class="orien-card">
+            <div class="orien-card-content">
+                <form class="orien-form" id="productForm">
+                    <!-- Images Gallery -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Product Images</label>
+                        <div class="orien-images-gallery" id="imageGallery">
+                            <div class="orien-image-item">
+                                <img src="/assets/images/pantallas3.png" alt="Product Image">
+                                <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
+                            </div>
+                            <div class="orien-image-item">
+                                <img src="/assets/images/360.png" alt="Product Image">
+                                <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="orien-upload-area orien-upload-area-sm" id="imageUpload">
+                            <i class="fas fa-plus"></i>
+                            <span>Add more images</span>
+                            <input type="file" multiple accept="image/*" style="display: none;">
                         </div>
                     </div>
-                    <div class="orien-admin-image-upload" id="imageUpload">
-                        <i class="fas fa-plus"></i>
-                        <p>Add more images</p>
-                        <input type="file" multiple accept="image/*" style="display: none;">
+                    
+                    <!-- Product Name -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Product Name</label>
+                        <input type="text" class="orien-input" value="Pantalla LED P2.976" required>
                     </div>
-                </div>
-                
-                <div class="orien-form-group">
-                    <label class="orien-label">Product Name</label>
-                    <input type="text" class="orien-input" value="Pantalla LED P2.976" required>
-                </div>
-                
-                <div class="orien-form-group">
-                    <label class="orien-label">Product Features</label>
-                    <textarea class="orien-input orien-textarea" rows="5">Paneles para imágenes perfectas e impactantes, respuesta rápida. Diseñada para ofrecer una calidad visual excepcional en cualquier entorno.</textarea>
-                </div>
-                
-                <div class="orien-form-group">
-                    <label class="orien-label">Product Price</label>
-                    <input type="text" class="orien-input" value="$2,500 USD" required>
-                </div>
-                
-                <div class="orien-admin-edit-actions">
-                    <a href="/admin/products/productsList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
-                    <button type="submit" class="orien-btn orien-btn-primary">Update Product</button>
-                </div>
-            </form>
+                    
+                    <!-- Category -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Category</label>
+                        <select class="orien-select">
+                            <option value="">Select a category</option>
+                            <option value="led" selected>Pantallas LED</option>
+                            <option value="360">Plataforma 360°</option>
+                            <option value="iluminacion">Iluminación</option>
+                            <option value="soportes">Soportes</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Product Type -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Product Type</label>
+                        <div class="orien-radio-group">
+                            <label class="orien-radio">
+                                <input type="radio" name="type" value="venta" checked> Venta
+                            </label>
+                            <label class="orien-radio">
+                                <input type="radio" name="type" value="renta"> Renta
+                            </label>
+                            <label class="orien-radio">
+                                <input type="radio" name="type" value="ambos"> Ambos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Features -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Product Features</label>
+                        <textarea class="orien-input orien-textarea" rows="5">Paneles para imágenes perfectas e impactantes, respuesta rápida. Diseñada para ofrecer una calidad visual excepcional en cualquier entorno.</textarea>
+                    </div>
+                    
+                    <!-- Product Price -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Product Price</label>
+                        <input type="text" class="orien-input" value="$2,500 USD" required>
+                    </div>
+                    
+                    <!-- Stock -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Stock Quantity</label>
+                        <input type="number" class="orien-input" value="15">
+                    </div>
+                    
+                    <!-- Versión info (estilo único de esta página) -->
+                    <div class="orien-admin-version-info">
+                        <i class="fas fa-history"></i>
+                        <span>Last updated: 2024-01-15 14:30</span>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="orien-form-actions">
+                        <button type="button" class="orien-btn orien-btn-outline" id="deleteBtn" style="margin-right: auto; color: #dc3545; border-color: #dc3545;">
+                            <i class="fas fa-trash"></i> Delete Product
+                        </button>
+                        <a href="/admin/products/productsList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                        <button type="submit" class="orien-btn orien-btn-primary">Update Product</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -68,23 +129,36 @@
     fileInput.addEventListener('change', (e) => {
         const files = Array.from(e.target.files);
         files.forEach(file => {
+            if (!file.type.match('image.*')) return;
+            
             const reader = new FileReader();
             reader.onload = (event) => {
                 const imageItem = document.createElement('div');
-                imageItem.className = 'orien-admin-image-item';
+                imageItem.className = 'orien-image-item';
                 imageItem.innerHTML = `
                     <img src="${event.target.result}" alt="Product Image">
-                    <span class="orien-image-remove" style="position:absolute;top:5px;right:5px;width:24px;height:24px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">&times;</span>
+                    <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
                 `;
                 gallery.appendChild(imageItem);
             };
             reader.readAsDataURL(file);
         });
+        fileInput.value = '';
     });
     
     gallery.addEventListener('click', (e) => {
-        if (e.target.classList.contains('orien-image-remove') || e.target.innerText === '×') {
-            e.target.closest('.orien-admin-image-item').remove();
+        const removeBtn = e.target.closest('.orien-image-remove');
+        if (removeBtn) {
+            removeBtn.closest('.orien-image-item').remove();
         }
     });
+    
+    const deleteBtn = document.getElementById('deleteBtn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete this product?')) {
+                window.location.href = '/admin/products/productsList';
+            }
+        });
+    }
 </script>

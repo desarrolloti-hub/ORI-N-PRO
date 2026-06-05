@@ -6,6 +6,9 @@
 .orien-table-container {
     width: 100%;
     overflow-x: auto;
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
 }
 
 /* Table base */
@@ -18,7 +21,7 @@
 /* Table header */
 .orien-table thead th {
     text-align: left;
-    padding: 16px 12px;
+    padding: 16px 15px;
     background: var(--color-dark);
     color: var(--color-light);
     font-weight: 400;
@@ -29,12 +32,17 @@
 
 /* Table body cells */
 .orien-table tbody td {
-    padding: 14px 12px;
+    padding: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     color: #555;
+    vertical-align: middle;
 }
 
-/* Table row hover */
+/* Table row hover - similar a cards */
+.orien-table tbody tr {
+    transition: background 0.3s ease;
+}
+
 .orien-table tbody tr:hover {
     background: rgba(0, 0, 0, 0.02);
 }
@@ -52,4 +60,80 @@
 .orien-table-bordered th,
 .orien-table-bordered td {
     border: 1px solid var(--color-gray);
+}
+
+/* ========================================
+   TABLA RESPONSIVE → TARJETAS
+   ======================================== */
+@media (max-width: 768px) {
+    .orien-table-container {
+        overflow-x: visible;
+        background: transparent;
+        box-shadow: none;
+    }
+    
+    /* Ocultar el header */
+    .orien-table thead {
+        display: none;
+    }
+    
+    /* Cada fila se convierte en tarjeta (mismo estilo que .orien-card) */
+    .orien-table tbody tr {
+        display: block;
+        margin-bottom: 24px;
+        background: var(--color-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .orien-table tbody tr:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+    }
+    
+    /* Cada celda como bloque flex */
+    .orien-table tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 14px 18px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        text-align: right;
+    }
+    
+    .orien-table tbody td:last-child {
+        border-bottom: none;
+    }
+    
+    /* Etiqueta que aparece antes del valor */
+    .orien-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--color-dark);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        flex: 1;
+        text-align: left;
+    }
+    
+    /* Contenido de la celda */
+    .orien-table tbody td > * {
+        flex: 2;
+        text-align: right;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .orien-table tbody td {
+        padding: 12px 15px;
+        gap: 12px;
+    }
+    
+    .orien-table tbody td::before {
+        font-size: 0.7rem;
+    }
 }
