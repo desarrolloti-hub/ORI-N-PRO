@@ -26,6 +26,9 @@
 @import './utils/animations.css';
 @import './utils/responsive.css';
 
+/*Shared*/
+@import './pages/shared/legal/termsAndConditions.css';
+
 /*Pages - Visitor */
 @import './pages/visitor/home.css';
 @import './pages/visitor/products.css';

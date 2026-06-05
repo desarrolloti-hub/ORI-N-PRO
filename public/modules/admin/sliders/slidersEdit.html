@@ -10,10 +10,10 @@
     <div class="orien-admin-edit-container">
         <div class="orien-admin-edit-nav">
             <div class="orien-admin-edit-nav-left">
-                <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
                     <i class="fas fa-arrow-left"></i> Dashboard
                 </a>
-                <a href="/admin/sliders/slidersList" class="orien-admin-nav-link" data-link>
+                <a href="/slidersList" class="orien-admin-nav-link" data-link>
                     <i class="fas fa-list"></i> Back to List
                 </a>
             </div>
@@ -99,7 +99,7 @@
                         <button type="button" class="orien-btn orien-btn-outline" id="deleteBtn" style="margin-right: auto; color: #dc3545; border-color: #dc3545;">
                             <i class="fas fa-trash"></i> Delete Slide
                         </button>
-                        <a href="/admin/sliders/slidersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                        <a href="/slidersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
                         <button type="submit" class="orien-btn orien-btn-primary">Update Slide</button>
                     </div>
                 </form>
@@ -148,7 +148,7 @@
     if (deleteBtn) {
         deleteBtn.addEventListener('click', () => {
             if (confirm('¿Estás seguro de que quieres eliminar este slide?')) {
-                window.location.href = '/admin/sliders/slidersList';
+                window.location.href = '/slidersList';
             }
         });
     }

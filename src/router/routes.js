@@ -39,43 +39,43 @@ export const routes = {
     },
 
     // Admin Routes
-    "/admin/adminDashboard": {
+    "/adminDashboard": {
         view: "/modules/admin/adminDashboard/adminDashboard.html",
         controller: null
     },
-    "/admin/products/productsList": {
+    "/productsList": {
         view: "/modules/admin/products/productsList.html",
         controller: null
     },
-    "/admin/products/productsCreate": {
+    "/productsCreate": {
         view: "/modules/admin/products/productsCreate.html",
         controller: null
     },
-    "/admin/products/productsEdit": {
+    "/productsEdit": {
         view: "/modules/admin/products/productsEdit.html",
         controller: null
     },
-    "/admin/sliders/slidersList": {
+    "/slidersList": {
         view: "/modules/admin/sliders/slidersList.html",
         controller: null
     },
-    "/admin/sliders/slidersCreate": {
+    "/slidersCreate": {
         view: "/modules/admin/sliders/slidersCreate.html",
         controller: null
     },
-    "/admin/sliders/slidersEdit": {
+    "/slidersEdit": {
         view: "/modules/admin/sliders/slidersEdit.html",
         controller: null
     },
-    "/admin/users/usersList": {
+    "/usersList": {
         view: "/modules/admin/users/usersList.html",
         controller: null
     },
-    "/admin/users/usersCreate": {
+    "/usersCreate": {
         view: "/modules/admin/users/usersCreate.html",
         controller: null
     },
-    "/admin/users/usersEdit": {
+    "/usersEdit": {
         view: "/modules/admin/users/usersEdit.html",
         controller: null
     },
@@ -84,5 +84,11 @@ export const routes = {
     '/404': {
         view: '/modules/shared/errors/404.html',
         controller: null
-    }
+    },
+
+    // Legal Routes
+    "/termsAndConditions": {
+        view: "/modules/shared/legal/termsAndConditions.html",
+        controller: null
+    },
 };
