@@ -37,7 +37,7 @@ export const routes = {
         view: "/modules/visitor/login/login.html",
         controller: null
     },
-    
+
     // Admin Routes
     "/admin/adminDashboard": {
         view: "/modules/admin/adminDashboard/adminDashboard.html",
@@ -55,7 +55,20 @@ export const routes = {
         view: "/modules/admin/products/productsEdit.html",
         controller: null
     },
-    
+    // Admin Sliders Routes (agregar después de las rutas de products)
+    "/admin/sliders/slidersList": {
+        view: "/modules/admin/sliders/slidersList.html",
+        controller: null
+    },
+    "/admin/sliders/slidersCreate": {
+        view: "/modules/admin/sliders/slidersCreate.html",
+        controller: null
+    },
+    "/admin/sliders/slidersEdit": {
+        view: "/modules/admin/sliders/slidersEdit.html",
+        controller: null
+    },
+
     // 404 Error Page
     '/404': {
         view: '/modules/shared/errors/404.html',

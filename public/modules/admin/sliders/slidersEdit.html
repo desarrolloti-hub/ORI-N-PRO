@@ -1,0 +1,155 @@
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Editar Slide</h1>
+        <p class="orien-banner-subtitle">Modifica la información del slide</p>
+    </div>
+</div>
+<br>
+<div class="orien-admin-sliders-edit">
+    <div class="orien-admin-edit-container">
+        <div class="orien-admin-edit-nav">
+            <div class="orien-admin-edit-nav-left">
+                <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+                <a href="/admin/sliders/slidersList" class="orien-admin-nav-link" data-link>
+                    <i class="fas fa-list"></i> Back to List
+                </a>
+            </div>
+            <div class="orien-admin-edit-status">
+                <span class="orien-badge orien-badge-outline">ID: SLD-001</span>
+                <span class="orien-badge orien-badge-primary">Active</span>
+            </div>
+        </div>
+        
+        <div class="orien-card">
+            <div class="orien-card-content">
+                <form class="orien-form" id="sliderForm">
+                    <!-- Preview del slide actual -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Vista previa actual</label>
+                        <div class="orien-slider-preview" id="sliderPreview">
+                            <img src="/assets/images/slide1.jpg" alt="Slide preview" class="orien-slider-preview-img">
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload - Cambiar imagen -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Cambiar imagen</label>
+                        <div class="orien-upload-area orien-upload-area-sm" id="imageUpload">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Replace image</span>
+                            <input type="file" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="orien-images-preview" id="imagePreview"></div>
+                        <small class="orien-input-hint">Dejar vacío para mantener la imagen actual</small>
+                    </div>
+                    
+                    <!-- Título -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Título</label>
+                        <input type="text" class="orien-input" value="Pantallas LED de última generación" required>
+                    </div>
+                    
+                    <!-- Subtítulo -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Subtítulo</label>
+                        <input type="text" class="orien-input" value="Tecnología para eventos y espectáculos">
+                    </div>
+                    
+                    <!-- Botón CTA -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Botón de acción (CTA)</label>
+                        <div class="orien-form-row">
+                            <input type="text" class="orien-input" placeholder="Texto del botón" value="Ver productos" style="flex: 2;">
+                            <input type="text" class="orien-input" placeholder="URL del enlace" value="/products" style="flex: 3;">
+                        </div>
+                    </div>
+                    
+                    <!-- Orden -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Orden</label>
+                        <input type="number" class="orien-input" value="1" min="1">
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Estado</label>
+                        <div class="orien-radio-group">
+                            <label class="orien-radio">
+                                <input type="radio" name="status" value="active" checked> Activo
+                            </label>
+                            <label class="orien-radio">
+                                <input type="radio" name="status" value="inactive"> Inactivo
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Información de versión -->
+                    <div class="orien-admin-version-info">
+                        <i class="fas fa-history"></i>
+                        <span>Last updated: 2024-01-15 14:30</span>
+                        <span class="separator">|</span>
+                        <i class="fas fa-chart-line"></i>
+                        <span>Mostrado en posición #1 del carrusel</span>
+                    </div>
+                    
+                    <div class="orien-form-actions">
+                        <button type="button" class="orien-btn orien-btn-outline" id="deleteBtn" style="margin-right: auto; color: #dc3545; border-color: #dc3545;">
+                            <i class="fas fa-trash"></i> Delete Slide
+                        </button>
+                        <a href="/admin/sliders/slidersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                        <button type="submit" class="orien-btn orien-btn-primary">Update Slide</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('imageUpload');
+    const fileInput = uploadArea.querySelector('input');
+    const previewContainer = document.getElementById('imagePreview');
+    const sliderPreview = document.getElementById('sliderPreview');
+    
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.match('image.*')) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                previewContainer.innerHTML = '';
+                const previewItem = document.createElement('div');
+                previewItem.className = 'orien-image-preview-item';
+                previewItem.innerHTML = `
+                    <img src="${event.target.result}" alt="Preview">
+                    <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
+                `;
+                previewContainer.appendChild(previewItem);
+                
+                sliderPreview.innerHTML = `<img src="${event.target.result}" alt="Slide preview" class="orien-slider-preview-img">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    previewContainer.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.orien-image-remove');
+        if (removeBtn) {
+            removeBtn.closest('.orien-image-preview-item').remove();
+            sliderPreview.innerHTML = `<img src="/assets/images/slide1.jpg" alt="Slide preview" class="orien-slider-preview-img">`;
+        }
+    });
+    
+    const deleteBtn = document.getElementById('deleteBtn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres eliminar este slide?')) {
+                window.location.href = '/admin/sliders/slidersList';
+            }
+        });
+    }
+</script>

@@ -1,0 +1,174 @@
+<div class="orien-banner">
+    <div class="orien-banner-overlay"></div>
+    <div class="orien-banner-content">
+        <h1 class="orien-banner-title">Crear Slide</h1>
+        <p class="orien-banner-subtitle">Agrega una nueva imagen al carrusel principal</p>
+    </div>
+</div>
+<br>
+<div class="orien-admin-sliders-create">
+    <div class="orien-admin-create-container">
+        <div class="orien-admin-create-nav">
+            <a href="/admin/adminDashboard" class="orien-admin-nav-link" data-link>
+                <i class="fas fa-arrow-left"></i> Dashboard
+            </a>
+            <a href="/admin/sliders/slidersList" class="orien-admin-nav-link" data-link>
+                <i class="fas fa-list"></i> Back to List
+            </a>
+        </div>
+        
+        <div class="orien-card">
+            <div class="orien-card-content">
+                <form class="orien-form" id="sliderForm">
+                    <!-- Preview del slide -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Vista previa</label>
+                        <div class="orien-slider-preview" id="sliderPreview">
+                            <div class="orien-slider-preview-placeholder">
+                                <i class="fas fa-image"></i>
+                                <p>Vista previa del slide</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Imagen del Slide</label>
+                        <div class="orien-upload-area" id="imageUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click or drag to upload image</p>
+                            <small class="orien-upload-hint">Recommended size: 1920x1080px. Formats: JPG, PNG, WEBP</small>
+                            <input type="file" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="orien-images-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <!-- Título -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Título</label>
+                        <input type="text" class="orien-input" placeholder="Ej: Pantallas LED de última generación" required>
+                        <small class="orien-input-hint">Texto principal que aparece sobre la imagen</small>
+                    </div>
+                    
+                    <!-- Subtítulo -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Subtítulo</label>
+                        <input type="text" class="orien-input" placeholder="Ej: Tecnología para eventos y espectáculos">
+                        <small class="orien-input-hint">Texto secundario opcional</small>
+                    </div>
+                    
+                    <!-- Botón CTA -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Botón de acción (CTA)</label>
+                        <div class="orien-form-row">
+                            <input type="text" class="orien-input" placeholder="Texto del botón" style="flex: 2;">
+                            <input type="text" class="orien-input" placeholder="URL del enlace" style="flex: 3;">
+                        </div>
+                        <small class="orien-input-hint">Ej: "Ver productos" → "/products"</small>
+                    </div>
+                    
+                    <!-- Orden -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Orden</label>
+                        <input type="number" class="orien-input" value="1" min="1" placeholder="Posición en el carrusel">
+                        <small class="orien-input-hint">Número más bajo = aparece primero</small>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="orien-form-group">
+                        <label class="orien-label">Estado</label>
+                        <div class="orien-radio-group">
+                            <label class="orien-radio">
+                                <input type="radio" name="status" value="active" checked> Activo
+                            </label>
+                            <label class="orien-radio">
+                                <input type="radio" name="status" value="inactive"> Inactivo
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Nota informativa -->
+                    <div class="orien-create-custom-note">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Los slides activos se mostrarán en el orden especificado en la página de inicio.</span>
+                    </div>
+                    
+                    <div class="orien-form-actions">
+                        <a href="/admin/sliders/slidersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
+                        <button type="submit" class="orien-btn orien-btn-primary">Save Slide</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('imageUpload');
+    const fileInput = uploadArea.querySelector('input');
+    const previewContainer = document.getElementById('imagePreview');
+    const sliderPreview = document.getElementById('sliderPreview');
+    
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.match('image.*')) {
+            handleImageFile(file);
+        }
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.match('image.*')) {
+            handleImageFile(file);
+        }
+    });
+    
+    function handleImageFile(file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            // Limpiar preview anterior
+            previewContainer.innerHTML = '';
+            
+            // Crear preview
+            const previewItem = document.createElement('div');
+            previewItem.className = 'orien-image-preview-item';
+            previewItem.innerHTML = `
+                <img src="${event.target.result}" alt="Preview">
+                <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
+            `;
+            previewContainer.appendChild(previewItem);
+            
+            // Actualizar vista previa grande
+            sliderPreview.innerHTML = `
+                <img src="${event.target.result}" alt="Slide preview" class="orien-slider-preview-img">
+            `;
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    previewContainer.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.orien-image-remove');
+        if (removeBtn) {
+            removeBtn.closest('.orien-image-preview-item').remove();
+            sliderPreview.innerHTML = `
+                <div class="orien-slider-preview-placeholder">
+                    <i class="fas fa-image"></i>
+                    <p>Vista previa del slide</p>
+                </div>
+            `;
+        }
+    });
+</script>
