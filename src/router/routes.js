@@ -6,8 +6,10 @@
 import { initHomeController } from "../modules/visitor/home/homeController.js";
 import { initProductsVisitorController } from "../modules/visitor/products/productsController.js";
 import { initProductDetailController } from "../modules/visitor/products/productsDetailController.js";
+import { initLoginController } from "../modules/visitor/login/loginController.js";
 
 // Importar controllers de vistas admin
+import { initAdminDashboardController } from "../modules/admin/adminDashboard/adminDashboardController.js";
 import { initCategoriesCreateController } from "../modules/admin/categories/categoriesCreateController.js";
 import { initCategoriesEditController } from "../modules/admin/categories/categoriesEditController.js";
 import { initCategoriesListController } from "../modules/admin/categories/categoriesListController.js";
@@ -20,6 +22,8 @@ import { initUsersListController } from "../modules/admin/users/usersListControl
 import { initCarouselsListController } from "../modules/admin/carousels/carouselsListController.js";
 import { initCarouselsCreateController } from "../modules/admin/carousels/carouselsCreateController.js";
 import { initCarouselsEditController } from "../modules/admin/carousels/carouselsEditController.js";
+
+// NOTA: initLoginController ya está importado arriba, no lo vuelvas a importar
 
 export const routes = {
   // Visitor Routes
@@ -57,14 +61,14 @@ export const routes = {
   },
   "/login": {
     view: "/modules/visitor/login/login.html",
-    controller: null,
+    controller: initLoginController,
   },
 
   // Admin Routes
   "/adminDashboard": {
-    view: "/modules/admin/adminDashboard/adminDashboard.html",
-    controller: null,
-  },
+  view: "/modules/admin/adminDashboard/adminDashboard.html",
+  controller: initAdminDashboardController,
+},
 
   // Categories Routes
   "/categoriesList": {

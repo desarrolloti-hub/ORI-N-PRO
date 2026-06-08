@@ -8,13 +8,20 @@
 
 <div class="orien-admin-dashboard">
   <div class="orien-admin-dashboard-container">
+    <!-- Botón de cerrar sesión -->
+    <div class="orien-admin-logout">
+      <button id="logoutBtn" class="orien-btn orien-btn-outline">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
+    </div>
+
     <div class="orien-admin-stats">
       <div class="orien-admin-stat-card">
         <div class="orien-admin-stat-icon">
           <i class="fas fa-box"></i>
         </div>
         <div class="orien-admin-stat-info">
-          <h3>12</h3>
+          <h3 id="totalProducts">0</h3>
           <p>Productos</p>
         </div>
       </div>
@@ -23,7 +30,7 @@
           <i class="fas fa-users"></i>
         </div>
         <div class="orien-admin-stat-info">
-          <h3>8</h3>
+          <h3 id="totalUsers">0</h3>
           <p>Usuarios</p>
         </div>
       </div>
@@ -32,13 +39,14 @@
           <i class="fas fa-chart-line"></i>
         </div>
         <div class="orien-admin-stat-info">
-          <h3>45</h3>
-          <p>Visitas hoy</p>
+          <h3 id="totalCarousels">0</h3>
+          <p>Carruseles</p>
         </div>
       </div>
     </div>
 
     <div class="orien-admin-modules">
+      <!-- Tarjeta de Productos -->
       <a href="/productsList" class="orien-admin-module-card" data-link>
         <div class="orien-admin-module-icon">
           <i class="fas fa-boxes"></i>
@@ -55,20 +63,27 @@
         </div>
       </a>
 
+      <!-- Tarjeta de Carruseles -->
       <a href="/carouselsList" class="orien-admin-module-card" data-link>
         <div class="orien-admin-module-icon">
-          <i class="fas fa-tags"></i>
+          <i class="fas fa-images"></i>
         </div>
         <div class="orien-admin-module-content">
           <h3>Carruseles</h3>
-          <p>Gestiona tus carruseles por productos o planes.</p>
+          <p>Gestiona los conjuntos de slides del carrusel principal.</p>
           <span class="orien-admin-module-link"
             >Gestionar <i class="fas fa-arrow-right"></i
           ></span>
         </div>
       </a>
 
-      <a href="/usersList" class="orien-admin-module-card" data-link>
+      <!-- Tarjeta de Usuarios (visible solo para admin) -->
+      <a
+        href="/usersList"
+        id="usersModuleCard"
+        class="orien-admin-module-card"
+        data-link
+      >
         <div class="orien-admin-module-icon">
           <i class="fas fa-users-cog"></i>
         </div>
@@ -81,13 +96,14 @@
         </div>
       </a>
 
+      <!-- Tarjeta de Categorías -->
       <a href="/categoriesList" class="orien-admin-module-card" data-link>
         <div class="orien-admin-module-icon">
-          <i class="fas fa-users-cog"></i>
+          <i class="fas fa-tags"></i>
         </div>
         <div class="orien-admin-module-content">
-          <h3>Gestión de Categorias</h3>
-          <p>Administra las categorias de los productos.</p>
+          <h3>Gestión de Categorías</h3>
+          <p>Administra las categorías de los productos.</p>
           <span class="orien-admin-module-link"
             >Gestionar <i class="fas fa-arrow-right"></i
           ></span>

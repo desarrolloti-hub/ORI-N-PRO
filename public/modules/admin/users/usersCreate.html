@@ -1,106 +1,146 @@
 <div class="orien-banner">
-    <div class="orien-banner-overlay"></div>
-    <div class="orien-banner-content">
-        <h1 class="orien-banner-title">Crear Usuario</h1>
-        <p class="orien-banner-subtitle">Agrega un nuevo usuario al sistema</p>
-    </div>
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Crear Usuario</h1>
+    <p class="orien-banner-subtitle">Agrega un nuevo usuario al sistema</p>
+  </div>
 </div>
-<br>
+
 <div class="orien-admin-users-create">
-    <div class="orien-admin-create-container">
-        <div class="orien-admin-create-nav">
-            <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
-                <i class="fas fa-arrow-left"></i> Dashboard
-            </a>
-            <a href="/usersList" class="orien-admin-nav-link" data-link>
-                <i class="fas fa-list"></i> Back to List
-            </a>
-        </div>
-        
-        <div class="orien-card">
-            <div class="orien-card-content">
-                <form class="orien-form" id="userForm">
-                    <!-- Información de la cuenta -->
-                    <div class="orien-form-section">
-                        <h3 class="orien-form-section-title">Información de la cuenta</h3>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Correo electrónico</label>
-                            <input type="email" name="email" class="orien-input" placeholder="usuario@ejemplo.com" required>
-                            <small class="orien-input-hint">Este será el nombre de usuario para iniciar sesión</small>
-                        </div>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Contraseña</label>
-                            <input type="password" name="password" class="orien-input" placeholder="••••••••" required>
-                            <small class="orien-input-hint">Mínimo 6 caracteres, incluir letras y números</small>
-                        </div>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Confirmar contraseña</label>
-                            <input type="password" name="confirm_password" class="orien-input" placeholder="••••••••" required>
-                        </div>
-                    </div>
-                    
-                    <!-- Información personal -->
-                    <div class="orien-form-section">
-                        <h3 class="orien-form-section-title">Información personal</h3>
-                        
-                        <div class="orien-form-row">
-                            <div class="orien-form-group" style="flex: 1;">
-                                <label class="orien-label">Nombre</label>
-                                <input type="text" name="nombre" class="orien-input" placeholder="Nombre" required>
-                            </div>
-                            <div class="orien-form-group" style="flex: 1;">
-                                <label class="orien-label">Apellidos</label>
-                                <input type="text" name="apellidos" class="orien-input" placeholder="Apellidos" required>
-                            </div>
-                        </div>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Teléfono</label>
-                            <input type="tel" name="telefono" class="orien-input" placeholder="+52 55 1234 5678">
-                        </div>
-                    </div>
-                    
-                    <!-- Rol y permisos -->
-                    <div class="orien-form-section">
-                        <h3 class="orien-form-section-title">Rol y permisos</h3>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Rol de usuario</label>
-                            <select name="cargo" class="orien-select">
-                                <option value="viewer">Visualizador - Solo lectura</option>
-                                <option value="editor">Editor - Puede crear y editar contenido</option>
-                                <option value="admin">Administrador - Acceso total</option>
-                            </select>
-                        </div>
-                        
-                        <div class="orien-form-group">
-                            <label class="orien-label">Estado</label>
-                            <div class="orien-radio-group">
-                                <label class="orien-radio">
-                                    <input type="radio" name="status" value="active" checked> Activo
-                                </label>
-                                <label class="orien-radio">
-                                    <input type="radio" name="status" value="inactive"> Inactivo
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Nota informativa -->
-                    <div class="orien-create-custom-note">
-                        <i class="fas fa-info-circle"></i>
-                        <span>El usuario recibirá un correo de bienvenida con sus credenciales de acceso.</span>
-                    </div>
-                    
-                    <div class="orien-form-actions">
-                        <a href="/usersList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
-                        <button type="submit" class="orien-btn orien-btn-primary">Create User</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="orien-admin-create-container">
+    <div class="orien-admin-create-nav">
+      <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-arrow-left"></i> Dashboard
+      </a>
+      <a href="/usersList" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-list"></i> Volver a la lista
+      </a>
     </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="userForm">
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Foto de perfil</h3>
+            <div class="orien-avatar-container">
+              <div class="orien-avatar-preview" id="avatarPreview">
+                <i class="fas fa-user-circle"></i>
+              </div>
+              <div class="orien-avatar-upload">
+                <div
+                  class="orien-upload-area orien-upload-area-sm"
+                  id="avatarUpload"
+                >
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span>Subir foto</span>
+                  <input type="file" accept="image/*" style="display: none" />
+                </div>
+                <button
+                  type="button"
+                  id="removeAvatarBtn"
+                  class="orien-btn orien-btn-sm orien-btn-outline"
+                  style="color: #dc3545; border-color: #dc3545"
+                >
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+            <input type="hidden" name="fotoURL" id="fotoURL" />
+          </div>
+
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información de la cuenta</h3>
+            <div class="orien-form-group">
+              <label class="orien-label">Correo electrónico</label>
+              <input
+                type="email"
+                name="email"
+                class="orien-input"
+                placeholder="usuario@ejemplo.com"
+                required
+              />
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Contraseña</label>
+              <input
+                type="password"
+                name="password"
+                class="orien-input"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Confirmar contraseña</label>
+              <input
+                type="password"
+                name="confirm_password"
+                class="orien-input"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información personal</h3>
+            <div class="orien-form-row">
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  class="orien-input"
+                  placeholder="Nombre"
+                  required
+                />
+              </div>
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Apellidos</label>
+                <input
+                  type="text"
+                  name="apellidos"
+                  class="orien-input"
+                  placeholder="Apellidos"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Rol y permisos</h3>
+            <div class="orien-form-group">
+              <label class="orien-label">Rol de usuario</label>
+              <select name="cargo" class="orien-select">
+                <option value="colaborador">Colaborador</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Estado</label>
+              <div class="orien-radio-group">
+                <label class="orien-radio">
+                  <input type="radio" name="status" value="active" checked />
+                  Activo
+                </label>
+                <label class="orien-radio">
+                  <input type="radio" name="status" value="inactive" /> Inactivo
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <a href="/usersList" class="orien-btn orien-btn-secondary" data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Crear Usuario
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,70 +1,66 @@
 <div class="orien-banner">
-    <div class="orien-banner-overlay"></div>
-    <div class="orien-banner-content">
-        <h1 class="orien-banner-title">Gestión de Usuarios</h1>
-        <p class="orien-banner-subtitle">Administra los usuarios del sistema</p>
-    </div>
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Gestión de Usuarios</h1>
+    <p class="orien-banner-subtitle">Administra los usuarios del sistema</p>
+  </div>
 </div>
 
 <div class="orien-section">
-    <div class="orien-admin-list-header">
-        <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
-            <i class="fas fa-arrow-left"></i> Dashboard
-        </a>
-        <a href="/usersCreate" class="orien-btn orien-btn-primary" data-link>
-            <i class="fas fa-plus"></i> Add User
-        </a>
+  <div class="orien-admin-list-header">
+    <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+      <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+    <a
+      href="/usersCreate"
+      id="addUserBtn"
+      class="orien-btn orien-btn-primary"
+      data-link
+      style="display: none"
+    >
+      <i class="fas fa-plus"></i> Nuevo Usuario
+    </a>
+  </div>
+
+  <div class="orien-admin-search-bar">
+    <div class="orien-admin-search-input">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        class="orien-input"
+        id="searchUsers"
+        placeholder="Buscar usuarios..."
+      />
     </div>
-    
-    <div class="orien-admin-search-bar">
-        <div class="orien-admin-search-input">
-            <i class="fas fa-search"></i>
-            <input type="text" class="orien-input" id="searchUsers" placeholder="Buscar usuarios...">
-        </div>
-        <div class="orien-admin-filter">
-            <select class="orien-select" id="filterRole" style="width: 180px;">
-                <option value="all">Todos los roles</option>
-                <option value="admin">Administradores</option>
-                <option value="editor">Editores</option>
-                <option value="viewer">Visualizadores</option>
-            </select>
-        </div>
-        <div class="orien-admin-filter">
-            <select class="orien-select" id="filterStatus" style="width: 150px;">
-                <option value="all">Todos los estados</option>
-                <option value="active">Activos</option>
-                <option value="inactive">Inactivos</option>
-            </select>
-        </div>
+    <div class="orien-admin-filter">
+      <select class="orien-select" id="filterRole" style="width: 180px">
+        <option value="all">Todos los roles</option>
+        <option value="admin">Administradores</option>
+        <option value="colaborador">Colaboradores</option>
+      </select>
     </div>
-    
-    <div class="orien-table-container">
-        <table class="orien-table" id="usersTable">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Nombre completo</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Estado</th>
-                    <th style="width: 100px;">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Los usuarios se cargarán dinámicamente via controller -->
-            </tbody>
-        </table>
+    <div class="orien-admin-filter">
+      <select class="orien-select" id="filterStatus" style="width: 150px">
+        <option value="all">Todos los estados</option>
+        <option value="active">Activos</option>
+        <option value="inactive">Inactivos</option>
+      </select>
     </div>
-    
-    <div class="orien-user-stats" id="usersCount">
-        Cargando usuarios...
-    </div>
-    
-    <div class="orien-pagination">
-        <button class="orien-pagination-item disabled">←</button>
-        <button class="orien-pagination-item active">1</button>
-        <button class="orien-pagination-item">2</button>
-        <button class="orien-pagination-item">3</button>
-        <button class="orien-pagination-item">→</button>
-    </div>
+  </div>
+
+  <div class="orien-table-container">
+    <table class="orien-table" id="usersTable">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th style="width: 100px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="orien-user-stats" id="usersCount">Cargando usuarios...</div>
 </div>
