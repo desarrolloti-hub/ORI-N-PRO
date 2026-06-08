@@ -21,7 +21,7 @@ import {
     sendPasswordResetEmail,
     deleteUser
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-import { User } from '/classes/User.js';
+import { User } from '/src/classes/User';
 
 const USERS_COLLECTION = 'users';
 

@@ -1,31 +1,33 @@
 <nav class="orien-navbar" id="orienNavbar">
-    <div class="orien-nav-container">
-        <a href="/" class="orien-nav-brand" data-link>
-            <img src="/assets/icons/orien.png" alt="Orién Pro Logo" class="orien-logo-img">
-            <span class="orien-logo-text">ORIÉN PRO</span>
-        </a>
-        
-        <div class="orien-hamburger" id="orienHamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+  <div class="orien-nav-container">
+    <a href="/" class="orien-nav-brand" data-link>
+      <img
+        src="/assets/icons/orien.png"
+        alt="Orién Pro Logo"
+        class="orien-logo-img"
+      />
+      <span class="orien-logo-text">ORIÉN PRO</span>
+    </a>
 
-        <div class="orien-close" id="orienClose">✕</div>
-
-        <ul class="orien-menu" id="orienMenu">
-            <li><a href="/" data-link>Inicio</a></li>
-            <li class="orien-dropdown">
-                <a href="/products" data-link>Productos ▾</a>
-                <div class="orien-dropdown-content">
-                    <a href="#consolas" data-link>Pantallas</a>
-                    <a href="#pc-gaming" data-link>Plataformas</a>
-                    <a href="#vr" data-link>Faros</a>
-                    <a href="#accesorios" data-link>Ofertas</a>
-                </div>
-            </li>
-            <li><a href="/about" data-link>Nosotros</a></li>
-            <li><a href="/contact" data-link>Contacto</a></li>
-        </ul>
+    <div class="orien-hamburger" id="orienHamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+
+    <div class="orien-close" id="orienClose">✕</div>
+
+    <ul class="orien-menu" id="orienMenu">
+      <li><a href="/" data-link>Inicio</a></li>
+      <li class="orien-dropdown">
+        <a href="/products" data-link>Productos ▾</a>
+        <div class="orien-dropdown-content" id="navbarDropdownContent">
+          <a href="/products?oferta=true" data-link>En oferta</a>
+          <!-- Las categorías se cargarán dinámicamente aquí -->
+        </div>
+      </li>
+      <li><a href="/about" data-link>Nosotros</a></li>
+      <li><a href="/contact" data-link>Contacto</a></li>
+    </ul>
+  </div>
 </nav>

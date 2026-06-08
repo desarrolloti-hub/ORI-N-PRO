@@ -28,16 +28,21 @@
 
 /*Shared*/
 @import './pages/shared/legal/termsAndConditions.css';
+@import './pages/shared/legal/warranty.css';
 
 /*Pages - Visitor */
 @import './pages/visitor/home.css';
 @import './pages/visitor/products.css';
+@import './pages/visitor/productsDetail.css';
 @import './pages/visitor/about.css';
 @import './pages/visitor/login.css';
 @import './pages/visitor/contact.css';
 
 /*Pages - Admin */
 @import './pages/admin/adminDashboard/adminDashboard.css';
+@import './pages/admin/categories/categoriesCreate.css';
+@import './pages/admin/categories/categoriesEdit.css';
+@import './pages/admin/categories/categoriesList.css';
 @import './pages/admin/products/productsCreate.css';
 @import './pages/admin/products/productsEdit.css';
 @import './pages/admin/products/productsList.css';

@@ -1,0 +1,87 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Editar Categoría</h1>
+    <p class="orien-banner-subtitle">Modifica la información de la categoría</p>
+  </div>
+</div>
+<br />
+<div class="orien-admin-categories-edit">
+  <div class="orien-admin-edit-container">
+    <div class="orien-admin-edit-nav">
+      <div class="orien-admin-edit-nav-left">
+        <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+          <i class="fas fa-arrow-left"></i> Panel de Control
+        </a>
+        <a href="/categoriesList" class="orien-admin-nav-link" data-link>
+          <i class="fas fa-list"></i> Regresar a lista
+        </a>
+      </div>
+      <div class="orien-admin-edit-status">
+        <span class="orien-badge orien-badge-outline" id="categoryId"
+          >Cargando...</span
+        >
+      </div>
+    </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="categoryForm">
+          <div class="orien-form-group">
+            <label class="orien-label">Nombre de la categoría</label>
+            <input type="text" name="nombre" class="orien-input" required />
+          </div>
+          <br />
+          <div class="orien-form-group">
+            <label class="orien-label">Slug</label>
+            <input type="text" name="slug" class="orien-input" readonly />
+            <small class="orien-input-hint"
+              >Identificador único generado automáticamente</small
+            >
+          </div>
+          <br />
+          <div class="orien-form-group">
+            <label class="orien-label">Descripción</label>
+            <textarea
+              name="descripcion"
+              class="orien-input orien-textarea"
+              rows="4"
+            ></textarea>
+          </div>
+          <br />
+          <div class="orien-form-group">
+            <label class="orien-label">Estado</label>
+            <div class="orien-radio-group">
+              <label class="orien-radio">
+                <input type="radio" name="status" value="active" /> Activo
+              </label>
+              <label class="orien-radio">
+                <input type="radio" name="status" value="inactive" /> Inactivo
+              </label>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <button
+              type="button"
+              class="orien-btn orien-btn-outline"
+              id="deleteBtn"
+              style="margin-right: auto; color: #dc3545; border-color: #dc3545"
+            >
+              <i class="fas fa-trash"></i> Eliminar categoría
+            </button>
+            <a
+              href="/categoriesList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Actualizar categoría
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

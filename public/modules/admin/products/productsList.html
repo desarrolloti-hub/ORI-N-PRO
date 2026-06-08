@@ -1,73 +1,66 @@
 <div class="orien-banner">
-    <div class="orien-banner-overlay"></div>
-    <div class="orien-banner-content">
-        <h1 class="orien-banner-title">Lista de productos</h1>
-        <p class="orien-banner-subtitle">Gestión completa de tu catálogo de productos</p>
-    </div>
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Lista de productos</h1>
+    <p class="orien-banner-subtitle">
+      Gestión completa de tu catálogo de productos
+    </p>
+  </div>
 </div>
 
 <div class="orien-section">
-    <div class="orien-admin-list-header">
-        <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
-            <i class="fas fa-arrow-left"></i> Dashboard
-        </a>
-        <a href="/productsCreate" class="orien-btn orien-btn-primary" data-link>
-            <i class="fas fa-plus"></i> Add Product
-        </a>
+  <div class="orien-admin-list-header">
+    <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+      <i class="fas fa-arrow-left"></i> Panel de Control
+    </a>
+    <a href="/productsCreate" class="orien-btn orien-btn-primary" data-link>
+      <i class="fas fa-plus"></i> Agregar Producto
+    </a>
+  </div>
+
+  <div class="orien-admin-search-bar">
+    <div class="orien-admin-search-input">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        class="orien-input"
+        id="searchProducts"
+        placeholder="Buscar productos..."
+      />
     </div>
-    
-    <div class="orien-admin-search-bar">
-        <div class="orien-admin-search-input">
-            <i class="fas fa-search"></i>
-            <input type="text" class="orien-input" placeholder="Buscar productos...">
-        </div>
-    </div>
-    
-    <!-- Usando SOLO el componente de tabla -->
-    <div class="orien-table-container">
-        <table class="orien-table">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td data-label="Imagen">
-                        <img src="/assets/images/pantallas3.png" alt="Pantalla LED" class="orien-table-image">
-                    </td>
-                    <td data-label="Producto">
-                        <strong>Pantalla LED P2.976</strong>
-                        <div class="orien-table-subtitle">Pantallas LED</div>
-                    </td>
-                    <td data-label="Precio">
-                        <span class="orien-table-price">$2,500 USD</span>
-                    </td>
-                    <td data-label="Acciones">
-                        <div class="orien-table-actions">
-                            <a href="/productsEdit" class="orien-btn orien-btn-sm orien-btn-outline" data-link>
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="orien-btn orien-btn-sm orien-btn-outline" style="color:#dc3545; border-color:#dc3545;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Más filas... -->
-            </tbody>
-        </table>
-    </div>
-    
-    <!-- Paginación -->
-    <div class="orien-pagination">
-        <button class="orien-pagination-item disabled">←</button>
-        <button class="orien-pagination-item active">1</button>
-        <button class="orien-pagination-item">2</button>
-        <button class="orien-pagination-item">3</button>
-        <button class="orien-pagination-item">→</button>
-    </div>
+  </div>
+
+  <div class="orien-table-container">
+    <table class="orien-table" id="productsTable">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Características</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 40px">
+            <div class="orien-spinner"></div>
+            <p>Cargando productos...</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="orien-product-stats" id="productsCount">
+    Cargando productos...
+  </div>
+
+  <div class="orien-pagination">
+    <button class="orien-pagination-item disabled">←</button>
+    <button class="orien-pagination-item active">1</button>
+    <button class="orien-pagination-item">2</button>
+    <button class="orien-pagination-item">3</button>
+    <button class="orien-pagination-item">→</button>
+  </div>
 </div>

@@ -3,7 +3,7 @@
    Controlador para la lista de usuarios
    ======================================== */
 
-import { UserService } from '/services/userService.js';
+import { UserService } from '/src/services/userService';
 
 let userService = null;
 let currentUsers = [];

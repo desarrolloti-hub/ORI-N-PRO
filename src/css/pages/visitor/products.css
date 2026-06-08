@@ -5,187 +5,167 @@
 
 /* Products Layout */
 .orien-products-layout {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px 80px;
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
 }
 
 @media (max-width: 992px) {
-    .orien-products-layout {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+  .orien-products-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 }
 
 /* Sidebar Filters */
 .orien-products-sidebar {
-    background: var(--color-light);
-    padding: 30px;
-    border-radius: 8px;
-    align-self: start;
-    position: sticky;
-    top: 100px;
-    box-shadow: var(--shadow);
+  background: var(--color-light);
+  padding: 30px;
+  border-radius: 8px;
+  align-self: start;
+  position: sticky;
+  top: 100px;
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 992px) {
-    .orien-products-sidebar {
-        position: static;
-    }
+  .orien-products-sidebar {
+    position: static;
+  }
 }
 
 .orien-sidebar-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 2px;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--color-gray);
-    color: var(--color-dark);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-gray);
+  color: var(--color-dark);
 }
 
-/* Filters (usando forms.css como base) */
+/* Filters */
 .orien-filter-clear {
-    display: inline-block;
-    margin-top: 20px;
-    font-size: 0.75rem;
-    color: #666;
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 1px solid var(--color-gray);
-    border-radius: 4px;
-    transition: var(--transition);
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: #666;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  transition: var(--transition);
 }
 
 .orien-filter-clear:hover {
-    color: var(--color-dark);
-    border-color: var(--color-dark);
+  color: var(--color-dark);
+  border-color: var(--color-dark);
 }
 
 /* Products Info Bar */
 .orien-products-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .orien-products-count {
-    font-size: 0.85rem;
-    color: #666;
+  font-size: 0.85rem;
+  color: #666;
 }
 
 .orien-products-sort {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .orien-products-sort label {
-    font-size: 0.8rem;
-    color: #666;
+  font-size: 0.8rem;
+  color: #666;
 }
 
 .orien-products-sort select {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    background: var(--color-white);
-    border: 1px solid var(--color-gray);
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 /* Category Tabs */
 .orien-category-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--color-gray);
-    padding-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--color-gray);
+  padding-bottom: 20px;
 }
 
 .orien-category-tab {
-    padding: 8px 24px;
-    background: transparent;
-    border: 1px solid var(--color-gray);
-    color: var(--color-dark);
-    cursor: pointer;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    border-radius: 30px;
-    transition: var(--transition);
+  padding: 8px 24px;
+  background: transparent;
+  border: 1px solid var(--color-gray);
+  color: var(--color-dark);
+  cursor: pointer;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  transition: var(--transition);
 }
 
 .orien-category-tab:hover,
 .orien-category-tab.active {
-    background: var(--color-dark);
-    color: var(--color-light);
-    border-color: var(--color-dark);
-}
-
-/* Quick View Modal */
-.orien-quickview-image {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    object-fit: contain;
-    background: var(--color-light);
-}
-
-.orien-quickview-spec-item {
-    display: flex;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.orien-quickview-spec-label {
-    width: 120px;
-    font-weight: 500;
-    color: var(--color-dark);
-}
-
-.orien-quickview-spec-value {
-    flex: 1;
-    color: #555;
+  background: var(--color-dark);
+  color: var(--color-light);
+  border-color: var(--color-dark);
 }
 
 /* Empty State */
 .orien-products-empty {
-    text-align: center;
-    padding: 60px 20px;
-    background: var(--color-light);
-    border-radius: 8px;
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--color-light);
+  border-radius: 8px;
 }
 
-/* Hero (si no usas banner.css) */
-.orien-products-hero {
-    background: linear-gradient(135deg, var(--color-dark) 0%, #1a1a2e 100%);
-    padding: 120px 20px 80px;
-    text-align: center;
+/* Estilos para precios en oferta */
+.orien-card-footer .orien-card-price {
+  display: inline-block;
+}
+.orien-card-price.old-price {
+  text-decoration: line-through;
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  margin-right: 8px;
+}
+.orien-card-price.sale-price {
+  color: #ff5722;
+  font-weight: bold;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-    .orien-products-layout {
-        padding: 0 15px 60px;
-    }
-    
-    .orien-products-info {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .orien-products-sort {
-        width: 100%;
-    }
-    
-    .orien-products-sort select {
-        flex: 1;
-    }
+  .orien-products-layout {
+    padding: 0 15px 60px;
+  }
+  .orien-products-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .orien-products-sort {
+    width: 100%;
+  }
+  .orien-products-sort select {
+    flex: 1;
+  }
 }

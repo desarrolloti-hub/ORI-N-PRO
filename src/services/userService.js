@@ -3,8 +3,8 @@
    Capa de lógica de negocio para usuarios
    ======================================== */
 
-import { UserRepository } from '/repository/userRepository.js';
-import { User } from '/classes/User.js';
+import { UserRepository } from '/src/repository/userRepository';
+import { User } from '/src/classes/User';
 
 export class UserService {
     

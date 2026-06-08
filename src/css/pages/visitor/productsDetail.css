@@ -1,0 +1,161 @@
+/* /src/css/pages/visitor/products/productDetail.css */
+
+.orien-product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.orien-product-detail-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.orien-product-detail-images {
+  flex: 1;
+  min-width: 300px;
+}
+
+.orien-product-detail-info {
+  flex: 1;
+  min-width: 300px;
+  background: var(--color-white);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.orien-product-detail-info h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: var(--color-dark);
+}
+
+.orien-product-detail-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin-bottom: 15px;
+}
+
+.orien-product-detail-type,
+.orien-product-detail-category {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.orien-product-detail-description h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 20px 0 10px;
+  color: var(--color-dark);
+}
+
+.orien-product-detail-description p {
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Carrusel de detalle */
+.orien-product-detail-carousel {
+  position: relative;
+  background: var(--color-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.orien-carousel-main {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-light);
+}
+
+.orien-carousel-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+}
+
+.orien-carousel-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.orien-carousel-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: var(--transition);
+  border: 2px solid transparent;
+  flex-shrink: 0;
+}
+
+.orien-carousel-thumb:hover {
+  opacity: 1;
+}
+
+.orien-carousel-thumb.active {
+  opacity: 1;
+  border-color: var(--color-dark);
+}
+
+.orien-carousel-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orien-product-detail-carousel .orien-carousel-prev,
+.orien-product-detail-carousel .orien-carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.orien-product-detail-carousel .orien-carousel-prev {
+  left: 10px;
+}
+
+.orien-product-detail-carousel .orien-carousel-next {
+  right: 10px;
+}
+
+.orien-product-detail-carousel .orien-carousel-prev:hover,
+.orien-product-detail-carousel .orien-carousel-next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+  .orien-product-detail-wrapper {
+    flex-direction: column;
+  }
+  .orien-carousel-thumb {
+    width: 50px;
+    height: 50px;
+  }
+}

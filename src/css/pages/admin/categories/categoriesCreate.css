@@ -1,0 +1,44 @@
+/* ========================================
+   CATEGORIES CREATE - Estilos específicos
+   ======================================== */
+
+.orien-admin-categories-create {
+  min-height: calc(100vh - 300px);
+  padding: 0 20px 60px;
+}
+
+.orien-admin-create-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.orien-admin-create-nav {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.orien-form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .orien-admin-categories-create {
+    padding: 0 15px 40px;
+  }
+
+  .orien-form-actions {
+    flex-direction: column;
+  }
+
+  .orien-form-actions .orien-btn {
+    width: 100%;
+  }
+}

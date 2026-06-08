@@ -1,0 +1,75 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Crear Categoría</h1>
+    <p class="orien-banner-subtitle">Agrega una nueva categoría de productos</p>
+  </div>
+</div>
+<br />
+<div class="orien-admin-categories-create">
+  <div class="orien-admin-create-container">
+    <div class="orien-admin-create-nav">
+      <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-arrow-left"></i> Panel de Control
+      </a>
+      <a href="/categoriesList" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-list"></i> Regresar a lista
+      </a>
+    </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="categoryForm">
+          <div class="orien-form-group">
+            <label class="orien-label">Nombre de la categoría</label>
+            <input
+              type="text"
+              name="nombre"
+              class="orien-input"
+              placeholder="Ej: Pantallas LED"
+              required
+            />
+            <small class="orien-input-hint"
+              >El slug se generará automáticamente</small
+            >
+          </div>
+          <br />
+          <div class="orien-form-group">
+            <label class="orien-label">Descripción</label>
+            <textarea
+              name="descripcion"
+              class="orien-input orien-textarea"
+              rows="4"
+              placeholder="Descripción de la categoría..."
+            ></textarea>
+          </div>
+          <br />
+          <div class="orien-form-group">
+            <label class="orien-label">Estado</label>
+            <div class="orien-radio-group">
+              <label class="orien-radio">
+                <input type="radio" name="status" value="active" checked />
+                Activo
+              </label>
+              <label class="orien-radio">
+                <input type="radio" name="status" value="inactive" /> Inactivo
+              </label>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <a
+              href="/categoriesList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Guardar categoría
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

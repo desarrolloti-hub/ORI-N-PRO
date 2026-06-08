@@ -1,201 +1,101 @@
 <!-- Products Hero -->
 <div class="orien-banner">
-    <div class="orien-banner-overlay"></div>
-    <div class="orien-banner-content">
-        <h1 class="orien-banner-title">Nuestros Productos</h1>
-        <p class="orien-banner-subtitle">Tecnología de vanguardia para eventos, entretenimiento y espacios profesionales</p>
-    </div>
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Nuestros Productos</h1>
+    <p class="orien-banner-subtitle">
+      Tecnología de vanguardia para eventos, entretenimiento y espacios
+      profesionales
+    </p>
+  </div>
 </div>
-<br>
+<br />
 <div class="orien-products-layout">
-    <!-- Sidebar Filters -->
-    <aside class="orien-products-sidebar">
-        <h3 class="orien-sidebar-title">Filtros</h3>
-        
-        <div class="orien-filter-group">
-            <div class="orien-filter-title">Categoría</div>
-            <div class="orien-filter-options">
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="led" class="filter-category"> Pantallas LED
-                </label>
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="360" class="filter-category"> Plataforma 360°
-                </label>
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="iluminacion" class="filter-category"> Iluminación
-                </label>
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="soportes" class="filter-category"> Soportes
-                </label>
-            </div>
-        </div>
-        
-        <div class="orien-filter-group">
-            <div class="orien-filter-title">Tipo</div>
-            <div class="orien-filter-options">
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="venta" class="filter-type"> Venta
-                </label>
-                <label class="orien-filter-option">
-                    <input type="checkbox" value="renta" class="filter-type"> Renta
-                </label>
-            </div>
-        </div>
-        
-        <a href="#" class="orien-filter-clear" id="clearFilters">Limpiar filtros</a>
-    </aside>
-    
-    <!-- Products Main Content -->
-    <main>
-        <!-- Category Tabs -->
-        <div class="orien-category-tabs">
-            <button class="orien-category-tab active" data-category="all">Todos</button>
-            <button class="orien-category-tab" data-category="led">Pantallas LED</button>
-            <button class="orien-category-tab" data-category="360">Plataforma 360°</button>
-            <button class="orien-category-tab" data-category="iluminacion">Iluminación</button>
-            <button class="orien-category-tab" data-category="soportes">Soportes</button>
-        </div>
-        
-        <!-- Products Info Bar -->
-        <div class="orien-products-info">
-            <div class="orien-products-count" id="productsCount">Mostrando 5 productos</div>
-            <div class="orien-products-sort">
-                <label>Ordenar por:</label>
-                <select id="sortProducts">
-                    <option value="default">Destacados</option>
-                    <option value="name-asc">Nombre A-Z</option>
-                    <option value="name-desc">Nombre Z-A</option>
-                </select>
-            </div>
-        </div>
-        
-        <!-- Products Grid usando .orien-card-grid y .orien-card de cards.css -->
-        <div class="orien-card-grid" id="productsGrid">
-            <!-- Product 1 - LED P2.976 -->
-            <div class="orien-card" data-category="led" data-type="venta">
-                <div class="orien-card-image">
-                    <img src="/assets/images/pantallas3.png" alt="Pantalla LED P2.976" loading="lazy">
-                    <span class="orien-card-badge orien-card-badge-left">Pantalla LED</span>
-                    <span class="orien-card-badge orien-card-badge-right sale">Venta</span>
-                </div>
-                <div class="orien-card-content">
-                    <h3 class="orien-card-title">Pantalla LED P2.976</h3>
-                    <div class="orien-card-subtitle">Interior y Exterior</div>
-                    <p class="orien-card-text">
-                        Paneles para imágenes perfectas e impactantes, respuesta rápida. Diseñada para ofrecer una calidad visual excepcional en cualquier entorno.
-                    </p>
-                    <div class="orien-card-footer">
-                        <span class="orien-card-price">Consultar <small>precio</small></span>
-                        <button class="orien-btn orien-btn-sm orien-btn-outline btn-quickview" data-product="led-p2976">Ver más</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Product 2 - Plataforma 360 -->
-            <div class="orien-card" data-category="360" data-type="venta">
-                <div class="orien-card-image">
-                    <img src="/assets/images/360.png" alt="Plataforma 360°" loading="lazy">
-                    <span class="orien-card-badge orien-card-badge-left">Plataforma 360°</span>
-                    <span class="orien-card-badge orien-card-badge-right sale">Venta</span>
-                </div>
-                <div class="orien-card-content">
-                    <h3 class="orien-card-title">Plataforma 360°</h3>
-                    <div class="orien-card-subtitle">Interior / Grabación</div>
-                    <p class="orien-card-text">
-                        100 cm grabadora de video/fotografías 360 grados. Captura momentos únicos desde todos los ángulos con calidad profesional.
-                    </p>
-                    <div class="orien-card-footer">
-                        <span class="orien-card-price">Consultar <small>precio</small></span>
-                        <button class="orien-btn orien-btn-sm orien-btn-outline btn-quickview" data-product="plataforma-360">Ver más</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Product 3 - Faro Móvil 380W -->
-            <div class="orien-card" data-category="iluminacion" data-type="venta">
-                <div class="orien-card-image">
-                    <img src="/assets/images/380W.png" alt="Faro Móvil 380W" loading="lazy">
-                    <span class="orien-card-badge orien-card-badge-left">Iluminación</span>
-                    <span class="orien-card-badge orien-card-badge-right sale">Venta</span>
-                </div>
-                <div class="orien-card-content">
-                    <h3 class="orien-card-title">Faro Móvil 380W</h3>
-                    <div class="orien-card-subtitle">Interior / Iluminación</div>
-                    <p class="orien-card-text">
-                        380W Faro móvil 3 en 1 Plus. Ruedas de 3 colores + OpenWhite (incluye CTO 3500K y UV). Mezcla de colores CMY completa.
-                    </p>
-                    <div class="orien-card-footer">
-                        <span class="orien-card-price">Consultar <small>precio</small></span>
-                        <button class="orien-btn orien-btn-sm orien-btn-outline btn-quickview" data-product="faro-380w">Ver más</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Product 4 - Faro Móvil 295W -->
-            <div class="orien-card" data-category="iluminacion" data-type="venta">
-                <div class="orien-card-image">
-                    <img src="/assets/images/295W.png" alt="Faro Móvil 295W" loading="lazy">
-                    <span class="orien-card-badge orien-card-badge-left">Iluminación</span>
-                    <span class="orien-card-badge orien-card-badge-right sale">Venta</span>
-                </div>
-                <div class="orien-card-content">
-                    <h3 class="orien-card-title">Faro Móvil 295W</h3>
-                    <div class="orien-card-subtitle">Interior / Iluminación</div>
-                    <p class="orien-card-text">
-                        295W Faro móvil con ruedas de 3 colores + OpenWhite. Mezcla de colores CMY completa para efectos visuales profesionales.
-                    </p>
-                    <div class="orien-card-footer">
-                        <span class="orien-card-price">Consultar <small>precio</small></span>
-                        <button class="orien-btn orien-btn-sm orien-btn-outline btn-quickview" data-product="faro-295w">Ver más</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Product 5 - Pantalla LED Estadio -->
-            <div class="orien-card" data-category="led" data-type="venta">
-                <div class="orien-card-image">
-                    <img src="/assets/images/soporte1.png" alt="Pantalla LED Estadio" loading="lazy">
-                    <span class="orien-card-badge orien-card-badge-left">Pantalla LED</span>
-                    <span class="orien-card-badge orien-card-badge-right sale">Venta</span>
-                </div>
-                <div class="orien-card-content">
-                    <h3 class="orien-card-title">Pantalla LED para Estadios</h3>
-                    <div class="orien-card-subtitle">Soporte Terrestre / Colgado / Montado en Pared</div>
-                    <p class="orien-card-text">
-                        Optimizado para estadios con presupuesto limitado. Máximo impacto visual con la mejor relación costo-beneficio del mercado.
-                    </p>
-                    <div class="orien-card-footer">
-                        <span class="orien-card-price">Consultar <small>precio</small></span>
-                        <button class="orien-btn orien-btn-sm orien-btn-outline btn-quickview" data-product="led-estadio">Ver más</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Pagination - Usando componente de pagination.css -->
-        <div class="orien-pagination">
-            <button class="orien-pagination-item disabled" id="prevPage">←</button>
-            <button class="orien-pagination-item active">1</button>
-            <button class="orien-pagination-item">2</button>
-            <button class="orien-pagination-item">3</button>
-            <button class="orien-pagination-item" id="nextPage">→</button>
-        </div>
-    </main>
+  <!-- Sidebar Filters -->
+  <aside class="orien-products-sidebar">
+    <h3 class="orien-sidebar-title">Filtros</h3>
+
+    <div class="orien-filter-group">
+      <div class="orien-filter-title">Categoría</div>
+      <div class="orien-filter-options"></div>
+    </div>
+
+    <div class="orien-filter-group">
+      <div class="orien-filter-title">Tipo</div>
+      <div class="orien-filter-options">
+        <label class="orien-filter-option">
+          <input type="checkbox" value="venta" class="filter-type" /> Venta
+        </label>
+        <label class="orien-filter-option">
+          <input type="checkbox" value="renta" class="filter-type" /> Renta
+        </label>
+      </div>
+    </div>
+
+    <div class="orien-filter-group">
+      <div class="orien-filter-title">Ofertas</div>
+      <div class="orien-filter-options">
+        <label class="orien-filter-option">
+          <input type="checkbox" id="filterOferta" class="filter-oferta" />
+          Mostrar solo productos en oferta
+        </label>
+      </div>
+    </div>
+
+    <a href="#" class="orien-filter-clear" id="clearFilters">Limpiar filtros</a>
+  </aside>
+
+  <!-- Products Main Content -->
+  <main>
+    <div class="orien-products-info">
+      <div class="orien-products-count" id="productsCount">
+        Cargando productos...
+      </div>
+      <div class="orien-products-sort">
+        <label>Ordenar por:</label>
+        <select id="sortProducts">
+          <option value="default">Destacados</option>
+          <option value="name-asc">Nombre A-Z</option>
+          <option value="name-desc">Nombre Z-A</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="destacados">Más populares</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="orien-card-grid" id="productsGrid">
+      <div class="orien-loading">
+        <div class="orien-spinner"></div>
+        <p>Cargando productos...</p>
+      </div>
+    </div>
+
+    <div class="orien-pagination">
+      <button class="orien-pagination-item disabled" id="prevPage">←</button>
+      <button class="orien-pagination-item active">1</button>
+      <button class="orien-pagination-item">2</button>
+      <button class="orien-pagination-item">3</button>
+      <button class="orien-pagination-item" id="nextPage">→</button>
+    </div>
+  </main>
 </div>
 
-<!-- Quick View Modal - Usando componente de modals.css -->
+<!-- Quick View Modal (ya no se usa, pero se mantiene por si acaso) -->
 <div class="orien-modal-overlay" id="quickViewModal">
-    <div class="orien-modal orien-modal-lg">
-        <div class="orien-modal-header">
-            <h3 class="orien-modal-title" id="modalTitle">Detalle del Producto</h3>
-            <button class="orien-modal-close" id="closeModal">✕</button>
-        </div>
-        <div class="orien-modal-body" id="modalBody">
-            <!-- Dynamic content will be injected here -->
-        </div>
-        <div class="orien-modal-footer">
-            <button class="orien-btn orien-btn-secondary" id="modalCloseBtn">Cerrar</button>
-            <button class="orien-btn orien-btn-primary" id="modalContactBtn">Solicitar cotización</button>
-        </div>
+  <div class="orien-modal orien-modal-lg">
+    <div class="orien-modal-header">
+      <h3 class="orien-modal-title" id="modalTitle">Detalle del Producto</h3>
+      <button class="orien-modal-close" id="closeModal">✕</button>
     </div>
+    <div class="orien-modal-body" id="modalBody"></div>
+    <div class="orien-modal-footer">
+      <button class="orien-btn orien-btn-secondary" id="modalCloseBtn">
+        Cerrar
+      </button>
+      <button class="orien-btn orien-btn-primary" id="modalContactBtn">
+        Solicitar cotización
+      </button>
+    </div>
+  </div>
 </div>

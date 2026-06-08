@@ -1,155 +1,141 @@
 <div class="orien-banner">
-    <div class="orien-banner-overlay"></div>
-    <div class="orien-banner-content">
-        <h1 class="orien-banner-title">Registrar productos</h1>
-        <p class="orien-banner-subtitle">Agregar un nuevo producto al catálogo</p>
-    </div>
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Registrar productos</h1>
+    <p class="orien-banner-subtitle">Agregar un nuevo producto al catálogo</p>
+  </div>
 </div>
 <br>
 <div class="orien-admin-products-create">
-    <div class="orien-admin-create-container">
-        <div class="orien-admin-create-nav">
-            <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
-                <i class="fas fa-arrow-left"></i> Dashboard
-            </a>
-            <a href="/productsList" class="orien-admin-nav-link" data-link>
-                <i class="fas fa-list"></i> Back to List
-            </a>
-        </div>
-        
-        <div class="orien-card">
-            <div class="orien-card-content">
-                <form class="orien-form" id="productForm">
-                    <!-- Images Upload Section -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Product Images</label>
-                        <div class="orien-upload-area" id="imageUpload">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click or drag to upload images</p>
-                            <small class="orien-upload-hint">Supported formats: JPG, PNG, WEBP</small>
-                            <input type="file" multiple accept="image/*" style="display: none;">
-                        </div>
-                        <div class="orien-images-preview" id="imagePreview"></div>
-                    </div>
-                    
-                    <!-- Product Name -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Product Name</label>
-                        <input type="text" class="orien-input" placeholder="Ej: Pantalla LED P2.976" required>
-                    </div>
-                    
-                    <!-- Category -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Category</label>
-                        <select class="orien-select">
-                            <option value="">Select a category</option>
-                            <option value="led">Pantallas LED</option>
-                            <option value="360">Plataforma 360°</option>
-                            <option value="iluminacion">Iluminación</option>
-                            <option value="soportes">Soportes</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Product Type -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Product Type</label>
-                        <div class="orien-radio-group">
-                            <label class="orien-radio">
-                                <input type="radio" name="type" value="venta" checked> Venta
-                            </label>
-                            <label class="orien-radio">
-                                <input type="radio" name="type" value="renta"> Renta
-                            </label>
-                            <label class="orien-radio">
-                                <input type="radio" name="type" value="ambos"> Ambos
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <!-- Product Features -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Product Features</label>
-                        <textarea class="orien-input orien-textarea" rows="5" placeholder="Describe las características del producto..."></textarea>
-                    </div>
-                    
-                    <!-- Product Price -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Product Price</label>
-                        <input type="text" class="orien-input" placeholder="Ej: $2,500 USD" required>
-                    </div>
-                    
-                    <!-- Stock -->
-                    <div class="orien-form-group">
-                        <label class="orien-label">Stock Quantity</label>
-                        <input type="number" class="orien-input" placeholder="Ej: 10" value="0">
-                    </div>
-                    
-                    <!-- Nota informativa (estilo único de esta página) -->
-                    <div class="orien-create-custom-note">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Los productos aparecerán inmediatamente en el catálogo después de guardar.</span>
-                    </div>
-                    
-                    <!-- Form Actions -->
-                    <div class="orien-form-actions">
-                        <a href="/productsList" class="orien-btn orien-btn-secondary" data-link>Cancel</a>
-                        <button type="submit" class="orien-btn orien-btn-primary">Save Product</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="orien-admin-create-container">
+    <div class="orien-admin-create-nav">
+      <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-arrow-left"></i> Panel de Control
+      </a>
+      <a href="/productsList" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-list"></i> Regresar a lista
+      </a>
     </div>
-</div>
 
-<script>
-    const uploadArea = document.getElementById('imageUpload');
-    const fileInput = uploadArea.querySelector('input');
-    const previewContainer = document.getElementById('imagePreview');
-    
-    uploadArea.addEventListener('click', () => fileInput.click());
-    
-    uploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadArea.classList.add('dragover');
-    });
-    
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('dragover');
-    });
-    
-    uploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove('dragover');
-        handleFiles(Array.from(e.dataTransfer.files));
-    });
-    
-    fileInput.addEventListener('change', (e) => {
-        handleFiles(Array.from(e.target.files));
-    });
-    
-    function handleFiles(files) {
-        files.forEach(file => {
-            if (!file.type.match('image.*')) return;
-            
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'orien-image-preview-item';
-                previewItem.innerHTML = `
-                    <img src="${event.target.result}" alt="Preview">
-                    <button type="button" class="orien-image-remove" aria-label="Remove image">&times;</button>
-                `;
-                previewContainer.appendChild(previewItem);
-            };
-            reader.readAsDataURL(file);
-        });
-        fileInput.value = '';
-    }
-    
-    previewContainer.addEventListener('click', (e) => {
-        const removeBtn = e.target.closest('.orien-image-remove');
-        if (removeBtn) {
-            removeBtn.closest('.orien-image-preview-item').remove();
-        }
-    });
-</script>
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="productForm">
+          <!-- Sección de imágenes subidas - Vista previa -->
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Imágenes del producto</h3>
+            <div class="orien-form-group">
+              <div class="orien-images-preview" id="imagePreview">
+                <p class="orien-no-images">No hay imágenes seleccionadas</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección de imágenes - Subir nuevas -->
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Subir imágenes</h3>
+            <div class="orien-form-group">
+              <div
+                class="orien-upload-area orien-upload-area-sm"
+                id="imageUpload"
+              >
+                <i class="fas fa-plus"></i>
+                <span>Click, arrastrar y soltar o Ctrl+V</span>
+                <small class="orien-upload-hint"
+                  >Máximo 10 imágenes en total</small
+                >
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del producto -->
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información del producto</h3>
+
+            <div class="orien-form-group">
+              <label class="orien-label">Nombre del producto</label>
+              <input
+                type="text"
+                name="nombre"
+                class="orien-input"
+                placeholder="Ej: Pantalla LED P2.976"
+                required
+              />
+            </div>
+            <br>
+            <div class="orien-form-group">
+              <label class="orien-label">Categoría</label>
+              <select
+                name="categoriaId"
+                id="categoriaSelect"
+                class="orien-select"
+                required
+              >
+                <option value="">Seleccionar categoría</option>
+              </select>
+            </div>
+            <br>
+            <div class="orien-form-group">
+              <label class="orien-label">Tipo de producto</label>
+              <div class="orien-radio-group">
+                <label class="orien-radio">
+                  <input type="radio" name="tipo" value="venta" checked /> Venta
+                </label>
+                <label class="orien-radio">
+                  <input type="radio" name="tipo" value="renta" /> Renta
+                </label>
+                <label class="orien-radio">
+                  <input type="radio" name="tipo" value="ambos" /> Ambos
+                </label>
+              </div>
+            </div>
+            <br>
+            <div class="orien-form-group">
+              <label class="orien-label">Precio</label>
+              <input
+                type="text"
+                name="precio"
+                class="orien-input"
+                placeholder="Ej: 2500"
+                required
+              />
+              <small class="orien-input-hint"
+                >Solo números (se formateará automáticamente a moneda
+                mexicana)</small
+              >
+            </div>
+            <br>
+            <div class="orien-form-group">
+              <label class="orien-label">Características</label>
+              <textarea
+                name="caracteristicas"
+                class="orien-input orien-textarea"
+                rows="5"
+                placeholder="Describe las características del producto..."
+                required
+              ></textarea>
+              <small class="orien-input-hint">Mínimo 10 caracteres</small>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <a
+              href="/productsList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Guardar producto
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

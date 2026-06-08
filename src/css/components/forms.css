@@ -3,9 +3,25 @@
    Estilos unificados para todos los formularios del sistema
    ======================================== */
 
-/* Form group */
 .orien-form-group {
-    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.orien-form-group .orien-btn {
+    margin: 0;
+}
+
+.orien-form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
 }
 
 /* Label */
@@ -143,6 +159,7 @@
     cursor: pointer;
     transition: var(--transition);
     background: var(--color-light);
+    width: 100%;
 }
 
 .orien-upload-area:hover,
@@ -170,10 +187,12 @@
 
 /* Upload area small */
 .orien-upload-area-sm {
-    padding: 20px;
-    align-items: center;
-    gap: 12px;
-    width: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  width: 100%;
+  margin-top: 0;
 }
 
 .orien-upload-area-sm i {

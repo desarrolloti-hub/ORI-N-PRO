@@ -3,7 +3,7 @@
    Controlador para edición de usuarios
    ======================================== */
 
-import { UserService } from '/services/UserService.js';
+import { UserService } from '/src/services/userService';
 
 let userService = null;
 let currentUserUid = null;

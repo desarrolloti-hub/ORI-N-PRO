@@ -1,0 +1,56 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Gestión de Categorías</h1>
+    <p class="orien-banner-subtitle">Administra las categorías de productos</p>
+  </div>
+</div>
+
+<div class="orien-section">
+  <div class="orien-admin-list-header">
+    <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+      <i class="fas fa-arrow-left"></i> Panel de Control
+    </a>
+    <a href="/categoriesCreate" class="orien-btn orien-btn-primary" data-link>
+      <i class="fas fa-plus"></i> Agregar Categoria
+    </a>
+  </div>
+
+  <div class="orien-admin-search-bar">
+    <div class="orien-admin-search-input">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        class="orien-input"
+        id="searchCategories"
+        placeholder="Buscar categorías..."
+      />
+    </div>
+  </div>
+
+  <div class="orien-table-container">
+    <table class="orien-table" id="categoriesTable">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Slug</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th style="width: 100px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 40px">
+            <div class="orien-spinner"></div>
+            <p>Cargando categorías...</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="orien-category-stats" id="categoriesCount">
+    Cargando categorías...
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<!-- /modules/visitor/products/productDetail.html -->
+<div class="orien-banner orien-banner-sm">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title" id="productDetailTitle">Cargando...</h1>
+    <p class="orien-banner-subtitle">Información completa del producto</p>
+  </div>
+</div>
+
+<div class="orien-product-detail-container">
+  <div class="orien-product-detail-wrapper">
+    <!-- Columna izquierda: Imágenes -->
+    <div class="orien-product-detail-images">
+      <div class="orien-product-detail-carousel" id="productCarousel">
+        <div class="orien-carousel-main">
+          <img id="carouselMainImage" src="" alt="Imagen principal" />
+        </div>
+        <div class="orien-carousel-thumbnails" id="carouselThumbnails"></div>
+        <button class="orien-carousel-prev" id="carouselPrev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="orien-carousel-next" id="carouselNext">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Columna derecha: Información -->
+    <div class="orien-product-detail-info">
+      <h2 id="productName">Cargando...</h2>
+      <div class="orien-product-detail-price" id="productPrice"></div>
+      <div class="orien-product-detail-type" id="productType"></div>
+      <div class="orien-product-detail-category" id="productCategory"></div>
+      <div class="orien-product-detail-description">
+        <h3>Características</h3>
+        <p id="productDescription"></p>
+      </div>
+      <br />
+      <button
+        class="orien-btn orien-btn-primary orien-btn-block"
+        id="whatsappBtn"
+      >
+        <i class="fab fa-whatsapp"></i> Solicitar cotización por WhatsApp
+      </button>
+      <br />
+      <a
+        href="/products"
+        class="orien-btn orien-btn-secondary orien-btn-block"
+        data-link
+      >
+        <i class="fas fa-arrow-left"></i> Volver a productos
+      </a>
+    </div>
+  </div>
+</div>
