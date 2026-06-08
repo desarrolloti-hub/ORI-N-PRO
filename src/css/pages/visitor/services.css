@@ -1,0 +1,94 @@
+/* ========================================
+   SERVICES PAGE - Orién Pro
+   ======================================== */
+
+.orien-services-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.orien-services-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.orien-service-item {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.orien-service-item.orien-service-alternate {
+  flex-direction: row-reverse;
+}
+
+.orien-service-content {
+  flex: 1;
+  min-width: 280px;
+}
+
+.orien-service-content h3 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: var(--color-dark);
+}
+
+.orien-service-content p {
+  line-height: 1.7;
+  color: #555;
+  font-size: 1rem;
+}
+
+.orien-service-media {
+  flex: 1;
+  min-width: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+.orien-service-media video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.orien-loading {
+  text-align: center;
+  padding: 60px;
+}
+
+.orien-empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--color-gray);
+}
+
+.orien-empty-state i {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.orien-empty-state p {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .orien-services-section {
+    padding: 40px 15px;
+  }
+  .orien-service-item,
+  .orien-service-item.orien-service-alternate {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .orien-service-content h3 {
+    font-size: 1.5rem;
+  }
+}

@@ -37,6 +37,8 @@
 @import './pages/visitor/about.css';
 @import './pages/visitor/login.css';
 @import './pages/visitor/contact.css';
+@import './pages/visitor/services.css';
+
 
 /*Pages - Admin */
 @import './pages/admin/adminDashboard/adminDashboard.css';
@@ -52,3 +54,6 @@
 @import './pages/admin/users/usersCreate.css';
 @import './pages/admin/users/usersEdit.css';
 @import './pages/admin/users/usersList.css';
+@import './pages/admin/services/servicesCreate.css';
+@import './pages/admin/services/servicesEdit.css';
+@import './pages/admin/services/servicesList.css';

@@ -7,9 +7,9 @@ import { initHomeController } from "../modules/visitor/home/homeController.js";
 import { initProductsVisitorController } from "../modules/visitor/products/productsController.js";
 import { initProductDetailController } from "../modules/visitor/products/productsDetailController.js";
 import { initLoginController } from "../modules/visitor/login/loginController.js";
+import { initServicesController } from "../modules/visitor/services/servicesController.js";
 
 // Importar controllers de vistas admin
-import { initAdminDashboardController } from "../modules/admin/adminDashboard/adminDashboardController.js";
 import { initCategoriesCreateController } from "../modules/admin/categories/categoriesCreateController.js";
 import { initCategoriesEditController } from "../modules/admin/categories/categoriesEditController.js";
 import { initCategoriesListController } from "../modules/admin/categories/categoriesListController.js";
@@ -22,8 +22,10 @@ import { initUsersListController } from "../modules/admin/users/usersListControl
 import { initCarouselsListController } from "../modules/admin/carousels/carouselsListController.js";
 import { initCarouselsCreateController } from "../modules/admin/carousels/carouselsCreateController.js";
 import { initCarouselsEditController } from "../modules/admin/carousels/carouselsEditController.js";
-
-// NOTA: initLoginController ya está importado arriba, no lo vuelvas a importar
+import { initServicesListController } from "../modules/admin/services/servicesListController.js";
+import { initServicesCreateController } from "../modules/admin/services/servicesCreateController.js";
+import { initServicesEditController } from "../modules/admin/services/servicesEditController.js";
+import { initAdminDashboardController } from "../modules/admin/adminDashboard/adminDashboardController.js";
 
 export const routes = {
   // Visitor Routes
@@ -49,7 +51,7 @@ export const routes = {
   },
   "/servicios": {
     view: "/modules/visitor/services/services.html",
-    controller: null,
+    controller: initServicesController,
   },
   "/about": {
     view: "/modules/visitor/about/about.html",
@@ -66,9 +68,9 @@ export const routes = {
 
   // Admin Routes
   "/adminDashboard": {
-  view: "/modules/admin/adminDashboard/adminDashboard.html",
-  controller: initAdminDashboardController,
-},
+    view: "/modules/admin/adminDashboard/adminDashboard.html",
+    controller: initAdminDashboardController,
+  },
 
   // Categories Routes
   "/categoriesList": {
@@ -120,6 +122,24 @@ export const routes = {
     controller: (params) => {
       if (params && params.id) {
         initCarouselsEditController(params.id);
+      }
+    },
+  },
+
+  // Services Routes
+  "/servicesList": {
+    view: "/modules/admin/services/servicesList.html",
+    controller: initServicesListController,
+  },
+  "/servicesCreate": {
+    view: "/modules/admin/services/servicesCreate.html",
+    controller: initServicesCreateController,
+  },
+  "/servicesEdit/:id": {
+    view: "/modules/admin/services/servicesEdit.html",
+    controller: (params) => {
+      if (params && params.id) {
+        initServicesEditController(params.id);
       }
     },
   },

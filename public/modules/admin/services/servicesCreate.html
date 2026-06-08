@@ -1,0 +1,114 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Crear Servicio</h1>
+    <p class="orien-banner-subtitle">
+      Agrega un nuevo servicio (texto + video)
+    </p>
+  </div>
+</div>
+
+<div class="orien-admin-services-create">
+  <div class="orien-admin-create-container">
+    <div class="orien-admin-create-nav">
+      <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-arrow-left"></i> Dashboard
+      </a>
+      <a href="/servicesList" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-list"></i> Volver a la lista
+      </a>
+    </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="serviceForm">
+          <!-- Video Upload -->
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Video del servicio</h3>
+            <div class="orien-form-group">
+              <div class="orien-upload-area" id="videoUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click, arrastra o suelta el video</p>
+                <small class="orien-upload-hint"
+                  >Formatos: MP4, WEBM, MOV. Tamaño máximo: </small
+                >
+                <input type="file" accept="video/*" style="display: none" />
+              </div>
+              <div id="videoPreview" class="orien-video-preview"></div>
+              <span id="videoFileName" class="orien-file-name"></span>
+            </div>
+          </div>
+
+          <!-- Información -->
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información del servicio</h3>
+            <div class="orien-form-group">
+              <label class="orien-label">Título</label>
+              <input
+                type="text"
+                name="titulo"
+                class="orien-input"
+                required
+                placeholder="Ej: Instalación Profesional"
+              />
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Descripción</label>
+              <textarea
+                name="descripcion"
+                class="orien-input orien-textarea"
+                rows="4"
+                required
+                placeholder="Describe el servicio..."
+              ></textarea>
+            </div>
+            <div class="orien-form-row">
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Orden</label>
+                <input
+                  type="number"
+                  name="orden"
+                  class="orien-input"
+                  value="0"
+                  min="0"
+                />
+              </div>
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Disposición del video</label>
+                <select name="alternar" class="orien-select">
+                  <option value="false">Video a la derecha</option>
+                  <option value="true">Video a la izquierda</option>
+                </select>
+              </div>
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Estado</label>
+              <div class="orien-radio-group">
+                <label class="orien-radio"
+                  ><input type="radio" name="status" value="active" checked />
+                  Activo</label
+                >
+                <label class="orien-radio"
+                  ><input type="radio" name="status" value="inactive" />
+                  Inactivo</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <a
+              href="/servicesList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Guardar Servicio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

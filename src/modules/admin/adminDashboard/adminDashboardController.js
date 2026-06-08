@@ -47,7 +47,7 @@ async function loadStats() {
     carouselService = new CarouselService();
 
     const products = await productService.getAllProducts();
-    const users = await userService.getAllUsers(false); // todos
+    const users = await userService.getAllUsers(false);
     const carousels = await carouselService.getAllCarousels();
 
     const totalProductsElem = document.getElementById("totalProducts");

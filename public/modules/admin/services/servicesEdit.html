@@ -1,0 +1,115 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Editar Servicio</h1>
+    <p class="orien-banner-subtitle">Modifica el servicio</p>
+  </div>
+</div>
+
+<div class="orien-admin-services-edit">
+  <div class="orien-admin-edit-container">
+    <div class="orien-admin-edit-nav">
+      <div class="orien-admin-edit-nav-left">
+        <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+          <i class="fas fa-arrow-left"></i> Dashboard
+        </a>
+        <a href="/servicesList" class="orien-admin-nav-link" data-link>
+          <i class="fas fa-list"></i> Volver a la lista
+        </a>
+      </div>
+      <div class="orien-admin-edit-status">
+        <span class="orien-badge orien-badge-outline" id="serviceId"
+          >Cargando...</span
+        >
+      </div>
+    </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="serviceForm">
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Video del servicio</h3>
+            <div class="orien-form-group">
+              <div id="videoPreview" class="orien-video-preview"></div>
+              <div
+                class="orien-upload-area orien-upload-area-sm"
+                id="videoUpload"
+              >
+                <i class="fas fa-exchange-alt"></i>
+                <span>Cambiar video</span>
+                <input type="file" accept="video/*" style="display: none" />
+              </div>
+              <span id="videoFileName" class="orien-file-name"></span>
+              <small class="orien-input-hint"
+                >Dejar vacío para mantener el video actual</small
+              >
+            </div>
+          </div>
+
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información del servicio</h3>
+            <div class="orien-form-group">
+              <label class="orien-label">Título</label>
+              <input type="text" name="titulo" class="orien-input" required />
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Descripción</label>
+              <textarea
+                name="descripcion"
+                class="orien-input orien-textarea"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+            <div class="orien-form-row">
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Orden</label>
+                <input type="number" name="orden" class="orien-input" min="0" />
+              </div>
+              <div class="orien-form-group" style="flex: 1">
+                <label class="orien-label">Disposición del video</label>
+                <select name="alternar" class="orien-select">
+                  <option value="false">Video a la derecha</option>
+                  <option value="true">Video a la izquierda</option>
+                </select>
+              </div>
+            </div>
+            <div class="orien-form-group">
+              <label class="orien-label">Estado</label>
+              <div class="orien-radio-group">
+                <label class="orien-radio"
+                  ><input type="radio" name="status" value="active" />
+                  Activo</label
+                >
+                <label class="orien-radio"
+                  ><input type="radio" name="status" value="inactive" />
+                  Inactivo</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="orien-form-actions">
+            <button
+              type="button"
+              class="orien-btn orien-btn-outline"
+              id="deleteBtn"
+              style="margin-right: auto; color: #dc3545; border-color: #dc3545"
+            >
+              <i class="fas fa-trash"></i> Eliminar servicio
+            </button>
+            <a
+              href="/servicesList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Actualizar Servicio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

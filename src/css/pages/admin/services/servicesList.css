@@ -1,0 +1,43 @@
+/* ========================================
+   SERVICES LIST - Estilos específicos
+   ======================================== */
+
+.orien-service-order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-light);
+  border-radius: 50%;
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.orien-table-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--color-light);
+}
+
+.orien-table-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  line-height: 1.4;
+  max-width: 300px;
+}
+
+.orien-table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .orien-service-order {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+}

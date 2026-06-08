@@ -1,0 +1,48 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Gestión de Servicios</h1>
+    <p class="orien-banner-subtitle">
+      Administra los servicios (texto + video)
+    </p>
+  </div>
+</div>
+
+<div class="orien-section">
+  <div class="orien-admin-list-header">
+    <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+      <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+    <a href="/servicesCreate" class="orien-btn orien-btn-primary" data-link>
+      <i class="fas fa-plus"></i> Nuevo Servicio
+    </a>
+  </div>
+
+  <div class="orien-admin-search-bar">
+    <div class="orien-admin-search-input">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        class="orien-input"
+        id="searchServices"
+        placeholder="Buscar servicios..."
+      />
+    </div>
+  </div>
+
+  <div class="orien-table-container">
+    <table class="orien-table" id="servicesTable">
+      <thead>
+        <tr>
+          <th>Orden</th>
+          <th>Título / Descripción</th>
+          <th>Video</th>
+          <th>Disposición</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
