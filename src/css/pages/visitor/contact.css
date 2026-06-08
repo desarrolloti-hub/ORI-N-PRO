@@ -187,7 +187,7 @@
     }
     
     .orien-contact-container {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
     
     .orien-contact-info,
@@ -222,21 +222,8 @@
         font-size: 1rem;
     }
     
-    .orien-contact-text h4 {
-        font-size: 0.9rem;
-    }
-    
-    .orien-contact-text p {
-        font-size: 0.8rem;
-    }
-    
     .orien-map-container {
         height: 300px;
-    }
-    
-    .orien-social-link {
-        width: 36px;
-        height: 36px;
     }
 }
 
@@ -245,20 +232,7 @@
         padding: 20px;
     }
     
-    .orien-contact-details {
-        gap: 18px;
-    }
-    
     .orien-map-container {
         height: 250px;
-    }
-    
-    .orien-social-links {
-        gap: 10px;
-    }
-    
-    .orien-social-link {
-        width: 34px;
-        height: 34px;
     }
 }
