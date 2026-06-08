@@ -17,6 +17,9 @@ import { initProductsListController } from "../modules/admin/products/productsLi
 import { initUsersCreateController } from "../modules/admin/users/usersCreateController.js";
 import { initUsersEditController } from "../modules/admin/users/usersEditController.js";
 import { initUsersListController } from "../modules/admin/users/usersListController.js";
+import { initCarouselsListController } from "../modules/admin/carousels/carouselsListController.js";
+import { initCarouselsCreateController } from "../modules/admin/carousels/carouselsCreateController.js";
+import { initCarouselsEditController } from "../modules/admin/carousels/carouselsEditController.js";
 
 export const routes = {
   // Visitor Routes
@@ -99,18 +102,22 @@ export const routes = {
     },
   },
 
-  // Sliders Routes
-  "/slidersList": {
-    view: "/modules/admin/sliders/slidersList.html",
-    controller: null,
+  // Carousels Routes
+  "/carouselsList": {
+    view: "/modules/admin/carousels/carouselsList.html",
+    controller: initCarouselsListController,
   },
-  "/slidersCreate": {
-    view: "/modules/admin/sliders/slidersCreate.html",
-    controller: null,
+  "/carouselsCreate": {
+    view: "/modules/admin/carousels/carouselsCreate.html",
+    controller: initCarouselsCreateController,
   },
-  "/slidersEdit": {
-    view: "/modules/admin/sliders/slidersEdit.html",
-    controller: null,
+  "/carouselsEdit/:id": {
+    view: "/modules/admin/carousels/carouselsEdit.html",
+    controller: (params) => {
+      if (params && params.id) {
+        initCarouselsEditController(params.id);
+      }
+    },
   },
 
   // Users Routes

@@ -1,0 +1,81 @@
+<div class="orien-banner">
+  <div class="orien-banner-overlay"></div>
+  <div class="orien-banner-content">
+    <h1 class="orien-banner-title">Crear Carrusel</h1>
+    <p class="orien-banner-subtitle">
+      Define un conjunto de slides para el carrusel principal
+    </p>
+  </div>
+</div>
+<br>
+<div class="orien-admin-carousels-create">
+  <div class="orien-admin-create-container">
+    <div class="orien-admin-create-nav">
+      <a href="/adminDashboard" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-arrow-left"></i> Panel de Control
+      </a>
+      <a href="/carouselsList" class="orien-admin-nav-link" data-link>
+        <i class="fas fa-list"></i> Volver a la lista
+      </a>
+    </div>
+
+    <div class="orien-card">
+      <div class="orien-card-content">
+        <form class="orien-form" id="carouselForm">
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Información del carrusel</h3>
+            <div class="orien-form-group">
+              <label class="orien-label">Nombre del carrusel *</label>
+              <input
+                type="text"
+                name="nombre"
+                class="orien-input"
+                required
+                placeholder="Ej: Carrusel principal"
+              />
+            </div>
+            <br>
+            <div class="orien-form-group">
+              <label class="orien-label">Descripción (opcional)</label>
+              <textarea
+                name="descripcion"
+                class="orien-input orien-textarea"
+                rows="2"
+                placeholder="Describe este conjunto de slides..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="orien-form-section">
+            <h3 class="orien-form-section-title">Slides del carrusel</h3>
+            <div id="slidesContainer"></div>
+            <button
+              type="button"
+              id="addSlideBtn"
+              class="orien-btn orien-btn-outline"
+              style="margin-top: 15px"
+            >
+              <i class="fas fa-plus"></i> Agregar slide
+            </button>
+            <small class="orien-input-hint"
+              >Máximo 10 slides. Arrastra la imagen o haz clic para
+              subir.</small
+            >
+          </div>
+
+          <div class="orien-form-actions">
+            <a
+              href="/carouselsList"
+              class="orien-btn orien-btn-secondary"
+              data-link
+              >Cancelar</a
+            >
+            <button type="submit" class="orien-btn orien-btn-primary">
+              Guardar Carrusel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+/* ========================================
+   CAROUSELS EDIT - Estilos específicos
+   ======================================== */
+
+.orien-admin-carousels-edit {
+  min-height: calc(100vh - 300px);
+  padding: 0 20px 60px;
+}
+
+.orien-admin-edit-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.orien-admin-edit-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.orien-admin-edit-nav-left {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.orien-admin-edit-status {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Tarjeta de slide compacta (mismo estilo que create) */
+.orien-slide-card {
+  background: var(--color-light);
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-gray);
+}
+
+.orien-slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.orien-slide-body {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.orien-slide-image-col {
+  flex: 0 0 140px;
+  text-align: center;
+}
+
+.orien-slide-image-col .slide-preview {
+  width: 120px;
+  height: 90px;
+  background: var(--color-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-gray);
+}
+
+.orien-slide-image-col .slide-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orien-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-gray);
+  font-size: 0.7rem;
+}
+
+.orien-image-placeholder i {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.orien-upload-area {
+  padding: 8px;
+  font-size: 0.7rem;
+}
+
+.orien-slide-fields-col {
+  flex: 1;
+  min-width: 200px;
+}
+
+.orien-slide-fields-col .orien-form-group {
+  margin-bottom: 10px;
+}
+
+.orien-slide-fields-col label {
+  font-size: 0.7rem;
+  margin-bottom: 4px;
+}
+
+.orien-slide-fields-col .orien-input {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+.orien-form-row {
+  display: flex;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .orien-slide-body {
+    flex-direction: column;
+  }
+  .orien-slide-image-col {
+    flex: auto;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  .orien-slide-image-col .slide-preview {
+    width: 80px;
+    height: 60px;
+  }
+}

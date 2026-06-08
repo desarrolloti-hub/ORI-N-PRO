@@ -46,9 +46,9 @@
 @import './pages/admin/products/productsCreate.css';
 @import './pages/admin/products/productsEdit.css';
 @import './pages/admin/products/productsList.css';
-@import './pages/admin/sliders/slidersCreate.css';
-@import './pages/admin/sliders/slidersEdit.css';
-@import './pages/admin/sliders/slidersList.css';
+@import './pages/admin/carousels/carouselsCreate.css';
+@import './pages/admin/carousels/carouselsEdit.css';
+@import './pages/admin/carousels/carouselsList.css';
 @import './pages/admin/users/usersCreate.css';
 @import './pages/admin/users/usersEdit.css';
 @import './pages/admin/users/usersList.css';

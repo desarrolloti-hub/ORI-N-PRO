@@ -1,0 +1,48 @@
+/* ========================================
+   CAROUSELS LIST - Estilos específicos
+   ======================================== */
+
+.orien-admin-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.orien-admin-search-bar {
+  margin-bottom: 30px;
+}
+
+.orien-admin-search-input {
+  position: relative;
+  max-width: 400px;
+}
+
+.orien-admin-search-input i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray);
+  z-index: 1;
+}
+
+.orien-admin-search-input .orien-input {
+  padding-left: 40px;
+}
+
+.orien-table-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .orien-admin-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

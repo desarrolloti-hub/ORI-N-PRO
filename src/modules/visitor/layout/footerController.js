@@ -112,7 +112,7 @@ function showSocialAlert(network) {
 
 /**
  * Muestra mensaje temporal para enlaces
- */
+
 function showLinkMessage(linkName) {
     const toast = document.createElement('div');
     toast.textContent = `📄 ${linkName} - Próximamente`;
@@ -138,6 +138,7 @@ function showLinkMessage(linkName) {
         setTimeout(() => toast.remove(), 300);
     }, 2000);
 }
+ */
 
 /**
  * Maneja animación del footer al hacer scroll
