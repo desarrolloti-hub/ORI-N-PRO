@@ -2,7 +2,9 @@
   <div class="orien-banner-overlay"></div>
   <div class="orien-banner-content">
     <h1 class="orien-banner-title">Editar Servicio</h1>
-    <p class="orien-banner-subtitle">Modifica el servicio</p>
+    <p class="orien-banner-subtitle">
+      Modifica el servicio (texto o carrusel + YouTube)
+    </p>
   </div>
 </div>
 <br />
@@ -28,22 +30,21 @@
       <div class="orien-card-content">
         <form class="orien-form" id="serviceForm">
           <div class="orien-form-section">
-            <h3 class="orien-form-section-title">Video del servicio</h3>
+            <h3 class="orien-form-section-title">Video de YouTube</h3>
             <div class="orien-form-group">
-              <div id="videoPreview" class="orien-video-preview"></div>
-              <div
-                class="orien-upload-area orien-upload-area-sm"
-                id="videoUpload"
-              >
-                <i class="fas fa-exchange-alt"></i>
-                <span>Cambiar video</span>
-                <input type="file" accept="video/*" style="display: none" />
-              </div>
-              <span id="videoFileName" class="orien-file-name"></span>
+              <label class="orien-label">URL del video (YouTube)</label>
+              <input
+                type="url"
+                name="youtubeUrl"
+                class="orien-input"
+                required
+                id="youtubeUrlInput"
+              />
               <small class="orien-input-hint"
-                >Dejar vacío para mantener el video actual</small
+                >Dejar igual para mantener el mismo video</small
               >
             </div>
+            <div id="youtubePreview" class="orien-youtube-preview"></div>
           </div>
 
           <div class="orien-form-section">
@@ -53,16 +54,57 @@
               <input type="text" name="titulo" class="orien-input" required />
             </div>
             <br />
+
             <div class="orien-form-group">
+              <label class="orien-label"
+                >Tipo de contenido (lado opuesto al video)</label
+              >
+              <div class="orien-radio-group">
+                <label class="orien-radio">
+                  <input type="radio" name="contentType" value="text" /> Texto
+                  descriptivo
+                </label>
+                <label class="orien-radio">
+                  <input type="radio" name="contentType" value="carousel" />
+                  Carrusel de imágenes
+                </label>
+              </div>
+            </div>
+            <br />
+
+            <div id="textContentGroup" class="orien-form-group">
               <label class="orien-label">Descripción</label>
               <textarea
                 name="descripcion"
                 class="orien-input orien-textarea"
                 rows="4"
-                required
               ></textarea>
             </div>
+
+            <div
+              id="carouselContentGroup"
+              class="orien-form-group"
+              style="display: none"
+            >
+              <label class="orien-label">Imágenes del carrusel (base64)</label>
+              <div id="carouselItemsContainer"></div>
+              <button
+                type="button"
+                id="addCarouselImageBtn"
+                class="orien-btn orien-btn-secondary orien-btn-sm"
+              >
+                + Agregar imagen
+              </button>
+              <input
+                type="file"
+                id="tempImageUpload"
+                accept="image/*"
+                style="display: none"
+                multiple
+              />
+            </div>
             <br />
+
             <div class="orien-form-row">
               <div class="orien-form-group" style="flex: 1">
                 <label class="orien-label">Orden</label>

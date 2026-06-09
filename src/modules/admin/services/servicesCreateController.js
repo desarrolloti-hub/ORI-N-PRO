@@ -1,5 +1,5 @@
 /* ========================================
-   SERVICES CREATE CONTROLLER - Orién Pro
+   SERVICES CREATE CONTROLLER - Orién Pro (con Carrusel)
    ======================================== */
 
 import { ServiceService } from "/src/services/serviceService.js";
@@ -10,12 +10,14 @@ import {
 } from "/src/modules/utils/uiHelpers.js";
 
 let serviceService = null;
-let selectedVideoFile = null;
+let carouselItemsArray = []; // Array de { imageBase64, caption }
 
 export function initServicesCreateController() {
   serviceService = new ServiceService();
   bindFormSubmit();
-  bindVideoUpload();
+  bindYoutubePreview();
+  bindContentTypeToggle();
+  bindCarouselEvents();
   console.log("✅ Services Create Controller inicializado");
 }
 
@@ -29,23 +31,23 @@ function bindFormSubmit() {
 async function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
+  const contentType = formData.get("contentType");
+  const carouselEnabled = contentType === "carousel";
 
-  const serviceData = {
-    titulo: formData.get("titulo"),
-    descripcion: formData.get("descripcion"),
-    orden: formData.get("orden"),
-    activo: formData.get("status"),
-    alternar: formData.get("alternar"),
-  };
-
-  if (!selectedVideoFile) {
-    showNotification("Debe seleccionar un video", "error");
-    return;
-  }
+  // Si es carrusel, forzar el campo carouselEnabled
+  formData.set("carouselEnabled", carouselEnabled ? "true" : "false");
 
   try {
     showLoading();
-    await serviceService.createService(serviceData, selectedVideoFile);
+    if (carouselEnabled) {
+      if (carouselItemsArray.length === 0) {
+        throw new Error("Debe agregar al menos una imagen al carrusel");
+      }
+      await serviceService.createService(formData, carouselItemsArray);
+    } else {
+      // Validar descripción (serviceService lo hará)
+      await serviceService.createService(formData, []);
+    }
     showNotification("Servicio creado exitosamente", "success");
     setTimeout(() => (window.location.href = "/servicesList"), 1500);
   } catch (error) {
@@ -54,34 +56,111 @@ async function handleSubmit(e) {
   }
 }
 
-function bindVideoUpload() {
-  const uploadArea = document.getElementById("videoUpload");
-  const fileInput = uploadArea.querySelector('input[type="file"]');
-  const preview = document.getElementById("videoPreview");
-  const fileNameSpan = document.getElementById("videoFileName");
+function bindYoutubePreview() {
+  const input = document.getElementById("youtubeUrlInput");
+  const previewDiv = document.getElementById("youtubePreview");
+  if (!input || !previewDiv) return;
 
-  uploadArea.addEventListener("click", () => fileInput.click());
-  uploadArea.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    uploadArea.classList.add("dragover");
+  const updatePreview = () => {
+    const url = input.value.trim();
+    const embedUrl = serviceService.getEmbedUrl(url);
+    if (embedUrl) {
+      previewDiv.innerHTML = `<div class="orien-video-wrapper"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+    } else {
+      previewDiv.innerHTML = "";
+    }
+  };
+  input.addEventListener("input", updatePreview);
+}
+
+function bindContentTypeToggle() {
+  const radios = document.querySelectorAll('input[name="contentType"]');
+  const textGroup = document.getElementById("textContentGroup");
+  const carouselGroup = document.getElementById("carouselContentGroup");
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      if (e.target.value === "text") {
+        textGroup.style.display = "block";
+        carouselGroup.style.display = "none";
+      } else {
+        textGroup.style.display = "none";
+        carouselGroup.style.display = "block";
+      }
+    });
   });
-  uploadArea.addEventListener("dragleave", () =>
-    uploadArea.classList.remove("dragover"),
-  );
-  uploadArea.addEventListener("drop", (e) => {
-    e.preventDefault();
-    uploadArea.classList.remove("dragover");
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("video/")) handleVideoFile(file);
-  });
-  fileInput.addEventListener("change", (e) => {
-    if (e.target.files[0]) handleVideoFile(e.target.files[0]);
+}
+
+function bindCarouselEvents() {
+  const addBtn = document.getElementById("addCarouselImageBtn");
+  const fileInput = document.getElementById("tempImageUpload");
+  const container = document.getElementById("carouselItemsContainer");
+
+  addBtn.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", async (e) => {
+    const files = Array.from(e.target.files);
+    for (const file of files) {
+      if (!file.type.startsWith("image/")) continue;
+      const base64 = await fileToBase64(file);
+      carouselItemsArray.push({ imageBase64: base64, caption: "" });
+      renderCarouselItems();
+    }
+    fileInput.value = "";
   });
 
-  function handleVideoFile(file) {
-    selectedVideoFile = file;
-    const url = URL.createObjectURL(file);
-    preview.innerHTML = `<video controls src="${url}" style="max-width:100%; max-height:200px; border-radius:8px;"></video>`;
-    if (fileNameSpan) fileNameSpan.textContent = file.name;
+  function renderCarouselItems() {
+    container.innerHTML = "";
+    carouselItemsArray.forEach((item, idx) => {
+      const card = document.createElement("div");
+      card.className = "orien-carousel-item-card";
+      card.innerHTML = `
+        <img src="${item.imageBase64}" class="carousel-preview-img" style="max-width:100px; max-height:100px; object-fit:cover; border-radius:8px;">
+        <input type="text" class="orien-input carousel-caption" placeholder="Texto sobre la imagen" value="${escapeHtml(item.caption)}" data-index="${idx}">
+        <button type="button" class="orien-btn orien-btn-sm orien-btn-outline remove-carousel-item" data-index="${idx}" style="color:#dc3545;">Eliminar</button>
+      `;
+      container.appendChild(card);
+    });
+    // bind events to new inputs/buttons
+    document.querySelectorAll(".carousel-caption").forEach((input) => {
+      input.removeEventListener("change", updateCaption);
+      input.addEventListener("change", updateCaption);
+    });
+    document.querySelectorAll(".remove-carousel-item").forEach((btn) => {
+      btn.removeEventListener("click", removeItem);
+      btn.addEventListener("click", removeItem);
+    });
   }
+
+  function updateCaption(e) {
+    const idx = parseInt(e.target.dataset.index);
+    if (!isNaN(idx) && carouselItemsArray[idx]) {
+      carouselItemsArray[idx].caption = e.target.value;
+    }
+  }
+
+  function removeItem(e) {
+    const idx = parseInt(e.target.dataset.index);
+    if (!isNaN(idx)) {
+      carouselItemsArray.splice(idx, 1);
+      renderCarouselItems();
+    }
+  }
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.replace(/[&<>]/g, (m) => {
+    if (m === "&") return "&amp;";
+    if (m === "<") return "&lt;";
+    if (m === ">") return "&gt;";
+    return m;
+  });
 }

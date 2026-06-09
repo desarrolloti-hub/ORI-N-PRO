@@ -1,5 +1,5 @@
 /* ========================================
-   SERVICES LIST CONTROLLER - Orién Pro
+   SERVICES LIST CONTROLLER - Orién Pro (con Carrusel)
    ======================================== */
 
 import { ServiceService } from "/src/services/serviceService.js";
@@ -16,7 +16,6 @@ export function initServicesListController() {
   serviceService = new ServiceService();
   loadServices();
   bindEvents();
-  console.log("✅ Services List Controller inicializado");
 }
 
 async function loadServices() {
@@ -34,64 +33,42 @@ async function loadServices() {
 function renderServicesTable(services) {
   const tbody = document.querySelector("#servicesTable tbody");
   if (!tbody) return;
-
   if (services.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">No hay servicios registrados</td</tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">No hay servicios registrados</td></tr>`;
     return;
   }
-
   tbody.innerHTML = services
     .map(
       (service) => `
     <tr data-id="${service.id}">
-      <td data-label="Orden">
-        <span class="orien-service-order">${service.orden}</span>
-      </td>
+      <td data-label="Orden"><span class="orien-service-order">${service.orden}</span></td>
       <td data-label="Título">
         <strong>${escapeHtml(service.titulo)}</strong>
-        <div class="orien-table-subtitle">${escapeHtml(service.descripcion.substring(0, 80))}${service.descripcion.length > 80 ? "..." : ""}</div>
+        <div class="orien-table-subtitle">${service.carouselEnabled ? "📸 Carrusel de imágenes" : escapeHtml(service.descripcion.substring(0, 80))}${!service.carouselEnabled && service.descripcion.length > 80 ? "..." : ""}</div>
       </td>
-      <td data-label="Video">
-        ${service.videoURL ? '<i class="fas fa-video"></i> Video subido' : '<span class="orien-badge orien-badge-secondary">Sin video</span>'}
-      </td>
-      <td data-label="Disposición">
-        <span class="orien-badge">${service.alternar ? "Video izquierda" : "Video derecha"}</span>
-      </td>
-      <td data-label="Estado">
-        ${service.activo ? '<span class="orien-badge orien-badge-primary">Activo</span>' : '<span class="orien-badge orien-badge-secondary">Inactivo</span>'}
-      </td>
+      <td data-label="YouTube">${service.youtubeUrl ? '<i class="fab fa-youtube" style="color:#ff0000"></i> <a href="' + service.youtubeUrl + '" target="_blank">Ver video</a>' : '<span class="orien-badge orien-badge-secondary">Sin video</span>'}</td>
+      <td data-label="Disposición"><span class="orien-badge">${service.alternar ? "Video izquierda" : "Video derecha"}</span></td>
+      <td data-label="Estado">${service.activo ? '<span class="orien-badge orien-badge-primary">Activo</span>' : '<span class="orien-badge orien-badge-secondary">Inactivo</span>'}</td>
       <td data-label="Acciones">
         <div class="orien-table-actions">
-          <a href="/servicesEdit/${service.id}" class="orien-btn orien-btn-sm orien-btn-outline" title="Editar">
-            <i class="fas fa-edit"></i>
-          </a>
-          <button class="orien-btn orien-btn-sm orien-btn-outline delete-service" data-id="${service.id}" data-video="${service.videoURL}" style="color:#dc3545; border-color:#dc3545;" title="Eliminar">
-            <i class="fas fa-trash"></i>
-          </button>
+          <a href="/servicesEdit/${service.id}" class="orien-btn orien-btn-sm orien-btn-outline" title="Editar"><i class="fas fa-edit"></i></a>
+          <button class="orien-btn orien-btn-sm orien-btn-outline delete-service" data-id="${service.id}" style="color:#dc3545; border-color:#dc3545;" title="Eliminar"><i class="fas fa-trash"></i></button>
         </div>
       </td>
     </tr>
   `,
     )
     .join("");
-
   document.querySelectorAll(".delete-service").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const id = btn.dataset.id;
-      const videoURL = btn.dataset.video;
-      deleteService(id, videoURL);
-    });
+    btn.addEventListener("click", () => deleteService(btn.dataset.id));
   });
 }
 
-async function deleteService(id, videoURL) {
-  if (
-    !confirm("¿Eliminar este servicio? También se eliminará el video asociado.")
-  )
-    return;
+async function deleteService(id) {
+  if (!confirm("¿Eliminar este servicio?")) return;
   try {
     showLoading();
-    await serviceService.deleteService(id, videoURL);
+    await serviceService.deleteService(id);
     showNotification("Servicio eliminado", "success");
     await loadServices();
   } catch (error) {

@@ -153,7 +153,7 @@ function bindEvents() {
 }
 
 function sendToWhatsApp(product, categoriaNombre) {
-  const phone = "5215561689578";
+  const phone = "5215551391533";
   const precio = product.getPrecioFormateado();
   const productUrl = window.location.href;
   const msg = `*Solicitud de cotización - Orién Pro*

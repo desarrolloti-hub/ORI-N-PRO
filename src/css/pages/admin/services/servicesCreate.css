@@ -1,74 +1,65 @@
 /* ========================================
-   SERVICES CREATE - Estilos específicos
+   SERVICES CREATE - Estilos específicos (con Carrusel)
    ======================================== */
 
 .orien-admin-services-create {
   min-height: calc(100vh - 300px);
   padding: 0 20px 60px;
 }
-
 .orien-admin-create-container {
   max-width: 800px;
   margin: 0 auto;
 }
-
 .orien-admin-create-nav {
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
   flex-wrap: wrap;
 }
-
-/* Upload de video */
-.orien-upload-area {
-  border: 2px dashed var(--color-gray);
+.orien-youtube-preview .orien-video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
   border-radius: 12px;
-  padding: 40px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+.orien-youtube-preview iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.orien-carousel-item-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   background: var(--color-light);
-}
-
-.orien-upload-area:hover,
-.orien-upload-area.dragover {
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.orien-upload-area i {
-  font-size: 2.5rem;
-  color: var(--color-gray);
+  padding: 12px;
+  border-radius: 12px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
-
-.orien-upload-hint {
-  font-size: 0.7rem;
-  color: var(--color-gray);
-  display: block;
-  margin-top: 8px;
+.carousel-preview-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
 }
-
-.orien-video-preview {
-  margin-top: 15px;
+.carousel-caption {
+  flex: 2;
+  min-width: 150px;
 }
-
-.orien-file-name {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--color-gray);
-  margin-top: 8px;
-}
-
 .orien-form-row {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
 }
-
 .orien-form-row .orien-form-group {
   flex: 1;
 }
-
 .orien-form-actions {
   display: flex;
   gap: 15px;
@@ -78,7 +69,6 @@
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   flex-wrap: wrap;
 }
-
 @media (max-width: 768px) {
   .orien-admin-services-create {
     padding: 0 15px 40px;
@@ -91,6 +81,13 @@
     flex-direction: column;
   }
   .orien-form-actions .orien-btn {
+    width: 100%;
+  }
+  .orien-carousel-item-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .carousel-caption {
     width: 100%;
   }
 }

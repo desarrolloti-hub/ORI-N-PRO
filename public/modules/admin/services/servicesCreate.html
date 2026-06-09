@@ -3,7 +3,7 @@
   <div class="orien-banner-content">
     <h1 class="orien-banner-title">Crear Servicio</h1>
     <p class="orien-banner-subtitle">
-      Agrega un nuevo servicio (texto + video)
+      Agrega un nuevo servicio (texto o carrusel + video YouTube)
     </p>
   </div>
 </div>
@@ -22,48 +22,111 @@
     <div class="orien-card">
       <div class="orien-card-content">
         <form class="orien-form" id="serviceForm">
-          <!-- Video Upload -->
+          <!-- YouTube Video -->
           <div class="orien-form-section">
-            <h3 class="orien-form-section-title">Video del servicio</h3>
+            <h3 class="orien-form-section-title">Video de YouTube</h3>
             <div class="orien-form-group">
-              <div class="orien-upload-area" id="videoUpload">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click, arrastra o suelta el video</p>
-                <small class="orien-upload-hint"
-                  >Formatos: MP4, WEBM, MOV. Tamaño máximo:
-                </small>
-                <input type="file" accept="video/*" style="display: none" />
-              </div>
-              <div id="videoPreview" class="orien-video-preview"></div>
-              <span id="videoFileName" class="orien-file-name"></span>
+              <label class="orien-label">URL del video (YouTube)</label>
+              <input
+                type="url"
+                name="youtubeUrl"
+                class="orien-input"
+                required
+                placeholder="https://www.youtube.com/watch?v=..."
+                id="youtubeUrlInput"
+              />
+              <small class="orien-input-hint"
+                >Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ</small
+              >
             </div>
+            <div id="youtubePreview" class="orien-youtube-preview"></div>
           </div>
 
-          <!-- Información -->
+          <!-- Información General -->
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Información del servicio</h3>
             <div class="orien-form-group">
               <label class="orien-label">Título</label>
-              <input
-                type="text"
-                name="titulo"
-                class="orien-input"
-                required
-                placeholder="Ej: Instalación Profesional"
-              />
+              <input type="text" name="titulo" class="orien-input" required />
             </div>
             <br />
+
+            <!-- Tipo de contenido (texto o carrusel) -->
             <div class="orien-form-group">
+              <label class="orien-label"
+                >Tipo de contenido (lado opuesto al video)</label
+              >
+              <div class="orien-radio-group">
+                <label class="orien-radio">
+                  <input type="radio" name="contentType" value="text" checked />
+                  Texto descriptivo
+                </label>
+                <label class="orien-radio">
+                  <input type="radio" name="contentType" value="carousel" />
+                  Carrusel de imágenes
+                </label>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo descripción (texto) -->
+            <div id="textContentGroup" class="orien-form-group">
               <label class="orien-label">Descripción</label>
               <textarea
                 name="descripcion"
                 class="orien-input orien-textarea"
                 rows="4"
-                required
                 placeholder="Describe el servicio..."
               ></textarea>
             </div>
+
+            <!-- Carrusel de imágenes -->
+            <div
+              id="carouselContentGroup"
+              class="orien-form-group"
+              style="display: none"
+            >
+              <label class="orien-label">Imágenes del carrusel (base64)</label>
+              <div id="carouselItemsContainer">
+                <div class="orien-carousel-item-template" style="display: none">
+                  <div class="orien-carousel-item-card">
+                    <img
+                      class="carousel-preview-img"
+                      src=""
+                      alt="Vista previa"
+                    />
+                    <input
+                      type="text"
+                      class="orien-input carousel-caption"
+                      placeholder="Texto sobre la imagen (opcional)"
+                    />
+                    <button
+                      type="button"
+                      class="orien-btn orien-btn-sm orien-btn-outline remove-carousel-item"
+                      style="color: #dc3545"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                id="addCarouselImageBtn"
+                class="orien-btn orien-btn-secondary orien-btn-sm"
+              >
+                + Agregar imagen
+              </button>
+              <input
+                type="file"
+                id="tempImageUpload"
+                accept="image/*"
+                style="display: none"
+                multiple
+              />
+            </div>
             <br />
+
             <div class="orien-form-row">
               <div class="orien-form-group" style="flex: 1">
                 <label class="orien-label">Orden</label>

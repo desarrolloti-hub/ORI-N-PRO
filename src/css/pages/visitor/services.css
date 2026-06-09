@@ -1,94 +1,458 @@
-/* ========================================
-   SERVICES PAGE - Orién Pro
-   ======================================== */
+/* ==========================================
+   SERVICES PAGE - ORIÉN PRO (FINAL)
+   Videos responsive, carrusel mismo tamaño, flex activo
+========================================== */
 
-.orien-services-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px;
+:root {
+  --service-radius: 34px;
+  --service-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+  --service-shadow-hover: 0 30px 55px rgba(0, 0, 0, 0.12);
 }
 
-.orien-services-container {
+.orien-services-page {
+  overflow-x: hidden;
+  background: var(--color-bg);
+}
+
+/* ==========================================
+   HERO
+========================================== */
+
+.orien-services-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-dark) 0%, #1a1a2e 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.orien-services-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(0, 0, 0, 0.02) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.orien-services-hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 950px;
+  text-align: center;
+}
+
+.orien-services-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  margin-bottom: 28px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.orien-services-badge span {
+  color: var(--color-dark);
+  letter-spacing: 3px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.orien-services-hero-title {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 1.1;
+  font-weight: 300;
+  color: white;
+  margin-bottom: 28px;
+  letter-spacing: -2px;
+}
+
+.orien-services-hero-title span {
+  display: block;
+  color: var(--color-gray);
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+.orien-services-hero-description {
+  max-width: 720px;
+  margin: auto;
+  color: var(--color-gray);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.8;
+}
+
+.orien-services-hero-scroll {
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
-}
-
-.orien-service-item {
-  display: flex;
   align-items: center;
-  gap: 50px;
-  flex-wrap: wrap;
+  gap: 12px;
+  cursor: pointer;
 }
 
-.orien-service-item.orien-service-alternate {
-  flex-direction: row-reverse;
+.orien-services-hero-scroll span {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  color: var(--color-gray);
 }
 
-.orien-service-content {
-  flex: 1;
-  min-width: 280px;
+.orien-services-hero-scroll i {
+  color: var(--color-dark);
+  animation: orienFloat 2s infinite;
 }
 
-.orien-service-content h3 {
-  font-size: 1.8rem;
+@keyframes orienFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* ==========================================
+   SECTION HEADER
+========================================== */
+
+.orien-services-section {
+  padding: 100px 24px 120px;
+}
+
+.orien-section-header {
+  max-width: 900px;
+  margin: 0 auto 80px auto;
+  text-align: center;
+}
+
+.orien-section-tag {
+  display: inline-block;
+  color: var(--color-gray);
+  letter-spacing: 3px;
+  font-size: 0.75rem;
   font-weight: 500;
   margin-bottom: 20px;
+}
+
+.orien-section-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.2;
+  font-weight: 300;
   color: var(--color-dark);
 }
 
-.orien-service-content p {
-  line-height: 1.7;
-  color: #555;
-  font-size: 1rem;
+.orien-section-divider {
+  width: 80px;
+  height: 2px;
+  background: var(--color-gray);
+  margin: 28px auto 0;
+  border-radius: 999px;
 }
+
+/* ==========================================
+   SERVICE CARDS (FLEX ACTIVO)
+========================================== */
+
+.orien-services-container {
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.orien-service-item {
+  display: flex; /* ← IMPORTANTE: no comentar */
+  align-items: center;
+  gap: 60px;
+  padding: 48px;
+  border-radius: var(--service-radius);
+  background: var(--color-white);
+  box-shadow: var(--service-shadow);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+    box-shadow 0.5s;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.orien-service-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.7s ease;
+}
+
+.orien-service-item:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--service-shadow-hover);
+}
+
+.orien-service-alternate {
+  flex-direction: row-reverse;
+}
+
+/* ==========================================
+   CONTENIDO - TÍTULO CENTRADO ARRIBA
+========================================== */
+
+.orien-service-content {
+  flex: 1;
+  text-align: center;
+}
+
+.orien-service-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: var(--color-dark);
+  margin-bottom: 28px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.orien-service-title::after {
+  content: "";
+  width: 60px;
+  height: 2px;
+  background: var(--color-gray);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+  border-radius: 999px;
+}
+
+.orien-service-description {
+  color: #5a5a5a;
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* ==========================================
+   VIDEO - RESPONSIVE (16:9)
+========================================== */
 
 .orien-service-media {
   flex: 1;
-  min-width: 280px;
-  border-radius: 16px;
+  border-radius: 28px;
   overflow: hidden;
-  box-shadow: var(--shadow);
-  background: #000;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: var(--color-dark);
+  width: 100%;
 }
 
-.orien-service-media video {
+.orien-video-wrapper {
+  position: relative;
   width: 100%;
-  height: auto;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.orien-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0;
   display: block;
 }
 
+/* ==========================================
+   CARRUSEL - MISMO TAMAÑO QUE EL VIDEO
+========================================== */
+
+.orien-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: var(--color-dark);
+  width: 100%;
+  display: block;
+}
+
+.orien-carousel-inner {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.orien-carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.orien-carousel-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.orien-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.orien-carousel:hover .orien-carousel-slide.active img {
+  transform: scale(1.02);
+  transition: transform 1.2s ease;
+}
+
+.orien-carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 35px 20px 15px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  color: white;
+  font-size: 0.9rem;
+  text-align: center;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================
+   LOADING
+========================================== */
+
 .orien-loading {
   text-align: center;
-  padding: 60px;
+  padding: 80px;
+}
+
+.orien-spinner {
+  width: 50px;
+  height: 50px;
+  margin: auto auto 20px;
+  border-radius: 50%;
+  border: 3px solid var(--color-light);
+  border-top: 3px solid var(--color-gray);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .orien-empty-state {
   text-align: center;
-  padding: 80px 20px;
-  color: var(--color-gray);
+  padding: 80px;
+  background: var(--color-white);
+  border-radius: 40px;
 }
 
 .orien-empty-state i {
   font-size: 4rem;
+  color: var(--color-gray);
   margin-bottom: 20px;
-  opacity: 0.5;
 }
 
-.orien-empty-state p {
-  font-size: 1rem;
+/* ==========================================
+   REVEAL
+========================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.8s ease;
+}
+
+/* ==========================================
+   RESPONSIVE - IMÁGENES Y VIDEOS IGUAL DE GRANDES
+========================================== */
+
+@media (max-width: 992px) {
+  .orien-service-item,
+  .orien-service-alternate {
+    display: grid;
+    flex-direction: column;
+    gap: 40px;
+  }
 }
 
 @media (max-width: 768px) {
   .orien-services-section {
-    padding: 40px 15px;
+    padding: 60px 16px 80px;
   }
-  .orien-service-item,
-  .orien-service-item.orien-service-alternate {
-    flex-direction: column;
+
+  .orien-service-item {
+    padding: 28px;
     gap: 30px;
   }
-  .orien-service-content h3 {
-    font-size: 1.5rem;
+
+  .orien-services-hero {
+    min-height: 70vh;
+    padding: 80px 20px;
+  }
+
+  /* FORZAR MISMO TAMAÑO ENTRE VIDEO Y CARRUSEL */
+  .orien-service-media,
+  .orien-carousel {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .orien-video-wrapper,
+  .orien-carousel-inner {
+    padding-bottom: 56.25% !important;
+    width: 100%;
+  }
+
+  .orien-video-wrapper iframe,
+  .orien-carousel-slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .orien-carousel-caption {
+    font-size: 0.75rem;
+    padding: 25px 12px 10px;
+  }
+
+  .orien-service-title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .orien-service-item {
+    padding: 20px;
+  }
+  .orien-service-title {
+    font-size: 1.4rem;
   }
 }
