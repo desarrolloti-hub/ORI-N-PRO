@@ -2,13 +2,14 @@
 
 /* ========================================
    ROUTER - Orién Pro
-   Sistema de enrutamiento SPA con soporte para parámetros y protección de rutas
+   Sistema de enrutamiento SPA con soporte para parámetros, fragmentos y scroll a anclas
    ======================================== */
 
 import { routes } from "./routes.js";
 
 let currentController = null;
 let currentPath = window.location.pathname;
+let currentHash = window.location.hash;
 
 /**
  * Verifica si el usuario tiene acceso a la ruta
@@ -62,8 +63,12 @@ export function initRouter() {
  * Maneja el cambio de ruta
  */
 async function handleRoute() {
+  const fullPath = window.location.pathname + window.location.hash;
   const path = window.location.pathname;
+  const hash = window.location.hash.substring(1); // sin el #
+
   currentPath = path;
+  currentHash = hash;
 
   let route = null;
   let params = {};
@@ -137,12 +142,23 @@ async function handleRoute() {
     }
 
     const event = new CustomEvent("route:changed", {
-      detail: { path, route, params },
+      detail: { path, route, params, hash },
     });
     document.dispatchEvent(event);
-  }, 100);
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    // Scroll al elemento si hay hash, de lo contrario al inicio
+    if (hash) {
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // Si no existe el elemento, ir al inicio
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, 100);
 }
 
 /**
@@ -199,13 +215,21 @@ function hideLoader() {
 }
 
 export function navigateTo(path) {
-  if (path === currentPath) return;
-  window.history.pushState({}, "", path);
+  // Extraer ruta base y hash
+  const [basePath, hash] = path.split("#");
+  const newFullPath = basePath + (hash ? "#" + hash : "");
+  if (newFullPath === window.location.pathname + window.location.hash) return;
+
+  window.history.pushState({}, "", newFullPath);
   handleRoute();
 }
 
 export function getCurrentPath() {
   return currentPath;
+}
+
+export function getCurrentHash() {
+  return currentHash;
 }
 
 export function getCurrentController() {

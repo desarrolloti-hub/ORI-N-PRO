@@ -28,6 +28,7 @@
 
 /*Shared*/
 @import './pages/shared/legal/termsAndConditions.css';
+@import './pages/shared/legal/temsOfService.css';
 @import './pages/shared/legal/warranty.css';
 
 /*Pages - Visitor */

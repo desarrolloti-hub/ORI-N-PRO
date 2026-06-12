@@ -177,4 +177,8 @@ export const routes = {
     view: "/modules/shared/legal/warranty.html",
     controller: null,
   },
+  "/termsOfService": {
+    view: "/modules/shared/legal/termsOfService.html",
+    controller: null,
+  },
 };

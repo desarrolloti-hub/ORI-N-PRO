@@ -1,0 +1,193 @@
+/* ========================================
+   TERMS OF SERVICE PAGE - Orién Pro
+   Estilos específicos para términos de servicio
+   ======================================== */
+
+/* Sección principal */
+.orien-legal-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px 80px;
+}
+
+.orien-legal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tarjeta de contenido legal */
+.orien-legal-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.orien-legal-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Fecha */
+.orien-legal-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.orien-legal-date i {
+  font-size: 0.9rem;
+}
+
+/* Texto de bienvenida */
+.orien-legal-welcome {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+/* Títulos de sección */
+.orien-legal-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--color-dark);
+  margin-bottom: 16px;
+  padding-left: 12px;
+  border-left: 3px solid var(--color-gray);
+}
+
+/* Párrafos */
+.orien-legal-card p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.orien-legal-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Listas */
+.orien-legal-list {
+  margin: 12px 0 0 24px;
+  padding: 0;
+}
+
+.orien-legal-list li {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.orien-legal-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Nota especial */
+.orien-legal-note {
+  background: var(--color-light);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #666;
+  border-left: 3px solid var(--color-gray);
+}
+
+.orien-legal-note i {
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+/* Información de contacto (si se necesita) */
+.orien-legal-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-light);
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.orien-legal-contact i {
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+.orien-legal-contact a {
+  color: var(--color-dark);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.orien-legal-contact a:hover {
+  color: var(--color-gray);
+}
+
+/* Separador (si hay más de una sección) */
+.orien-legal-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.orien-legal-divider span {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orien-legal-section {
+    padding: 40px 15px 60px;
+  }
+  .orien-legal-card {
+    padding: 20px;
+  }
+  .orien-legal-title {
+    font-size: 1.1rem;
+    padding-left: 8px;
+  }
+  .orien-legal-list {
+    margin-left: 20px;
+  }
+  .orien-legal-card p,
+  .orien-legal-list li {
+    font-size: 0.85rem;
+  }
+  .orien-legal-note {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .orien-legal-section {
+    padding: 30px 12px 50px;
+  }
+  .orien-legal-card {
+    padding: 16px;
+  }
+  .orien-legal-title {
+    font-size: 1rem;
+  }
+  .orien-legal-list {
+    margin-left: 16px;
+  }
+}
