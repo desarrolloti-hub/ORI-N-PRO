@@ -1,5 +1,6 @@
 /* ========================================
    CAROUSELS EDIT CONTROLLER - Orién Pro
+   Con límite de caracteres y validaciones mejoradas
    ======================================== */
 
 import { CarouselService } from "/src/services/carouselService.js";
@@ -12,6 +13,15 @@ import {
 let carouselService = null;
 let currentCarouselId = null;
 let slides = [];
+
+const LIMITS = {
+  nombre: 50,
+  descripcion: 200,
+  titulo: 60,
+  subtitulo: 100,
+  ctaTexto: 30,
+  ctaUrl: 200,
+};
 
 export function initCarouselsEditController(id) {
   if (!id) return;
@@ -47,8 +57,14 @@ async function loadCarouselData() {
 function populateForm(carousel) {
   const nombreInput = document.querySelector('input[name="nombre"]');
   const descInput = document.querySelector('textarea[name="descripcion"]');
-  if (nombreInput) nombreInput.value = carousel.nombre;
-  if (descInput) descInput.value = carousel.descripcion || "";
+  if (nombreInput) {
+    nombreInput.value = carousel.nombre;
+    nombreInput.maxLength = LIMITS.nombre;
+  }
+  if (descInput) {
+    descInput.value = carousel.descripcion || "";
+    descInput.maxLength = LIMITS.descripcion;
+  }
   const idSpan = document.getElementById("carouselId");
   if (idSpan) idSpan.textContent = `ID: ${carousel.id.substring(0, 8)}...`;
 }
@@ -78,21 +94,21 @@ function renderSlides(slidesArray) {
           </div>
           <div class="orien-slide-fields-col">
             <div class="orien-form-group">
-              <label>Título</label>
-              <input type="text" class="orien-input slide-title" value="${escapeHtml(slide.titulo)}">
+              <label>Título (máx ${LIMITS.titulo} caracteres)</label>
+              <input type="text" class="orien-input slide-title" maxlength="${LIMITS.titulo}" value="${escapeHtml(slide.titulo)}">
             </div>
             <div class="orien-form-group">
-              <label>Subtítulo</label>
-              <input type="text" class="orien-input slide-subtitle" value="${escapeHtml(slide.subtitulo)}">
+              <label>Subtítulo (máx ${LIMITS.subtitulo} caracteres)</label>
+              <input type="text" class="orien-input slide-subtitle" maxlength="${LIMITS.subtitulo}" value="${escapeHtml(slide.subtitulo)}">
             </div>
             <div class="orien-form-row">
               <div class="orien-form-group">
-                <label>Texto CTA</label>
-                <input type="text" class="orien-input slide-cta-text" value="${escapeHtml(slide.ctaTexto)}">
+                <label>Texto CTA (máx ${LIMITS.ctaTexto} caracteres)</label>
+                <input type="text" class="orien-input slide-cta-text" maxlength="${LIMITS.ctaTexto}" value="${escapeHtml(slide.ctaTexto)}">
               </div>
               <div class="orien-form-group">
-                <label>URL CTA</label>
-                <input type="text" class="orien-input slide-cta-url" value="${escapeHtml(slide.ctaUrl)}">
+                <label>URL CTA (máx ${LIMITS.ctaUrl} caracteres)</label>
+                <input type="text" class="orien-input slide-cta-url" maxlength="${LIMITS.ctaUrl}" value="${escapeHtml(slide.ctaUrl)}">
               </div>
             </div>
           </div>
@@ -103,7 +119,6 @@ function renderSlides(slidesArray) {
     container.insertAdjacentHTML("beforeend", slideHtml);
     bindSlideEventsForId(slideId, idx, slide.imagen);
   });
-  bindSlideEvents();
 }
 
 function bindSlideEventsForId(slideId, originalIndex, existingImage) {
@@ -204,21 +219,6 @@ function updateSlideNumbers() {
   });
 }
 
-function bindSlideEvents() {
-  document.getElementById("slidesContainer")?.addEventListener("input", (e) => {
-    const target = e.target;
-    if (
-      target.classList.contains("slide-title") ||
-      target.classList.contains("slide-subtitle") ||
-      target.classList.contains("slide-cta-text") ||
-      target.classList.contains("slide-cta-url")
-    ) {
-      const card = target.closest(".orien-slide-card");
-      if (card) updateSlideFromDom(card.dataset.slideId);
-    }
-  });
-}
-
 function bindAddSlide() {
   const btn = document.getElementById("addSlideBtn");
   if (btn) {
@@ -230,6 +230,10 @@ function bindAddSlide() {
 function addNewSlide() {
   const container = document.getElementById("slidesContainer");
   if (!container) return;
+  if (container.children.length >= 10) {
+    showNotification("Máximo 10 slides por carrusel", "warning");
+    return;
+  }
   const newId = `new-${Date.now()}`;
   const newIndex = slides.length + 1;
   const slideHtml = `
@@ -254,21 +258,21 @@ function addNewSlide() {
         </div>
         <div class="orien-slide-fields-col">
           <div class="orien-form-group">
-            <label>Título</label>
-            <input type="text" class="orien-input slide-title">
+            <label>Título (máx ${LIMITS.titulo} caracteres)</label>
+            <input type="text" class="orien-input slide-title" maxlength="${LIMITS.titulo}">
           </div>
           <div class="orien-form-group">
-            <label>Subtítulo</label>
-            <input type="text" class="orien-input slide-subtitle">
+            <label>Subtítulo (máx ${LIMITS.subtitulo} caracteres)</label>
+            <input type="text" class="orien-input slide-subtitle" maxlength="${LIMITS.subtitulo}">
           </div>
           <div class="orien-form-row">
             <div class="orien-form-group">
-              <label>Texto CTA</label>
-              <input type="text" class="orien-input slide-cta-text">
+              <label>Texto CTA (máx ${LIMITS.ctaTexto} caracteres)</label>
+              <input type="text" class="orien-input slide-cta-text" maxlength="${LIMITS.ctaTexto}">
             </div>
             <div class="orien-form-group">
-              <label>URL CTA</label>
-              <input type="text" class="orien-input slide-cta-url">
+              <label>URL CTA (máx ${LIMITS.ctaUrl} caracteres)</label>
+              <input type="text" class="orien-input slide-cta-url" maxlength="${LIMITS.ctaUrl}">
             </div>
           </div>
         </div>
@@ -300,12 +304,68 @@ function bindFormSubmit() {
 async function handleUpdate(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-  const nombre = formData.get("nombre");
-  const descripcion = formData.get("descripcion") || "";
+  const nombre = formData.get("nombre")?.trim() || "";
+  const descripcion = formData.get("descripcion")?.trim() || "";
+
+  // Validar longitud
+  if (nombre.length === 0) {
+    showNotification("El nombre del carrusel es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (descripcion.length > LIMITS.descripcion) {
+    showNotification(
+      `La descripción no puede exceder ${LIMITS.descripcion} caracteres`,
+      "error",
+    );
+    return;
+  }
 
   if (slides.length === 0) {
     showNotification("Debe tener al menos un slide", "error");
     return;
+  }
+
+  for (let i = 0; i < slides.length; i++) {
+    const s = slides[i];
+    if (!s.imagen) {
+      showNotification(`Slide ${i + 1}: debe tener una imagen`, "error");
+      return;
+    }
+    if (s.titulo?.length > LIMITS.titulo) {
+      showNotification(
+        `Slide ${i + 1}: el título excede ${LIMITS.titulo} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.subtitulo?.length > LIMITS.subtitulo) {
+      showNotification(
+        `Slide ${i + 1}: el subtítulo excede ${LIMITS.subtitulo} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.ctaTexto?.length > LIMITS.ctaTexto) {
+      showNotification(
+        `Slide ${i + 1}: el texto CTA excede ${LIMITS.ctaTexto} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.ctaUrl?.length > LIMITS.ctaUrl) {
+      showNotification(
+        `Slide ${i + 1}: la URL CTA excede ${LIMITS.ctaUrl} caracteres`,
+        "error",
+      );
+      return;
+    }
   }
 
   const finalSlides = slides.map((s) => ({

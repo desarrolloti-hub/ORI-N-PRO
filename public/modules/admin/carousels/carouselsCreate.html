@@ -7,7 +7,7 @@
     </p>
   </div>
 </div>
-<br>
+<br />
 <div class="orien-admin-carousels-create">
   <div class="orien-admin-create-container">
     <div class="orien-admin-create-nav">
@@ -25,22 +25,28 @@
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Información del carrusel</h3>
             <div class="orien-form-group">
-              <label class="orien-label">Nombre del carrusel *</label>
+              <label class="orien-label"
+                >Nombre del carrusel * (máx 50 caracteres)</label
+              >
               <input
                 type="text"
                 name="nombre"
                 class="orien-input"
                 required
+                maxlength="50"
                 placeholder="Ej: Carrusel principal"
               />
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Descripción (opcional)</label>
+              <label class="orien-label"
+                >Descripción (opcional, máx 200 caracteres)</label
+              >
               <textarea
                 name="descripcion"
                 class="orien-input orien-textarea"
                 rows="2"
+                maxlength="200"
                 placeholder="Describe este conjunto de slides..."
               ></textarea>
             </div>

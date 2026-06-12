@@ -1,5 +1,6 @@
 /* ========================================
    CAROUSELS CREATE CONTROLLER - Orién Pro
+   Con límite de caracteres y validaciones mejoradas
    ======================================== */
 
 import { CarouselService } from "/src/services/carouselService.js";
@@ -13,12 +14,26 @@ let carouselService = null;
 let slides = [];
 let nextSlideIndex = 1;
 
+// Límites de caracteres
+const LIMITS = {
+  nombre: 50,
+  descripcion: 200,
+  titulo: 60,
+  subtitulo: 100,
+  ctaTexto: 30,
+  ctaUrl: 200,
+};
+
 export function initCarouselsCreateController() {
   carouselService = new CarouselService();
   bindFormSubmit();
   bindAddSlide();
   bindImageUploadHandlers();
   bindSlideEvents();
+  // Agregar un slide inicial por defecto
+  if (document.getElementById("slidesContainer")?.children.length === 0) {
+    addSlide();
+  }
   console.log("✅ Carousels Create Controller inicializado");
 }
 
@@ -32,12 +47,70 @@ function bindFormSubmit() {
 async function handleSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-  const nombre = formData.get("nombre");
-  const descripcion = formData.get("descripcion") || "";
+  const nombre = formData.get("nombre")?.trim() || "";
+  const descripcion = formData.get("descripcion")?.trim() || "";
 
+  // Validar longitud
+  if (nombre.length === 0) {
+    showNotification("El nombre del carrusel es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (descripcion.length > LIMITS.descripcion) {
+    showNotification(
+      `La descripción no puede exceder ${LIMITS.descripcion} caracteres`,
+      "error",
+    );
+    return;
+  }
+
+  // Validar slides
   if (slides.length === 0) {
     showNotification("Debe agregar al menos un slide", "error");
     return;
+  }
+
+  // Validar cada slide
+  for (let i = 0; i < slides.length; i++) {
+    const s = slides[i];
+    if (!s.imagen) {
+      showNotification(`Slide ${i + 1}: debe subir una imagen`, "error");
+      return;
+    }
+    if (s.titulo?.length > LIMITS.titulo) {
+      showNotification(
+        `Slide ${i + 1}: el título excede ${LIMITS.titulo} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.subtitulo?.length > LIMITS.subtitulo) {
+      showNotification(
+        `Slide ${i + 1}: el subtítulo excede ${LIMITS.subtitulo} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.ctaTexto?.length > LIMITS.ctaTexto) {
+      showNotification(
+        `Slide ${i + 1}: el texto CTA excede ${LIMITS.ctaTexto} caracteres`,
+        "error",
+      );
+      return;
+    }
+    if (s.ctaUrl?.length > LIMITS.ctaUrl) {
+      showNotification(
+        `Slide ${i + 1}: la URL CTA excede ${LIMITS.ctaUrl} caracteres`,
+        "error",
+      );
+      return;
+    }
   }
 
   try {
@@ -62,6 +135,13 @@ function bindAddSlide() {
 function addSlide() {
   const container = document.getElementById("slidesContainer");
   if (!container) return;
+
+  // Máximo 10 slides
+  if (container.children.length >= 10) {
+    showNotification("Máximo 10 slides por carrusel", "warning");
+    return;
+  }
+
   const slideId = Date.now();
   const slideHtml = `
     <div class="orien-slide-card" data-slide-id="${slideId}">
@@ -85,21 +165,21 @@ function addSlide() {
         </div>
         <div class="orien-slide-fields-col">
           <div class="orien-form-group">
-            <label>Título</label>
-            <input type="text" class="orien-input slide-title" placeholder="Título del slide">
+            <label>Título (máx ${LIMITS.titulo} caracteres)</label>
+            <input type="text" class="orien-input slide-title" maxlength="${LIMITS.titulo}" placeholder="Título del slide">
           </div>
           <div class="orien-form-group">
-            <label>Subtítulo</label>
-            <input type="text" class="orien-input slide-subtitle" placeholder="Subtítulo">
+            <label>Subtítulo (máx ${LIMITS.subtitulo} caracteres)</label>
+            <input type="text" class="orien-input slide-subtitle" maxlength="${LIMITS.subtitulo}" placeholder="Subtítulo">
           </div>
           <div class="orien-form-row">
             <div class="orien-form-group">
-              <label>Texto CTA</label>
-              <input type="text" class="orien-input slide-cta-text" placeholder="Ej: Ver más">
+              <label>Texto CTA (máx ${LIMITS.ctaTexto} caracteres)</label>
+              <input type="text" class="orien-input slide-cta-text" maxlength="${LIMITS.ctaTexto}" placeholder="Ej: Ver más">
             </div>
             <div class="orien-form-group">
-              <label>URL CTA</label>
-              <input type="text" class="orien-input slide-cta-url" placeholder="/products">
+              <label>URL CTA (máx ${LIMITS.ctaUrl} caracteres)</label>
+              <input type="text" class="orien-input slide-cta-url" maxlength="${LIMITS.ctaUrl}" placeholder="/products">
             </div>
           </div>
         </div>
@@ -153,6 +233,15 @@ function bindSlideEventsForId(slideId) {
       if (file && file.type.match("image.*")) handleImageUpload(file, slideId);
     });
   }
+
+  // Actualizar datos al modificar inputs
+  const inputs = card.querySelectorAll(
+    ".slide-title, .slide-subtitle, .slide-cta-text, .slide-cta-url",
+  );
+  inputs.forEach((input) => {
+    input.removeEventListener("input", () => updateSlideDataFromDom(slideId));
+    input.addEventListener("input", () => updateSlideDataFromDom(slideId));
+  });
 }
 
 function handleImageUpload(file, slideId) {
@@ -235,16 +324,5 @@ function updateSlideNumbers() {
 }
 
 function bindImageUploadHandlers() {
-  document.addEventListener("input", (e) => {
-    const target = e.target;
-    if (
-      target.classList.contains("slide-title") ||
-      target.classList.contains("slide-subtitle") ||
-      target.classList.contains("slide-cta-text") ||
-      target.classList.contains("slide-cta-url")
-    ) {
-      const card = target.closest(".orien-slide-card");
-      if (card) updateSlideDataFromDom(card.dataset.slideId);
-    }
-  });
+  // Ya se maneja en bindSlideEventsForId
 }

@@ -30,16 +30,25 @@
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Información del carrusel</h3>
             <div class="orien-form-group">
-              <label class="orien-label">Nombre *</label>
-              <input type="text" name="nombre" class="orien-input" required />
+              <label class="orien-label">Nombre * (máx 50 caracteres)</label>
+              <input
+                type="text"
+                name="nombre"
+                class="orien-input"
+                required
+                maxlength="50"
+              />
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Descripción</label>
+              <label class="orien-label"
+                >Descripción (máx 200 caracteres)</label
+              >
               <textarea
                 name="descripcion"
                 class="orien-input orien-textarea"
                 rows="2"
+                maxlength="200"
               ></textarea>
             </div>
           </div>
@@ -55,6 +64,10 @@
             >
               <i class="fas fa-plus"></i> Agregar slide
             </button>
+            <small class="orien-input-hint"
+              >Máximo 10 slides. Arrastra la imagen o haz clic para
+              cambiar.</small
+            >
           </div>
 
           <div class="orien-form-actions">
