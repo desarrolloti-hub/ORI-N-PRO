@@ -1,5 +1,6 @@
 /* ========================================
    CATEGORIES CREATE CONTROLLER - Orién Pro
+   Con límite de caracteres
    ======================================== */
 
 import { CategoryService } from "/src/services/categoryService.js";
@@ -11,6 +12,11 @@ import {
 
 let categoryService = null;
 let initialized = false;
+
+const LIMITS = {
+  nombre: 50,
+  descripcion: 200,
+};
 
 export function initCategoriesCreateController() {
   if (initialized) return;
@@ -40,9 +46,32 @@ async function handleSubmit(event) {
   const form = event.target;
   const formData = new FormData(form);
 
+  const nombre = formData.get("nombre")?.trim() || "";
+  const descripcion = formData.get("descripcion")?.trim() || "";
+
+  // Validar longitud
+  if (nombre.length === 0) {
+    showNotification("El nombre de la categoría es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (descripcion.length > LIMITS.descripcion) {
+    showNotification(
+      `La descripción no puede exceder ${LIMITS.descripcion} caracteres`,
+      "error",
+    );
+    return;
+  }
+
   const categoryData = {
-    nombre: formData.get("nombre"),
-    descripcion: formData.get("descripcion"),
+    nombre: nombre,
+    descripcion: descripcion,
     activo: formData.get("status") === "active",
   };
 

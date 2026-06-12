@@ -1,5 +1,6 @@
 /* ========================================
    CATEGORIES EDIT CONTROLLER - Orién Pro
+   Con límite de caracteres
    ======================================== */
 
 import { CategoryService } from "/src/services/categoryService.js";
@@ -12,6 +13,12 @@ import {
 let categoryService = null;
 let currentCategoryId = null;
 let initialized = false;
+
+const LIMITS = {
+  nombre: 50,
+  descripcion: 200,
+  slug: 50, // aunque sea readonly, validamos por seguridad
+};
 
 export function initCategoriesEditController(id) {
   if (initialized && currentCategoryId === id) return;
@@ -70,10 +77,18 @@ function populateForm(category) {
   const statusRadios = document.querySelectorAll('input[name="status"]');
   const idSpan = document.getElementById("categoryId");
 
-  if (nombreInput) nombreInput.value = category.nombre;
-  if (slugInput) slugInput.value = category.slug;
-  if (descripcionTextarea)
+  if (nombreInput) {
+    nombreInput.value = category.nombre;
+    nombreInput.maxLength = LIMITS.nombre;
+  }
+  if (slugInput) {
+    slugInput.value = category.slug;
+    slugInput.maxLength = LIMITS.slug;
+  }
+  if (descripcionTextarea) {
     descripcionTextarea.value = category.descripcion || "";
+    descripcionTextarea.maxLength = LIMITS.descripcion;
+  }
   if (idSpan) idSpan.textContent = `ID: ${category.id.substring(0, 8)}...`;
 
   statusRadios.forEach((radio) => {
@@ -102,9 +117,32 @@ async function handleSubmit(event) {
   const form = event.target;
   const formData = new FormData(form);
 
+  const nombre = formData.get("nombre")?.trim() || "";
+  const descripcion = formData.get("descripcion")?.trim() || "";
+
+  // Validar longitud
+  if (nombre.length === 0) {
+    showNotification("El nombre de la categoría es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (descripcion.length > LIMITS.descripcion) {
+    showNotification(
+      `La descripción no puede exceder ${LIMITS.descripcion} caracteres`,
+      "error",
+    );
+    return;
+  }
+
   const categoryData = {
-    nombre: formData.get("nombre"),
-    descripcion: formData.get("descripcion"),
+    nombre: nombre,
+    descripcion: descripcion,
     activo: formData.get("status") === "active",
   };
 

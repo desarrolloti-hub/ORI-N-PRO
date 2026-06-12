@@ -28,24 +28,41 @@
       <div class="orien-card-content">
         <form class="orien-form" id="categoryForm">
           <div class="orien-form-group">
-            <label class="orien-label">Nombre de la categoría</label>
-            <input type="text" name="nombre" class="orien-input" required />
+            <label class="orien-label"
+              >Nombre de la categoría * (máx 50 caracteres)</label
+            >
+            <input
+              type="text"
+              name="nombre"
+              class="orien-input"
+              required
+              maxlength="50"
+            />
           </div>
           <br />
           <div class="orien-form-group">
-            <label class="orien-label">Slug</label>
-            <input type="text" name="slug" class="orien-input" readonly />
+            <label class="orien-label"
+              >Slug (máx 50 caracteres, solo lectura)</label
+            >
+            <input
+              type="text"
+              name="slug"
+              class="orien-input"
+              readonly
+              maxlength="50"
+            />
             <small class="orien-input-hint"
               >Identificador único generado automáticamente</small
             >
           </div>
           <br />
           <div class="orien-form-group">
-            <label class="orien-label">Descripción</label>
+            <label class="orien-label">Descripción (máx 200 caracteres)</label>
             <textarea
               name="descripcion"
               class="orien-input orien-textarea"
               rows="4"
+              maxlength="200"
             ></textarea>
           </div>
           <br />

@@ -21,13 +21,16 @@
       <div class="orien-card-content">
         <form class="orien-form" id="categoryForm">
           <div class="orien-form-group">
-            <label class="orien-label">Nombre de la categoría</label>
+            <label class="orien-label"
+              >Nombre de la categoría * (máx 50 caracteres)</label
+            >
             <input
               type="text"
               name="nombre"
               class="orien-input"
               placeholder="Ej: Pantallas LED"
               required
+              maxlength="50"
             />
             <small class="orien-input-hint"
               >El slug se generará automáticamente</small
@@ -35,12 +38,13 @@
           </div>
           <br />
           <div class="orien-form-group">
-            <label class="orien-label">Descripción</label>
+            <label class="orien-label">Descripción (máx 200 caracteres)</label>
             <textarea
               name="descripcion"
               class="orien-input orien-textarea"
               rows="4"
               placeholder="Descripción de la categoría..."
+              maxlength="200"
             ></textarea>
           </div>
           <br />
