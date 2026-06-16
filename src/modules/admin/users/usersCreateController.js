@@ -1,5 +1,6 @@
 /* ========================================
    USERS CREATE CONTROLLER - Orién Pro
+   Con validación de nombres y límites
    ======================================== */
 
 import { UserService } from "/src/services/userService";
@@ -12,6 +13,17 @@ import {
 let userService = null;
 let initialized = false;
 let currentAvatarBase64 = "";
+
+const LIMITS = {
+  nombre: 50,
+  apellidos: 50,
+  email: 100,
+  passwordMin: 6,
+  passwordMax: 30,
+};
+
+// Regex para nombres: letras, espacios, guiones, apóstrofes, acentos, ñ
+const NAME_PATTERN = /^[A-Za-zÀ-ÿ\u00f1\u00d1\s\-']+$/;
 
 export function initUsersCreateController() {
   if (initialized) return;
@@ -36,42 +48,106 @@ function bindFormSubmit() {
   form.addEventListener("submit", handleSubmit);
 }
 
+function isValidName(name) {
+  if (!name || name.trim().length === 0) return false;
+  return NAME_PATTERN.test(name.trim());
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const formData = new FormData(form);
 
-  const nombre = formData.get("nombre");
-  const apellidos = formData.get("apellidos");
+  const nombre = formData.get("nombre")?.trim() || "";
+  const apellidos = formData.get("apellidos")?.trim() || "";
   const nombreCompleto = `${nombre} ${apellidos}`.trim();
 
-  const userData = {
-    nombre: nombreCompleto,
-    email: formData.get("email"),
-    cargo: formData.get("cargo"),
-    activo: formData.get("status") === "active",
-    fotoURL: currentAvatarBase64,
-  };
+  // Validar nombre
+  if (!isValidName(nombre)) {
+    showNotification(
+      "El nombre solo debe contener letras, espacios, guiones o apóstrofes",
+      "error",
+    );
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
 
-  const password = formData.get("password");
-  const confirmPassword = formData.get("confirm_password");
+  // Validar apellidos
+  if (!isValidName(apellidos)) {
+    showNotification(
+      "Los apellidos solo deben contener letras, espacios, guiones o apóstrofes",
+      "error",
+    );
+    return;
+  }
+  if (apellidos.length > LIMITS.apellidos) {
+    showNotification(
+      `Los apellidos no pueden exceder ${LIMITS.apellidos} caracteres`,
+      "error",
+    );
+    return;
+  }
+
+  // Validar email
+  const email = formData.get("email")?.trim() || "";
+  if (email.length === 0) {
+    showNotification("El correo electrónico es obligatorio", "error");
+    return;
+  }
+  if (email.length > LIMITS.email) {
+    showNotification(
+      `El correo no puede exceder ${LIMITS.email} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (!email.includes("@") || !email.includes(".")) {
+    showNotification("El correo electrónico no es válido", "error");
+    return;
+  }
+
+  // Validar contraseña
+  const password = formData.get("password") || "";
+  const confirmPassword = formData.get("confirm_password") || "";
 
   if (password !== confirmPassword) {
     showNotification("Las contraseñas no coinciden", "error");
     return;
   }
-  if (!userData.nombre) {
-    showNotification("El nombre es obligatorio", "error");
+  if (password.length < LIMITS.passwordMin) {
+    showNotification(
+      `La contraseña debe tener al menos ${LIMITS.passwordMin} caracteres`,
+      "error",
+    );
     return;
   }
-  if (!userData.email || !userData.email.includes("@")) {
-    showNotification("El correo electrónico no es válido", "error");
+  if (password.length > LIMITS.passwordMax) {
+    showNotification(
+      `La contraseña no puede exceder ${LIMITS.passwordMax} caracteres`,
+      "error",
+    );
     return;
   }
-  if (!password || password.length < 6) {
-    showNotification("La contraseña debe tener al menos 6 caracteres", "error");
+
+  // Validar nombre completo
+  if (!nombreCompleto) {
+    showNotification("El nombre completo es obligatorio", "error");
     return;
   }
+
+  const userData = {
+    nombre: nombreCompleto,
+    email: email,
+    cargo: formData.get("cargo"),
+    activo: formData.get("status") === "active",
+    fotoURL: currentAvatarBase64,
+  };
 
   try {
     showLoading();

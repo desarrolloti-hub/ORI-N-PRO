@@ -5,7 +5,7 @@
     <p class="orien-banner-subtitle">Agrega un nuevo usuario al sistema</p>
   </div>
 </div>
-<br>
+<br />
 <div class="orien-admin-users-create">
   <div class="orien-admin-create-container">
     <div class="orien-admin-create-nav">
@@ -51,27 +51,32 @@
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Información de la cuenta</h3>
             <div class="orien-form-group">
-              <label class="orien-label">Correo electrónico</label>
+              <label class="orien-label"
+                >Correo electrónico (máx 100 caracteres)</label
+              >
               <input
                 type="email"
                 name="email"
                 class="orien-input"
                 placeholder="usuario@ejemplo.com"
                 required
+                maxlength="100"
               />
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Contraseña</label>
+              <label class="orien-label">Contraseña (6-30 caracteres)</label>
               <input
                 type="password"
                 name="password"
                 class="orien-input"
                 placeholder="••••••••"
                 required
+                minlength="6"
+                maxlength="30"
               />
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
               <label class="orien-label">Confirmar contraseña</label>
               <input
@@ -80,6 +85,8 @@
                 class="orien-input"
                 placeholder="••••••••"
                 required
+                minlength="6"
+                maxlength="30"
               />
             </div>
           </div>
@@ -88,23 +95,29 @@
             <h3 class="orien-form-section-title">Información personal</h3>
             <div class="orien-form-row">
               <div class="orien-form-group" style="flex: 1">
-                <label class="orien-label">Nombre</label>
+                <label class="orien-label">Nombre (máx 50 caracteres)</label>
                 <input
                   type="text"
                   name="nombre"
                   class="orien-input"
                   placeholder="Nombre"
                   required
+                  maxlength="50"
+                  pattern="[A-Za-zÀ-ÿ\u00f1\u00d1\s\-']+"
+                  title="Solo letras, espacios, guiones y apóstrofes"
                 />
               </div>
               <div class="orien-form-group" style="flex: 1">
-                <label class="orien-label">Apellidos</label>
+                <label class="orien-label">Apellidos (máx 50 caracteres)</label>
                 <input
                   type="text"
                   name="apellidos"
                   class="orien-input"
                   placeholder="Apellidos"
                   required
+                  maxlength="50"
+                  pattern="[A-Za-zÀ-ÿ\u00f1\u00d1\s\-']+"
+                  title="Solo letras, espacios, guiones y apóstrofes"
                 />
               </div>
             </div>
@@ -119,7 +132,7 @@
                 <option value="admin">Administrador</option>
               </select>
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
               <label class="orien-label">Estado</label>
               <div class="orien-radio-group">

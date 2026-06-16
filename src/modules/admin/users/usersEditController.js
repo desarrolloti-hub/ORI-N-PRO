@@ -1,5 +1,6 @@
 /* ========================================
    USERS EDIT CONTROLLER - Orién Pro
+   Con validación de nombres y límites
    ======================================== */
 
 import { UserService } from "/src/services/userService";
@@ -16,10 +17,24 @@ let initialized = false;
 let currentAvatarBase64 = "";
 let currentUserData = null;
 
+const LIMITS = {
+  nombre: 50,
+  apellidos: 50,
+  email: 100,
+  passwordMin: 6,
+  passwordMax: 30,
+};
+
+const NAME_PATTERN = /^[A-Za-zÀ-ÿ\u00f1\u00d1\s\-']+$/;
+
+function isValidName(name) {
+  if (!name || name.trim().length === 0) return false;
+  return NAME_PATTERN.test(name.trim());
+}
+
 export function initUsersEditController(uid) {
   if (initialized && currentUserUid === uid) return;
 
-  // Verificar permisos: solo admin o el propio usuario pueden editar
   const loggedUser = getCurrentUser();
   if (!loggedUser) {
     showNotification("Debes iniciar sesión", "error");
@@ -75,9 +90,23 @@ function populateForm(user) {
   const nombre = nombreParts[0] || "";
   const apellidos = nombreParts.slice(1).join(" ") || "";
 
-  document.querySelector('input[name="nombre"]').value = nombre;
-  document.querySelector('input[name="apellidos"]').value = apellidos;
-  document.querySelector('input[name="email"]').value = user.email;
+  const nombreInput = document.querySelector('input[name="nombre"]');
+  const apellidosInput = document.querySelector('input[name="apellidos"]');
+  const emailInput = document.querySelector('input[name="email"]');
+
+  if (nombreInput) {
+    nombreInput.value = nombre;
+    nombreInput.maxLength = LIMITS.nombre;
+  }
+  if (apellidosInput) {
+    apellidosInput.value = apellidos;
+    apellidosInput.maxLength = LIMITS.apellidos;
+  }
+  if (emailInput) {
+    emailInput.value = user.email;
+    emailInput.maxLength = LIMITS.email;
+  }
+
   document.querySelector('select[name="cargo"]').value = user.cargo;
   document.getElementById("userUid").textContent =
     `ID: ${user.uid.substring(0, 8)}...`;
@@ -126,9 +155,47 @@ function bindFormSubmit() {
 async function handleSubmit(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
-  const nombre = formData.get("nombre");
-  const apellidos = formData.get("apellidos");
+
+  const nombre = formData.get("nombre")?.trim() || "";
+  const apellidos = formData.get("apellidos")?.trim() || "";
   const nombreCompleto = `${nombre} ${apellidos}`.trim();
+
+  // Validar nombre
+  if (!isValidName(nombre)) {
+    showNotification(
+      "El nombre solo debe contener letras, espacios, guiones o apóstrofes",
+      "error",
+    );
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+
+  // Validar apellidos
+  if (!isValidName(apellidos)) {
+    showNotification(
+      "Los apellidos solo deben contener letras, espacios, guiones o apóstrofes",
+      "error",
+    );
+    return;
+  }
+  if (apellidos.length > LIMITS.apellidos) {
+    showNotification(
+      `Los apellidos no pueden exceder ${LIMITS.apellidos} caracteres`,
+      "error",
+    );
+    return;
+  }
+
+  if (!nombreCompleto) {
+    showNotification("El nombre completo es obligatorio", "error");
+    return;
+  }
 
   const updateData = {
     nombre: nombreCompleto,
@@ -137,21 +204,30 @@ async function handleSubmit(event) {
     fotoURL: currentAvatarBase64,
   };
 
-  const newPassword = formData.get("new_password");
-  const confirmPassword = formData.get("confirm_password");
+  const newPassword = formData.get("new_password") || "";
+  const confirmPassword = formData.get("confirm_password") || "";
 
   try {
     showLoading();
     await userService.updateUser(currentUserUid, updateData);
-    if (newPassword && newPassword.trim() !== "") {
+
+    if (newPassword.trim() !== "") {
       if (newPassword !== confirmPassword) {
         showNotification("Las contraseñas nuevas no coinciden", "error");
         hideLoading();
         return;
       }
-      if (newPassword.length < 6) {
+      if (newPassword.length < LIMITS.passwordMin) {
         showNotification(
-          "La contraseña debe tener al menos 6 caracteres",
+          `La contraseña debe tener al menos ${LIMITS.passwordMin} caracteres`,
+          "error",
+        );
+        hideLoading();
+        return;
+      }
+      if (newPassword.length > LIMITS.passwordMax) {
+        showNotification(
+          `La contraseña no puede exceder ${LIMITS.passwordMax} caracteres`,
           "error",
         );
         hideLoading();
@@ -159,6 +235,7 @@ async function handleSubmit(event) {
       }
       await userService.changeUserPassword(currentUserUid, newPassword);
     }
+
     showNotification("Usuario actualizado exitosamente", "success");
     setTimeout(() => (window.location.href = "/usersList"), 1500);
   } catch (error) {
