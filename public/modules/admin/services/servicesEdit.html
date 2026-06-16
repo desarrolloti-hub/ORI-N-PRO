@@ -32,16 +32,18 @@
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Video de YouTube</h3>
             <div class="orien-form-group">
-              <label class="orien-label">URL del video (YouTube)</label>
+              <label class="orien-label">URL del video (YouTube) *</label>
               <input
                 type="url"
                 name="youtubeUrl"
                 class="orien-input"
                 required
                 id="youtubeUrlInput"
+                maxlength="200"
               />
               <small class="orien-input-hint"
-                >Dejar igual para mantener el mismo video</small
+                >Dejar igual para mantener el mismo video (máx 200
+                caracteres)</small
               >
             </div>
             <div id="youtubePreview" class="orien-youtube-preview"></div>
@@ -50,8 +52,14 @@
           <div class="orien-form-section">
             <h3 class="orien-form-section-title">Información del servicio</h3>
             <div class="orien-form-group">
-              <label class="orien-label">Título</label>
-              <input type="text" name="titulo" class="orien-input" required />
+              <label class="orien-label">Título * (máx 80 caracteres)</label>
+              <input
+                type="text"
+                name="titulo"
+                class="orien-input"
+                required
+                maxlength="80"
+              />
             </div>
             <br />
 
@@ -73,12 +81,16 @@
             <br />
 
             <div id="textContentGroup" class="orien-form-group">
-              <label class="orien-label">Descripción</label>
+              <label class="orien-label"
+                >Descripción * (máx 500 caracteres)</label
+              >
               <textarea
                 name="descripcion"
                 class="orien-input orien-textarea"
                 rows="4"
+                maxlength="500"
               ></textarea>
+              <small class="orien-input-hint">Mínimo 10 caracteres</small>
             </div>
 
             <div
@@ -102,6 +114,10 @@
                 style="display: none"
                 multiple
               />
+              <small class="orien-input-hint"
+                >Máximo 10 imágenes. El texto de cada imagen tiene máximo 100
+                caracteres.</small
+              >
             </div>
             <br />
 

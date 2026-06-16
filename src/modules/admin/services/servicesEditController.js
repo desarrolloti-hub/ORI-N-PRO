@@ -1,5 +1,6 @@
 /* ========================================
    SERVICES EDIT CONTROLLER - Orién Pro (con Carrusel)
+   Con límite de caracteres y validación de YouTube
    ======================================== */
 
 import { ServiceService } from "/src/services/serviceService.js";
@@ -12,6 +13,13 @@ import {
 let serviceService = null;
 let currentServiceId = null;
 let carouselItemsArray = [];
+
+const LIMITS = {
+  titulo: 80,
+  descripcion: 500,
+  youtubeUrl: 200,
+  caption: 100,
+};
 
 export function initServicesEditController(id) {
   if (!id) return;
@@ -43,6 +51,15 @@ async function loadServiceData() {
 }
 
 function populateForm(service) {
+  const tituloInput = document.querySelector('input[name="titulo"]');
+  if (tituloInput) tituloInput.maxLength = LIMITS.titulo;
+
+  const descInput = document.querySelector('textarea[name="descripcion"]');
+  if (descInput) descInput.maxLength = LIMITS.descripcion;
+
+  const youtubeInput = document.querySelector('input[name="youtubeUrl"]');
+  if (youtubeInput) youtubeInput.maxLength = LIMITS.youtubeUrl;
+
   document.querySelector('input[name="titulo"]').value = service.titulo;
   document.querySelector('textarea[name="descripcion"]').value =
     service.descripcion;
@@ -91,13 +108,83 @@ async function handleSubmit(e) {
   const formData = new FormData(e.target);
   const contentType = formData.get("contentType");
   const carouselEnabled = contentType === "carousel";
+
+  const titulo = formData.get("titulo")?.trim() || "";
+  const descripcion = formData.get("descripcion")?.trim() || "";
+  const youtubeUrl = formData.get("youtubeUrl")?.trim() || "";
+
+  // Validaciones de longitud
+  if (titulo.length === 0) {
+    showNotification("El título es obligatorio", "error");
+    return;
+  }
+  if (titulo.length > LIMITS.titulo) {
+    showNotification(
+      `El título no puede exceder ${LIMITS.titulo} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (youtubeUrl.length === 0) {
+    showNotification("La URL de YouTube es obligatoria", "error");
+    return;
+  }
+  if (youtubeUrl.length > LIMITS.youtubeUrl) {
+    showNotification(
+      `La URL de YouTube no puede exceder ${LIMITS.youtubeUrl} caracteres`,
+      "error",
+    );
+    return;
+  }
+
+  // Validación de YouTube
+  const embedUrl = serviceService.getEmbedUrl(youtubeUrl);
+  if (!embedUrl) {
+    showNotification("La URL de YouTube no es válida", "error");
+    return;
+  }
+
+  // Validación de contenido
+  if (!carouselEnabled) {
+    if (descripcion.length === 0) {
+      showNotification("La descripción es obligatoria", "error");
+      return;
+    }
+    if (descripcion.length < 10) {
+      showNotification(
+        "La descripción debe tener al menos 10 caracteres",
+        "error",
+      );
+      return;
+    }
+    if (descripcion.length > LIMITS.descripcion) {
+      showNotification(
+        `La descripción no puede exceder ${LIMITS.descripcion} caracteres`,
+        "error",
+      );
+      return;
+    }
+  } else {
+    if (carouselItemsArray.length === 0) {
+      showNotification("Debe agregar al menos una imagen al carrusel", "error");
+      return;
+    }
+    for (let i = 0; i < carouselItemsArray.length; i++) {
+      if (carouselItemsArray[i].caption?.length > LIMITS.caption) {
+        showNotification(
+          `Caption de la imagen ${i + 1} excede ${LIMITS.caption} caracteres`,
+          "error",
+        );
+        return;
+      }
+    }
+  }
+
   formData.set("carouselEnabled", carouselEnabled ? "true" : "false");
 
   try {
     showLoading();
     if (carouselEnabled) {
-      if (carouselItemsArray.length === 0)
-        throw new Error("Debe agregar al menos una imagen");
       await serviceService.updateService(
         currentServiceId,
         formData,
@@ -173,7 +260,15 @@ function bindCarouselEvents() {
   addBtn.addEventListener("click", () => fileInput.click());
   fileInput.addEventListener("change", async (e) => {
     const files = Array.from(e.target.files);
-    for (const file of files) {
+    const remaining = 10 - carouselItemsArray.length;
+    if (files.length > remaining) {
+      showNotification(
+        `Solo puedes agregar ${remaining} imágenes más. Máximo 10.`,
+        "warning",
+      );
+    }
+    const toProcess = files.slice(0, remaining);
+    for (const file of toProcess) {
       if (!file.type.startsWith("image/")) continue;
       const base64 = await fileToBase64(file);
       carouselItemsArray.push({ imageBase64: base64, caption: "" });
@@ -192,7 +287,7 @@ function renderCarouselItems() {
     card.className = "orien-carousel-item-card";
     card.innerHTML = `
       <img src="${item.imageBase64}" class="carousel-preview-img" style="max-width:100px; max-height:100px; object-fit:cover; border-radius:8px;">
-      <input type="text" class="orien-input carousel-caption" placeholder="Texto sobre la imagen" value="${escapeHtml(item.caption)}" data-index="${idx}">
+      <input type="text" class="orien-input carousel-caption" placeholder="Texto sobre la imagen (máx ${LIMITS.caption} caracteres)" value="${escapeHtml(item.caption)}" data-index="${idx}" maxlength="${LIMITS.caption}">
       <button type="button" class="orien-btn orien-btn-sm orien-btn-outline remove-carousel-item" data-index="${idx}" style="color:#dc3545;">Eliminar</button>
     `;
     container.appendChild(card);
