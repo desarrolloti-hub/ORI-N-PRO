@@ -5,7 +5,7 @@
     <p class="orien-banner-subtitle">Agregar un nuevo producto al catálogo</p>
   </div>
 </div>
-<br>
+<br />
 <div class="orien-admin-products-create">
   <div class="orien-admin-create-container">
     <div class="orien-admin-create-nav">
@@ -58,18 +58,21 @@
             <h3 class="orien-form-section-title">Información del producto</h3>
 
             <div class="orien-form-group">
-              <label class="orien-label">Nombre del producto</label>
+              <label class="orien-label"
+                >Nombre del producto * (máx 80 caracteres)</label
+              >
               <input
                 type="text"
                 name="nombre"
                 class="orien-input"
                 placeholder="Ej: Pantalla LED P2.976"
                 required
+                maxlength="80"
               />
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Categoría</label>
+              <label class="orien-label">Categoría *</label>
               <select
                 name="categoriaId"
                 id="categoriaSelect"
@@ -79,7 +82,7 @@
                 <option value="">Seleccionar categoría</option>
               </select>
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
               <label class="orien-label">Tipo de producto</label>
               <div class="orien-radio-group">
@@ -94,32 +97,40 @@
                 </label>
               </div>
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Precio</label>
+              <label class="orien-label">Precio * (solo números)</label>
               <input
                 type="text"
                 name="precio"
                 class="orien-input"
                 placeholder="Ej: 2500"
                 required
+                maxlength="12"
+                pattern="[0-9]+"
+                title="Solo números, máximo 12 dígitos"
               />
               <small class="orien-input-hint"
                 >Solo números (se formateará automáticamente a moneda
                 mexicana)</small
               >
             </div>
-            <br>
+            <br />
             <div class="orien-form-group">
-              <label class="orien-label">Características</label>
+              <label class="orien-label"
+                >Características * (máx 500 caracteres)</label
+              >
               <textarea
                 name="caracteristicas"
                 class="orien-input orien-textarea"
                 rows="5"
                 placeholder="Describe las características del producto..."
                 required
+                maxlength="500"
               ></textarea>
-              <small class="orien-input-hint">Mínimo 10 caracteres</small>
+              <small class="orien-input-hint"
+                >Mínimo 10 caracteres, máximo 500</small
+              >
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 /* ========================================
    PRODUCTS CREATE CONTROLLER - Orién Pro
+   Con límite de caracteres
    ======================================== */
 
 import { ProductService } from "/src/services/productService.js";
@@ -15,6 +16,12 @@ let productService = null;
 let categoryService = null;
 let initialized = false;
 let currentImagenes = [];
+
+const LIMITS = {
+  nombre: 80,
+  caracteristicas: 500,
+  precio: 12, // dígitos
+};
 
 export function initProductsCreateController() {
   if (initialized) return;
@@ -154,23 +161,76 @@ async function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const formData = new FormData(form);
-  let precioRaw = formData.get("precio");
+
+  const nombre = formData.get("nombre")?.trim() || "";
+  const caracteristicas = formData.get("caracteristicas")?.trim() || "";
+  let precioRaw = formData.get("precio")?.trim() || "";
+
+  // Validaciones de longitud
+  if (nombre.length === 0) {
+    showNotification("El nombre del producto es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (caracteristicas.length === 0) {
+    showNotification("Las características son obligatorias", "error");
+    return;
+  }
+  if (caracteristicas.length > LIMITS.caracteristicas) {
+    showNotification(
+      `Las características no pueden exceder ${LIMITS.caracteristicas} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (caracteristicas.length < 10) {
+    showNotification(
+      "Las características deben tener al menos 10 caracteres",
+      "error",
+    );
+    return;
+  }
+  if (precioRaw.length > LIMITS.precio) {
+    showNotification(
+      `El precio no puede tener más de ${LIMITS.precio} dígitos`,
+      "error",
+    );
+    return;
+  }
+  if (!/^\d+$/.test(precioRaw)) {
+    showNotification("El precio solo debe contener números", "error");
+    return;
+  }
+
   const precioLimpio = Product.limpiarPrecio(precioRaw);
   const precioFormateado = precioLimpio
     ? `$${parseInt(precioLimpio).toLocaleString("es-MX")} MXN`
     : "";
   const categoriaId = document.getElementById("categoriaSelect")?.value || "";
+
   const productData = {
-    nombre: formData.get("nombre"),
-    caracteristicas: formData.get("caracteristicas"),
+    nombre: nombre,
+    caracteristicas: caracteristicas,
     precio: precioFormateado,
     tipo: formData.get("tipo"),
     categoriaId: categoriaId,
   };
+
   if (!categoriaId) {
     showNotification("Seleccione una categoría", "error");
     return;
   }
+  if (currentImagenes.length === 0) {
+    showNotification("Debe subir al menos una imagen", "error");
+    return;
+  }
+
   try {
     showLoading();
     await productService.createProduct(productData, currentImagenes);

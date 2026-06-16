@@ -1,5 +1,6 @@
 /* ========================================
    PRODUCTS EDIT CONTROLLER - Orién Pro
+   Con límite de caracteres
    ======================================== */
 
 import { ProductService } from "/src/services/productService.js";
@@ -16,6 +17,12 @@ let categoryService = null;
 let currentProductId = null;
 let initialized = false;
 let currentImagenes = [];
+
+const LIMITS = {
+  nombre: 80,
+  caracteristicas: 500,
+  precio: 12,
+};
 
 export function initProductsEditController(id) {
   if (initialized && currentProductId === id) return;
@@ -120,14 +127,23 @@ function populateForm(product) {
   const ofertaCheckbox = document.getElementById("enOfertaCheckbox");
   const precioOfertaGroup = document.getElementById("precioOfertaGroup");
 
-  if (nombreInput) nombreInput.value = product.nombre;
-  if (caracteristicasTextarea)
+  if (nombreInput) {
+    nombreInput.value = product.nombre;
+    nombreInput.maxLength = LIMITS.nombre;
+  }
+  if (caracteristicasTextarea) {
     caracteristicasTextarea.value = product.caracteristicas;
-  const precioNumeros = product.precio.replace(/[^0-9]/g, "");
-  if (precioInput) precioInput.value = precioNumeros;
+    caracteristicasTextarea.maxLength = LIMITS.caracteristicas;
+  }
+  const precioNumeros = product.precio?.replace(/[^0-9]/g, "") || "";
+  if (precioInput) {
+    precioInput.value = precioNumeros;
+    precioInput.maxLength = LIMITS.precio;
+  }
   if (precioOfertaInput && product.precioOferta) {
     const precioOfertaNumeros = product.precioOferta.replace(/[^0-9]/g, "");
     precioOfertaInput.value = precioOfertaNumeros;
+    precioOfertaInput.maxLength = LIMITS.precio;
   }
   if (idSpan) idSpan.textContent = `ID: ${product.id.substring(0, 8)}...`;
   if (categoriaSelect && product.categoriaId)
@@ -227,34 +243,102 @@ async function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const formData = new FormData(form);
-  let precioRaw = formData.get("precio");
+
+  const nombre = formData.get("nombre")?.trim() || "";
+  const caracteristicas = formData.get("caracteristicas")?.trim() || "";
+  let precioRaw = formData.get("precio")?.trim() || "";
+
+  // Validaciones
+  if (nombre.length === 0) {
+    showNotification("El nombre del producto es obligatorio", "error");
+    return;
+  }
+  if (nombre.length > LIMITS.nombre) {
+    showNotification(
+      `El nombre no puede exceder ${LIMITS.nombre} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (caracteristicas.length === 0) {
+    showNotification("Las características son obligatorias", "error");
+    return;
+  }
+  if (caracteristicas.length > LIMITS.caracteristicas) {
+    showNotification(
+      `Las características no pueden exceder ${LIMITS.caracteristicas} caracteres`,
+      "error",
+    );
+    return;
+  }
+  if (caracteristicas.length < 10) {
+    showNotification(
+      "Las características deben tener al menos 10 caracteres",
+      "error",
+    );
+    return;
+  }
+  if (precioRaw.length > LIMITS.precio) {
+    showNotification(
+      `El precio no puede tener más de ${LIMITS.precio} dígitos`,
+      "error",
+    );
+    return;
+  }
+  if (!/^\d+$/.test(precioRaw)) {
+    showNotification("El precio solo debe contener números", "error");
+    return;
+  }
+
   const precioLimpio = Product.limpiarPrecio(precioRaw);
   const precioFormateado = precioLimpio
     ? `$${parseInt(precioLimpio).toLocaleString("es-MX")} MXN`
     : "";
+
   let precioOfertaFormateado = "";
   const enOferta = formData.get("enOferta") === "on";
   if (enOferta) {
-    const precioOfertaRaw = formData.get("precioOferta");
+    const precioOfertaRaw = formData.get("precioOferta")?.trim() || "";
+    if (precioOfertaRaw.length > LIMITS.precio) {
+      showNotification(
+        `El precio de oferta no puede tener más de ${LIMITS.precio} dígitos`,
+        "error",
+      );
+      return;
+    }
+    if (precioOfertaRaw && !/^\d+$/.test(precioOfertaRaw)) {
+      showNotification(
+        "El precio de oferta solo debe contener números",
+        "error",
+      );
+      return;
+    }
     const precioOfertaLimpio = Product.limpiarPrecio(precioOfertaRaw);
     if (precioOfertaLimpio) {
       precioOfertaFormateado = `$${parseInt(precioOfertaLimpio).toLocaleString("es-MX")} MXN`;
     }
   }
+
   const categoriaId = document.getElementById("categoriaSelect")?.value || "";
   const productData = {
-    nombre: formData.get("nombre"),
-    caracteristicas: formData.get("caracteristicas"),
+    nombre: nombre,
+    caracteristicas: caracteristicas,
     precio: precioFormateado,
     precioOferta: precioOfertaFormateado,
     enOferta: enOferta,
     tipo: formData.get("tipo"),
     categoriaId: categoriaId,
   };
+
   if (!categoriaId) {
     showNotification("Seleccione una categoría", "error");
     return;
   }
+  if (currentImagenes.length === 0) {
+    showNotification("Debe tener al menos una imagen", "error");
+    return;
+  }
+
   try {
     showLoading();
     await productService.updateProduct(

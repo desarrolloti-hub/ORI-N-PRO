@@ -65,12 +65,20 @@
             <h3 class="orien-form-section-title">Información del producto</h3>
 
             <div class="orien-form-group">
-              <label class="orien-label">Nombre del producto</label>
-              <input type="text" name="nombre" class="orien-input" required />
+              <label class="orien-label"
+                >Nombre del producto * (máx 80 caracteres)</label
+              >
+              <input
+                type="text"
+                name="nombre"
+                class="orien-input"
+                required
+                maxlength="80"
+              />
             </div>
             <br />
             <div class="orien-form-group">
-              <label class="orien-label">Categoría</label>
+              <label class="orien-label">Categoría *</label>
               <select
                 name="categoriaId"
                 id="categoriaSelect"
@@ -97,8 +105,16 @@
             </div>
             <br />
             <div class="orien-form-group">
-              <label class="orien-label">Precio</label>
-              <input type="text" name="precio" class="orien-input" required />
+              <label class="orien-label">Precio * (solo números)</label>
+              <input
+                type="text"
+                name="precio"
+                class="orien-input"
+                required
+                maxlength="12"
+                pattern="[0-9]+"
+                title="Solo números, máximo 12 dígitos"
+              />
               <small class="orien-input-hint"
                 >Solo números (se formateará automáticamente)</small
               >
@@ -115,12 +131,15 @@
               id="precioOfertaGroup"
               style="display: none"
             >
-              <label class="orien-label">Precio de oferta</label>
+              <label class="orien-label">Precio de oferta (solo números)</label>
               <input
                 type="text"
                 name="precioOferta"
                 class="orien-input"
                 placeholder="Ej: 1500"
+                maxlength="12"
+                pattern="[0-9]+"
+                title="Solo números, máximo 12 dígitos"
               />
               <small class="orien-input-hint"
                 >Solo números (se formateará automáticamente)</small
@@ -128,12 +147,15 @@
             </div>
             <br />
             <div class="orien-form-group">
-              <label class="orien-label">Características</label>
+              <label class="orien-label"
+                >Características * (máx 500 caracteres)</label
+              >
               <textarea
                 name="caracteristicas"
                 class="orien-input orien-textarea"
                 rows="5"
                 required
+                maxlength="500"
               ></textarea>
             </div>
           </div>
