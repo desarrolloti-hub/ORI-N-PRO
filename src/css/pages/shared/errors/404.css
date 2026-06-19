@@ -1,0 +1,194 @@
+/* ========================================
+   404 PAGE - Orién Pro
+   Estilos para página de mantenimiento
+   ======================================== */
+
+/* Sección principal - reutiliza .orien-legal-section */
+.orien-legal-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px 80px;
+}
+
+.orien-legal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tarjeta de error */
+.orien-legal-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.orien-legal-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Tarjeta principal de 404 */
+.orien-404-card {
+  text-align: center;
+  padding: 48px 32px;
+}
+
+.orien-404-icon {
+  font-size: 4rem;
+  color: var(--color-gray);
+  margin-bottom: 20px;
+}
+
+.orien-404-icon i {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.orien-404-title {
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--color-dark);
+  margin-bottom: 16px;
+}
+
+.orien-404-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.orien-404-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--color-gray);
+  margin: 20px auto;
+  border-radius: 999px;
+}
+
+.orien-404-subtext {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+  margin-bottom: 25px;
+}
+
+/* Botón volver al inicio */
+.orien-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+/* Nota de contacto */
+.orien-legal-note {
+  background: var(--color-light);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #666;
+  border-left: 3px solid var(--color-gray);
+}
+
+.orien-legal-note i {
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+.orien-legal-note a {
+  color: var(--color-dark);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.orien-legal-note a:hover {
+  color: var(--color-gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orien-legal-section {
+    padding: 40px 15px 60px;
+  }
+
+  .orien-legal-card {
+    padding: 20px;
+  }
+
+  .orien-404-card {
+    padding: 32px 20px;
+  }
+
+  .orien-404-icon {
+    font-size: 3rem;
+  }
+
+  .orien-404-title {
+    font-size: 1.4rem;
+  }
+
+  .orien-404-description {
+    font-size: 0.9rem;
+  }
+
+  .orien-404-subtext {
+    font-size: 0.8rem;
+  }
+
+  .orien-btn {
+    padding: 10px 24px;
+    font-size: 0.85rem;
+  }
+
+  .orien-legal-note {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .orien-legal-section {
+    padding: 30px 12px 50px;
+  }
+
+  .orien-legal-card {
+    padding: 16px;
+  }
+
+  .orien-404-card {
+    padding: 24px 16px;
+  }
+
+  .orien-404-icon {
+    font-size: 2.5rem;
+  }
+
+  .orien-404-title {
+    font-size: 1.2rem;
+  }
+}

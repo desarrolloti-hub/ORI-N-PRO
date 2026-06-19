@@ -4,320 +4,371 @@
    ======================================== */
 
 .orien-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 30px;
-    z-index: 1000;
-    transition: var(--transition);
-    background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  background: transparent;
 }
 
 @media (min-width: 768px) {
-    .orien-navbar {
-        padding: 20px 50px;
-    }
+  .orien-navbar {
+    padding: 20px 50px;
+  }
 }
 
+/* Fondo más oscuro cuando hay scroll o en cualquier página excepto home */
 .orien-navbar-scrolled {
-    background: var(--color-bg);
-    padding: 12px 30px;
-    box-shadow: var(--shadow);
+  background: var(--color-bg);
+  padding: 12px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* En el home, navbar siempre visible con sombra sutil */
+.orien-hero-section ~ .orien-navbar-scrolled,
+body:not(.page-home) .orien-navbar-scrolled {
+  background: var(--color-bg);
 }
 
 .orien-nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .orien-nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    z-index: 1002;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  z-index: 1002;
 }
 
 .orien-logo-img {
-    height: 32px;
-    width: auto;
+  height: 32px;
+  width: auto;
 }
 
 @media (min-width: 768px) {
-    .orien-logo-img {
-        height: 42px;
-    }
+  .orien-logo-img {
+    height: 42px;
+  }
 }
 
 .orien-logo-text {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: var(--color-light);
-    letter-spacing: 3px;
-    white-space: nowrap;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--color-white);
+  letter-spacing: 3px;
+  white-space: nowrap;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 @media (min-width: 768px) {
-    .orien-logo-text {
-        font-size: 1.6rem;
-    }
+  .orien-logo-text {
+    font-size: 1.6rem;
+  }
 }
 
+/* Cuando el navbar tiene scroll, el logo cambia a oscuro */
 .orien-navbar-scrolled .orien-logo-text {
-    color: var(--color-dark);
+  color: var(--color-dark);
+  text-shadow: none;
 }
 
 /* ========== MENÚ DESKTOP ========== */
 .orien-menu {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
-    .orien-menu {
-        gap: 35px;
-    }
+  .orien-menu {
+    gap: 35px;
+  }
 }
 
 .orien-menu li a {
-    color: var(--color-light);
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: var(--transition);
-    white-space: nowrap;
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  position: relative;
 }
 
 @media (min-width: 768px) {
-    .orien-menu li a {
-        font-size: 0.95rem;
-    }
+  .orien-menu li a {
+    font-size: 0.95rem;
+  }
 }
 
+/* Subrayado animado en hover */
+.orien-menu li a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-gray);
+  transition: width 0.3s ease;
+}
+
+.orien-menu li a:hover::after {
+  width: 100%;
+}
+
+/* Cuando el navbar tiene scroll, el texto del menú cambia a oscuro */
 .orien-navbar-scrolled .orien-menu li a {
-    color: var(--color-dark);
+  color: var(--color-dark);
+  text-shadow: none;
 }
 
 /* ========== DROPDOWN ========== */
 .orien-dropdown {
-    position: relative;
+  position: relative;
 }
 
 .orien-dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(30,30,30,0.95);
-    min-width: 180px;
-    padding: 10px 0;
-    z-index: 1001;
-    border-radius: 4px;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+  padding: 10px 0;
+  z-index: 1001;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.orien-navbar-scrolled .orien-dropdown-content {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .orien-dropdown:hover .orien-dropdown-content {
-    display: block;
+  display: block;
 }
 
 .orien-dropdown-content a {
-    display: block;
-    padding: 10px 20px;
-    color: var(--color-gray);
-    font-size: 0.85rem;
+  display: block;
+  padding: 10px 20px;
+  color: var(--color-gray);
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  text-shadow: none;
+}
+
+.orien-navbar-scrolled .orien-dropdown-content a {
+  color: #555;
 }
 
 .orien-dropdown-content a:hover {
-    color: var(--color-light);
-    padding-left: 25px;
+  color: var(--color-dark);
+  padding-left: 25px;
 }
 
 /* ========== BOTONES HAMBURGUESA Y CIERRE ========== */
 .orien-hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    z-index: 1002;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1002;
+  padding: 5px;
 }
 
 .orien-hamburger span {
-    width: 25px;
-    height: 2px;
-    background: var(--color-light);
-    margin: 4px 0;
-    transition: var(--transition);
+  width: 25px;
+  height: 2px;
+  background: var(--color-white);
+  margin: 4px 0;
+  transition: all 0.3s ease;
 }
 
 .orien-navbar-scrolled .orien-hamburger span {
-    background: var(--color-dark);
+  background: var(--color-dark);
 }
 
 .orien-close {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: var(--color-dark);
-    background: transparent;
-    border: none;
-    z-index: 1002;
-    line-height: 1;
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--color-dark);
+  background: transparent;
+  border: none;
+  z-index: 1002;
+  line-height: 1;
 }
 
 /* ========== RESPONSIVE (MÓVIL) ========== */
 @media screen and (max-width: 768px) {
-    .orien-hamburger {
-        display: flex;
-    }
-    
-    .orien-close {
-        display: none;
-        position: relative;
-        z-index: 1002;
-    }
-    
-    /* Menú oculto por defecto (fuera de pantalla) */
-    .orien-menu {
-        display: flex;
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 350px;
-        height: 100vh;
-        background: var(--color-bg);
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding: 100px 30px 30px;
-        gap: 25px;
-        z-index: 1001;
-        transition: right 0.3s ease-in-out;
-        box-shadow: -5px 0 30px rgba(0,0,0,0.2);
-        margin: 0;
-        overflow-y: auto;
-    }
-    
-    /* Menú activo (visible) */
-    .orien-menu.active {
-        right: 0;
-    }
-    
-    /* Estilos de enlaces en móvil */
-    .orien-menu li {
-        width: 100%;
-    }
-    
-    .orien-menu li a {
-        color: var(--color-dark);
-        font-size: 1.1rem;
-        display: block;
-        width: 100%;
-        padding: 10px 0;
-    }
-    
-    /* Dropdown en móvil */
-    .orien-dropdown {
-        width: 100%;
-    }
-    
-    .orien-dropdown > a {
-        position: relative;
-    }
-    
-    .orien-dropdown > a::after {
-        content: ' ▼';
-        font-size: 0.7rem;
-        position: absolute;
-        right: 0;
-    }
-    
-    .orien-dropdown.active > a::after {
-        content: ' ▲';
-    }
-    
-    .orien-dropdown-content {
-        display: none;
-        position: static;
-        background: var(--color-light);
-        padding-left: 20px;
-        margin-top: 10px;
-        width: 100%;
-        box-shadow: none;
-    }
-    
-    .orien-dropdown.active .orien-dropdown-content {
-        display: block;
-    }
-    
-    .orien-dropdown-content a {
-        padding: 10px 15px;
-        font-size: 0.95rem;
-    }
-    
-    .orien-dropdown-content a:hover {
-        padding-left: 20px;
-    }
-    
-    /* Scroll cuando menú está abierto */
-    body.menu-open {
-        overflow: hidden;
-    }
+  .orien-hamburger {
+    display: flex;
+  }
+
+  .orien-close {
+    display: none;
+    position: relative;
+    z-index: 1002;
+  }
+
+  /* Menú oculto por defecto (fuera de pantalla) */
+  .orien-menu {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: var(--color-bg);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 100px 30px 30px;
+    gap: 25px;
+    z-index: 1001;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  /* Menú activo (visible) */
+  .orien-menu.active {
+    right: 0;
+  }
+
+  /* Estilos de enlaces en móvil */
+  .orien-menu li {
+    width: 100%;
+  }
+
+  .orien-menu li a {
+    color: var(--color-dark);
+    font-size: 1.1rem;
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-shadow: none;
+  }
+
+  /* Dropdown en móvil */
+  .orien-dropdown {
+    width: 100%;
+  }
+
+  .orien-dropdown > a {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .orien-dropdown > a::after {
+    content: " ▼";
+    font-size: 0.7rem;
+    position: absolute;
+    right: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .orien-dropdown.active > a::after {
+    content: " ▲";
+  }
+
+  .orien-dropdown-content {
+    display: none;
+    position: static;
+    background: var(--color-light);
+    padding-left: 20px;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 4px;
+    border: none;
+  }
+
+  .orien-dropdown.active .orien-dropdown-content {
+    display: block;
+  }
+
+  .orien-dropdown-content a {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    color: var(--color-dark);
+  }
+
+  .orien-dropdown-content a:hover {
+    padding-left: 20px;
+    color: var(--color-dark);
+  }
+
+  /* Scroll cuando menú está abierto */
+  body.menu-open {
+    overflow: hidden;
+  }
 }
 
 /* ========== AJUSTES EXTRA PARA PANTALLAS PEQUEÑAS ========== */
 @media screen and (max-width: 480px) {
-    .orien-navbar {
-        padding: 15px 20px;
-    }
-    
-    .orien-navbar-scrolled {
-        padding: 10px 20px;
-    }
-    
-    .orien-logo-text {
-        font-size: 1rem;
-    }
-    
-    .orien-logo-img {
-        height: 28px;
-    }
-    
-    .orien-menu {
-        width: 85%;
-        padding: 80px 20px 30px;
-    }
+  .orien-navbar {
+    padding: 15px 20px;
+  }
+
+  .orien-navbar-scrolled {
+    padding: 10px 20px;
+  }
+
+  .orien-logo-text {
+    font-size: 1rem;
+  }
+
+  .orien-logo-img {
+    height: 28px;
+  }
+
+  .orien-menu {
+    width: 85%;
+    padding: 80px 20px 30px;
+  }
 }
 
 /* Loader efecto para enlaces */
 .orien-menu li a.loading {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
+/* Fix para hamburger en móvil */
 @media (max-width: 768px) {
-    .orien-hamburger {
-        display: flex !important;
-    }
-    
-    .orien-hamburger span {
-        display: block !important;
-        width: 25px;
-        height: 2px;
-        background: white;
-        margin: 4px 0;
-    }
-    
-    .orien-navbar-scrolled .orien-hamburger span {
-        background: #333 !important;
-    }
+  .orien-hamburger span {
+    display: block !important;
+    width: 25px;
+    height: 2px;
+    background: var(--color-white);
+    margin: 4px 0;
+  }
+
+  .orien-navbar-scrolled .orien-hamburger span {
+    background: var(--color-dark) !important;
+  }
 }

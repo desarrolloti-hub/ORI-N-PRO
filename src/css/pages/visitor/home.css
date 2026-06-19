@@ -3,90 +3,433 @@
    Estilos exclusivos de la página de inicio
    ======================================== */
 
+/* Hero Section - Slider (OCUPA TODA LA PANTALLA) */
+.orien-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ocupa toda la pantalla */
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.orien-hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.orien-hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translateX(100%);
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.8s;
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+.orien-hero-slide.active {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 2;
+}
+
+.orien-slide-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1);
+  transition: transform 8s ease;
+}
+
+.orien-hero-slide.active .orien-slide-image {
+  transform: scale(1.05);
+}
+
+/* Overlay */
+.orien-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Slide Text - Responsive y con word-break */
+.orien-slide-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  color: white;
+  text-align: center;
+  width: 85%;
+  max-width: 700px;
+  padding: 20px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.orien-slide-text h2 {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.orien-slide-text p {
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.orien-slide-text .orien-cta-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 35px;
+  color: var(--color-dark);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  border: 2px solid transparent;
+}
+
+.orien-slide-text .orien-cta-button:hover {
+  background: transparent;
+  color: white;
+  border-color: white;
+  transform: scale(1.05);
+}
+
+/* Scroll Indicator */
+.orien-scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.orien-scroll-indicator:hover {
+  opacity: 1;
+}
+
+.orien-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    height: 30px;
+    opacity: 0.3;
+  }
+  50% {
+    height: 50px;
+    opacity: 1;
+  }
+}
+
+/* ==========================================
+   MUSIC PLAYER - ICONOS CONSISTENTES
+   ========================================== */
+
+.orien-music-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px 8px 12px;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.orien-music-label {
+  color: white;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.orien-music-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(102, 101, 101, 0.3);
+}
+
+.orien-music-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(102, 101, 101, 0.3);
+}
+
+.orien-music-btn.playing {
+  animation: musicPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+  0%,
+  100% {
+    box-shadow: 0 2px 10px rgba(102, 101, 101, 0.3);
+  }
+  50% {
+    box-shadow: 0 2px 25px rgba(102, 101, 101, 0.3);
+  }
+}
+
+/* Music player responsive - SOLO TAMAÑO, NO COLORES */
+@media (max-width: 768px) {
+  .orien-music-player {
+    bottom: 20px;
+    right: 20px;
+    padding: 6px 12px 6px 10px;
+  }
+  .orien-music-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .orien-music-label {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orien-music-player {
+    bottom: 15px;
+    right: 15px;
+    padding: 5px 10px 5px 8px;
+  }
+  .orien-music-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+  .orien-music-label {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .orien-music-label {
+    display: none;
+  }
+  .orien-music-player {
+    padding: 5px;
+  }
+}
+
 /* Productos - específico del home */
 .orien-product-item {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 80px;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease, transform 0.8s ease;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 80px;
+  width: 100%;
+  opacity: 0;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .orien-product-item.visible {
-    opacity: 1;
-    transform: translateX(0);
+  opacity: 1;
+  transform: translateX(0);
 }
 
 @media (max-width: 767px) {
-    .orien-product-item {
-        flex-direction: column !important;
-        gap: 30px;
-        margin-bottom: 60px;
-    }
+  .orien-product-item {
+    flex-direction: column !important;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
 }
 
 @media (min-width: 768px) {
-    .orien-image-left {
-        flex-direction: row;
-        transform: translateX(-60px);
-    }
-    .orien-image-right {
-        flex-direction: row-reverse;
-        transform: translateX(60px);
-    }
-    .orien-product-image {
-        flex: 0 0 45%;
-    }
+  .orien-image-left {
+    flex-direction: row;
+    transform: translateX(-60px);
+  }
+  .orien-image-right {
+    flex-direction: row-reverse;
+    transform: translateX(60px);
+  }
+  .orien-product-image {
+    flex: 0 0 45%;
+  }
 }
 
 .orien-product-image {
-    flex: 1;
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
+  flex: 1;
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .orien-product-image img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .orien-product-info {
-    flex: 1;
-    width: 100%;
-    padding: 30px;
+  flex: 1;
+  width: 100%;
+  padding: 30px;
 }
 
 @media (min-width: 768px) {
-    .orien-product-info {
-        padding: 40px;
-    }
+  .orien-product-info {
+    padding: 40px;
+  }
 }
 
 .orien-tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #666;
-    margin-bottom: 15px;
-    padding: 4px 12px;
-    border: 1px solid var(--color-gray);
-    background: var(--color-bg);
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 15px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-gray);
+  background: var(--color-bg);
 }
 
 .orien-product-info h3 {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    font-weight: 400;
-    margin-bottom: 20px;
-    color: var(--color-dark);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--color-dark);
 }
 
 .orien-product-info p {
-    color: #555;
-    line-height: 1.7;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: #555;
+  line-height: 1.7;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+/* Responsive del carrusel - MANTIENE 100vh */
+@media (max-width: 768px) {
+  .orien-hero-section {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+
+  .orien-slide-text {
+    width: 92%;
+    padding: 15px;
+  }
+
+  .orien-slide-text h2 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin-bottom: 10px;
+  }
+
+  .orien-slide-text p {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    line-height: 1.5;
+    max-width: 100%;
+  }
+
+  .orien-slide-text .orien-cta-button {
+    padding: 10px 25px;
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orien-hero-section {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+
+  .orien-slide-text {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .orien-slide-text h2 {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+  }
+
+  .orien-slide-text p {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    line-height: 1.4;
+    max-width: 100%;
+  }
+
+  .orien-slide-text .orien-cta-button {
+    padding: 8px 20px;
+    font-size: 0.75rem;
+    margin-top: 10px;
+  }
 }

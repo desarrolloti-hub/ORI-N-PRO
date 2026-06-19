@@ -58,15 +58,23 @@ function bindEvents() {
   if (elements.menu) {
     elements.menu.addEventListener("click", handleLinkClick);
   }
+
+  // Manejar dropdown en desktop y mobile
   const dropdowns = document.querySelectorAll(".orien-dropdown");
   dropdowns.forEach((dropdown) => {
     const link = dropdown.querySelector("a");
     if (link) {
       link.addEventListener("click", (e) => {
+        // En móvil: toggle dropdown
         if (window.innerWidth <= 768) {
           e.preventDefault();
+          // Cerrar otros dropdowns
+          document.querySelectorAll(".orien-dropdown.active").forEach((d) => {
+            if (d !== dropdown) d.classList.remove("active");
+          });
           dropdown.classList.toggle("active");
         }
+        // En desktop: el hover lo maneja CSS
       });
     }
   });
@@ -85,6 +93,10 @@ function openMenu() {
 function closeMenu() {
   if (!elements.menu) return;
   elements.menu.classList.remove("active");
+  // Cerrar dropdowns al cerrar menú
+  document.querySelectorAll(".orien-dropdown.active").forEach((d) => {
+    d.classList.remove("active");
+  });
   elements.body.classList.remove("menu-open");
   elements.body.style.overflow = "";
   state.isMenuOpen = false;
@@ -124,6 +136,13 @@ function handleLinkClick(e) {
   const link = e.target.closest("a");
   if (link && link.getAttribute("href")) {
     const href = link.getAttribute("href");
+    // Si es un dropdown en mobile, no navegar
+    if (window.innerWidth <= 768) {
+      const parent = link.closest(".orien-dropdown");
+      if (parent && link === parent.querySelector("a")) {
+        return; // No navegar, el click ya maneja el toggle
+      }
+    }
     if (href && !href.startsWith("http") && href !== "#") {
       e.preventDefault();
       addLoadingEffect(link);
@@ -174,7 +193,7 @@ async function loadCategoriesToDropdown() {
   try {
     const categoryService = new CategoryService();
     const categories = await categoryService.getAllCategories(true);
-    // Eliminar enlaces de categorías previos
+    // Eliminar enlaces de categorías previos (conservar "En oferta")
     const categoryLinks = dropdownContent.querySelectorAll("a[data-category]");
     categoryLinks.forEach((link) => link.remove());
     categories.forEach((cat) => {

@@ -1,6 +1,7 @@
 /* ========================================
    CAROUSELS EDIT CONTROLLER - Orién Pro
    Con límite de caracteres y validaciones mejoradas
+   FIX: No duplica slides al editar
    ======================================== */
 
 import { CarouselService } from "/src/services/carouselService.js";
@@ -13,6 +14,7 @@ import {
 let carouselService = null;
 let currentCarouselId = null;
 let slides = [];
+let deletedSlideIds = new Set(); // Para rastrear slides eliminados
 
 const LIMITS = {
   nombre: 50,
@@ -21,6 +23,8 @@ const LIMITS = {
   subtitulo: 100,
   ctaTexto: 30,
   ctaUrl: 200,
+  maxImages: 8,
+  maxImageSizeKB: 50,
 };
 
 export function initCarouselsEditController(id) {
@@ -44,7 +48,12 @@ async function loadCarouselData() {
       return;
     }
     populateForm(carousel);
-    slides = [...carousel.slides];
+    // IMPORTANTE: Usar los slides originales, no crear nuevos
+    slides = carousel.slides.map((slide, index) => ({
+      ...slide,
+      tempId: `orig-${index}`,
+      _isNew: false,
+    }));
     renderSlides(slides);
     hideLoading();
   } catch (error) {
@@ -73,8 +82,12 @@ function renderSlides(slidesArray) {
   const container = document.getElementById("slidesContainer");
   if (!container) return;
   container.innerHTML = "";
+
   slidesArray.forEach((slide, idx) => {
-    const slideId = `edit-${Date.now()}-${idx}`;
+    // Usar el tempId existente o crear uno nuevo
+    const slideId = slide.tempId || `edit-${Date.now()}-${idx}`;
+    slide.tempId = slideId;
+
     const slideHtml = `
       <div class="orien-slide-card" data-slide-id="${slideId}" data-original-index="${idx}">
         <div class="orien-slide-header">
@@ -88,27 +101,27 @@ function renderSlides(slidesArray) {
             </div>
             <div class="orien-upload-area slide-upload" data-slide-id="${slideId}">
               <i class="fas fa-exchange-alt"></i>
-              <span>Cambiar imagen</span>
+              <span>Cambiar imagen (máx ${LIMITS.maxImageSizeKB}KB)</span>
               <input type="file" accept="image/*" style="display: none;">
             </div>
           </div>
           <div class="orien-slide-fields-col">
             <div class="orien-form-group">
               <label>Título (máx ${LIMITS.titulo} caracteres)</label>
-              <input type="text" class="orien-input slide-title" maxlength="${LIMITS.titulo}" value="${escapeHtml(slide.titulo)}">
+              <input type="text" class="orien-input slide-title" maxlength="${LIMITS.titulo}" value="${escapeHtml(slide.titulo || "")}">
             </div>
             <div class="orien-form-group">
               <label>Subtítulo (máx ${LIMITS.subtitulo} caracteres)</label>
-              <input type="text" class="orien-input slide-subtitle" maxlength="${LIMITS.subtitulo}" value="${escapeHtml(slide.subtitulo)}">
+              <input type="text" class="orien-input slide-subtitle" maxlength="${LIMITS.subtitulo}" value="${escapeHtml(slide.subtitulo || "")}">
             </div>
             <div class="orien-form-row">
               <div class="orien-form-group">
                 <label>Texto CTA (máx ${LIMITS.ctaTexto} caracteres)</label>
-                <input type="text" class="orien-input slide-cta-text" maxlength="${LIMITS.ctaTexto}" value="${escapeHtml(slide.ctaTexto)}">
+                <input type="text" class="orien-input slide-cta-text" maxlength="${LIMITS.ctaTexto}" value="${escapeHtml(slide.ctaTexto || "")}">
               </div>
               <div class="orien-form-group">
                 <label>URL CTA (máx ${LIMITS.ctaUrl} caracteres)</label>
-                <input type="text" class="orien-input slide-cta-url" maxlength="${LIMITS.ctaUrl}" value="${escapeHtml(slide.ctaUrl)}">
+                <input type="text" class="orien-input slide-cta-url" maxlength="${LIMITS.ctaUrl}" value="${escapeHtml(slide.ctaUrl || "")}">
               </div>
             </div>
           </div>
@@ -117,11 +130,66 @@ function renderSlides(slidesArray) {
       </div>
     `;
     container.insertAdjacentHTML("beforeend", slideHtml);
-    bindSlideEventsForId(slideId, idx, slide.imagen);
+    bindSlideEventsForId(slideId, slide);
   });
 }
 
-function bindSlideEventsForId(slideId, originalIndex, existingImage) {
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        const MAX_DIMENSION = 800;
+        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+          const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.85;
+        let result = canvas.toDataURL("image/jpeg", quality);
+
+        let attempts = 0;
+        while (
+          result.length > LIMITS.maxImageSizeKB * 1024 &&
+          quality > 0.1 &&
+          attempts < 20
+        ) {
+          quality -= 0.05;
+          result = canvas.toDataURL("image/jpeg", quality);
+          attempts++;
+        }
+
+        if (result.length > LIMITS.maxImageSizeKB * 1024) {
+          const canvas2 = document.createElement("canvas");
+          canvas2.width = Math.round(width * 0.5);
+          canvas2.height = Math.round(height * 0.5);
+          const ctx2 = canvas2.getContext("2d");
+          ctx2.drawImage(canvas, 0, 0, canvas2.width, canvas2.height);
+          result = canvas2.toDataURL("image/jpeg", 0.5);
+        }
+
+        resolve(result);
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+}
+
+function bindSlideEventsForId(slideId, existingSlide) {
   const card = document.querySelector(
     `.orien-slide-card[data-slide-id="${slideId}"]`,
   );
@@ -132,7 +200,13 @@ function bindSlideEventsForId(slideId, originalIndex, existingImage) {
     removeBtn.addEventListener("click", () => {
       card.remove();
       const idx = slides.findIndex((s) => s.tempId === slideId);
-      if (idx !== -1) slides.splice(idx, 1);
+      if (idx !== -1) {
+        // Marcar como eliminado si no es nuevo
+        if (!slides[idx]._isNew) {
+          deletedSlideIds.add(slideId);
+        }
+        slides.splice(idx, 1);
+      }
       updateSlideNumbers();
     });
   }
@@ -142,28 +216,36 @@ function bindSlideEventsForId(slideId, originalIndex, existingImage) {
   const previewDiv = card.querySelector(".slide-preview");
   if (uploadArea) {
     uploadArea.addEventListener("click", () => fileInput.click());
-    fileInput.addEventListener("change", (e) => {
+    fileInput.addEventListener("change", async (e) => {
       const file = e.target.files[0];
       if (file && file.type.match("image.*")) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          if (previewDiv)
-            previewDiv.innerHTML = `<img src="${ev.target.result}" alt="Preview">`;
-          const idx = slides.findIndex((s) => s.tempId === slideId);
-          if (idx !== -1) slides[idx].imagen = ev.target.result;
-          else {
-            slides.push({
-              tempId: slideId,
-              imagen: ev.target.result,
-              titulo: "",
-              subtitulo: "",
-              ctaTexto: "",
-              ctaUrl: "",
-              orden: slides.length + 1,
-            });
+        try {
+          if (previewDiv) {
+            previewDiv.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#f0f0f0;font-size:0.8rem;color:#666;"><i class="fas fa-spinner fa-spin"></i> Comprimiendo...</div>`;
           }
-        };
-        reader.readAsDataURL(file);
+
+          const compressedImage = await compressImage(file);
+          const sizeKB = Math.round(compressedImage.length / 1024);
+
+          if (previewDiv) {
+            previewDiv.innerHTML = `<img src="${compressedImage}" alt="Preview">`;
+          }
+
+          if (sizeKB > LIMITS.maxImageSizeKB) {
+            showNotification(
+              `Imagen comprimida a ${sizeKB}KB (recomendado < ${LIMITS.maxImageSizeKB}KB)`,
+              "warning",
+            );
+          }
+
+          const idx = slides.findIndex((s) => s.tempId === slideId);
+          if (idx !== -1) {
+            slides[idx].imagen = compressedImage;
+          }
+        } catch (error) {
+          console.error("Error comprimiendo imagen:", error);
+          showNotification("Error al procesar la imagen", "error");
+        }
       }
     });
   }
@@ -175,10 +257,12 @@ function bindSlideEventsForId(slideId, originalIndex, existingImage) {
     input.addEventListener("input", () => updateSlideFromDom(slideId));
   });
 
+  // Si el slide no existe en el array, agregarlo (solo para slides nuevos)
   if (!slides.some((s) => s.tempId === slideId)) {
     slides.push({
       tempId: slideId,
-      imagen: existingImage || "",
+      _isNew: true,
+      imagen: existingSlide?.imagen || "",
       titulo: card.querySelector(".slide-title")?.value || "",
       subtitulo: card.querySelector(".slide-subtitle")?.value || "",
       ctaTexto: card.querySelector(".slide-cta-text")?.value || "",
@@ -230,8 +314,11 @@ function bindAddSlide() {
 function addNewSlide() {
   const container = document.getElementById("slidesContainer");
   if (!container) return;
-  if (container.children.length >= 10) {
-    showNotification("Máximo 10 slides por carrusel", "warning");
+  if (container.children.length >= LIMITS.maxImages) {
+    showNotification(
+      `Máximo ${LIMITS.maxImages} slides por carrusel`,
+      "warning",
+    );
     return;
   }
   const newId = `new-${Date.now()}`;
@@ -252,7 +339,7 @@ function addNewSlide() {
           </div>
           <div class="orien-upload-area slide-upload" data-slide-id="${newId}">
             <i class="fas fa-cloud-upload-alt"></i>
-            <span>Subir imagen</span>
+            <span>Subir imagen (máx ${LIMITS.maxImageSizeKB}KB)</span>
             <input type="file" accept="image/*" style="display: none;">
           </div>
         </div>
@@ -281,9 +368,66 @@ function addNewSlide() {
     </div>
   `;
   container.insertAdjacentHTML("beforeend", slideHtml);
-  bindSlideEventsForId(newId, -1, "");
+
+  const uploadArea = document.querySelector(
+    `.slide-upload[data-slide-id="${newId}"]`,
+  );
+  const fileInput = uploadArea?.querySelector("input");
+  const previewDiv = document.getElementById(`preview-${newId}`);
+
+  if (uploadArea && fileInput) {
+    uploadArea.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (file && file.type.match("image.*")) {
+        try {
+          if (previewDiv) {
+            previewDiv.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#f0f0f0;font-size:0.8rem;color:#666;"><i class="fas fa-spinner fa-spin"></i> Comprimiendo...</div>`;
+          }
+          const compressedImage = await compressImage(file);
+          const sizeKB = Math.round(compressedImage.length / 1024);
+          if (previewDiv) {
+            previewDiv.innerHTML = `<img src="${compressedImage}" alt="Preview">`;
+          }
+          if (sizeKB > LIMITS.maxImageSizeKB) {
+            showNotification(
+              `Imagen comprimida a ${sizeKB}KB (recomendado < ${LIMITS.maxImageSizeKB}KB)`,
+              "warning",
+            );
+          }
+          const idx = slides.findIndex((s) => s.tempId === newId);
+          if (idx !== -1) slides[idx].imagen = compressedImage;
+        } catch (error) {
+          console.error("Error comprimiendo imagen:", error);
+          showNotification("Error al procesar la imagen", "error");
+        }
+      }
+    });
+  }
+
+  const card = document.querySelector(
+    `.orien-slide-card[data-slide-id="${newId}"]`,
+  );
+  const inputs = card?.querySelectorAll(
+    ".slide-title, .slide-subtitle, .slide-cta-text, .slide-cta-url",
+  );
+  inputs?.forEach((input) => {
+    input.addEventListener("input", () => updateSlideFromDom(newId));
+  });
+
+  const removeBtn = card?.querySelector(".remove-slide-btn");
+  if (removeBtn) {
+    removeBtn.addEventListener("click", () => {
+      card.remove();
+      const idx = slides.findIndex((s) => s.tempId === newId);
+      if (idx !== -1) slides.splice(idx, 1);
+      updateSlideNumbers();
+    });
+  }
+
   slides.push({
     tempId: newId,
+    _isNew: true,
     imagen: "",
     titulo: "",
     subtitulo: "",
@@ -307,7 +451,6 @@ async function handleUpdate(e) {
   const nombre = formData.get("nombre")?.trim() || "";
   const descripcion = formData.get("descripcion")?.trim() || "";
 
-  // Validar longitud
   if (nombre.length === 0) {
     showNotification("El nombre del carrusel es obligatorio", "error");
     return;
@@ -327,15 +470,35 @@ async function handleUpdate(e) {
     return;
   }
 
-  if (slides.length === 0) {
+  // Filtrar slides eliminados
+  const finalSlides = slides
+    .filter((s) => !deletedSlideIds.has(s.tempId))
+    .map((s, idx) => ({
+      imagen: s.imagen || "",
+      titulo: s.titulo || "",
+      subtitulo: s.subtitulo || "",
+      ctaTexto: s.ctaTexto || "",
+      ctaUrl: s.ctaUrl || "",
+      orden: idx + 1,
+    }));
+
+  if (finalSlides.length === 0) {
     showNotification("Debe tener al menos un slide", "error");
     return;
   }
 
-  for (let i = 0; i < slides.length; i++) {
-    const s = slides[i];
+  for (let i = 0; i < finalSlides.length; i++) {
+    const s = finalSlides[i];
     if (!s.imagen) {
       showNotification(`Slide ${i + 1}: debe tener una imagen`, "error");
+      return;
+    }
+    const sizeKB = Math.round(s.imagen.length / 1024);
+    if (sizeKB > LIMITS.maxImageSizeKB * 2) {
+      showNotification(
+        `Slide ${i + 1}: la imagen es demasiado grande (${sizeKB}KB). Máximo ${LIMITS.maxImageSizeKB}KB.`,
+        "error",
+      );
       return;
     }
     if (s.titulo?.length > LIMITS.titulo) {
@@ -368,14 +531,17 @@ async function handleUpdate(e) {
     }
   }
 
-  const finalSlides = slides.map((s) => ({
-    imagen: s.imagen || "",
-    titulo: s.titulo || "",
-    subtitulo: s.subtitulo || "",
-    ctaTexto: s.ctaTexto || "",
-    ctaUrl: s.ctaUrl || "",
-    orden: s.orden,
-  }));
+  const totalSize = finalSlides.reduce(
+    (sum, s) => sum + (s.imagen?.length || 0),
+    0,
+  );
+  if (totalSize > 850 * 1024) {
+    showNotification(
+      `El tamaño total de las imágenes (${Math.round(totalSize / 1024)} KB) excede el límite de 850 KB.`,
+      "error",
+    );
+    return;
+  }
 
   try {
     showLoading();
