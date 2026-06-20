@@ -1,5 +1,5 @@
 /* ========================================
-   SERVICES LIST CONTROLLER - Orién Pro (con Carrusel)
+   SERVICES LIST CONTROLLER - Orién Pro
    ======================================== */
 
 import { ServiceService } from "/src/services/serviceService.js";
@@ -8,9 +8,11 @@ import {
   hideLoading,
   showNotification,
 } from "/src/modules/utils/uiHelpers.js";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let serviceService = null;
 let currentServices = [];
+let pagination = null;
 
 export function initServicesListController() {
   serviceService = new ServiceService();
@@ -22,12 +24,24 @@ async function loadServices() {
   try {
     showLoading();
     currentServices = await serviceService.getAllServices(false);
-    renderServicesTable(currentServices);
+    initPaginationForServices(currentServices);
     hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
     hideLoading();
   }
+}
+
+function initPaginationForServices(services) {
+  const container = document.getElementById("paginationControls");
+  if (!container) {
+    renderServicesTable(services);
+    return;
+  }
+
+  pagination = initPagination(container, services, 10, (pageItems) => {
+    renderServicesTable(pageItems);
+  });
 }
 
 function renderServicesTable(services) {
@@ -70,10 +84,16 @@ async function deleteService(id) {
     showLoading();
     await serviceService.deleteService(id);
     showNotification("Servicio eliminado", "success");
-    await loadServices();
+    // Recargar
+    currentServices = await serviceService.getAllServices(false);
+    if (pagination) {
+      pagination.setItems(currentServices);
+    } else {
+      renderServicesTable(currentServices);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -89,7 +109,11 @@ function bindEvents() {
 
 function filterServices(term) {
   if (!term.trim()) {
-    renderServicesTable(currentServices);
+    if (pagination) {
+      pagination.setItems(currentServices);
+    } else {
+      renderServicesTable(currentServices);
+    }
     return;
   }
   const filtered = currentServices.filter(
@@ -97,7 +121,11 @@ function filterServices(term) {
       s.titulo.toLowerCase().includes(term.toLowerCase()) ||
       s.descripcion.toLowerCase().includes(term.toLowerCase()),
   );
-  renderServicesTable(filtered);
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderServicesTable(filtered);
+  }
 }
 
 function escapeHtml(str) {

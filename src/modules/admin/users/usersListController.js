@@ -9,10 +9,12 @@ import {
   showNotification,
 } from "/src/modules/utils/uiHelpers.js";
 import { getCurrentUser, isAdmin } from "/src/modules/utils/auth.js";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let userService = null;
 let currentUsers = [];
 let loggedUser = null;
+let pagination = null;
 
 export function initUsersListController() {
   loggedUser = getCurrentUser();
@@ -35,10 +37,8 @@ export function initUsersListController() {
 async function loadUsers() {
   try {
     showLoading();
-    // Traer TODOS los usuarios (activos e inactivos) de una sola vez
     currentUsers = await userService.getAllUsers(false);
-    renderUserTable(currentUsers);
-    updateUserCount(currentUsers.length);
+    initPaginationForUsers(currentUsers);
     hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
@@ -46,16 +46,37 @@ async function loadUsers() {
   }
 }
 
+function initPaginationForUsers(users) {
+  const container = document.getElementById("paginationControls");
+  if (!container) {
+    renderUserTable(users);
+    updateUserCount(users.length);
+    return;
+  }
+
+  pagination = initPagination(
+    container,
+    users,
+    10,
+    (pageItems, totalItems) => {
+      renderUserTable(pageItems);
+      updateUserCount(totalItems);
+    },
+    {
+      onTotalUpdate: (total) => updateUserCount(total),
+    },
+  );
+}
+
 function renderUserTable(users) {
   const tbody = document.querySelector("#usersTable tbody");
   if (!tbody) return;
 
   if (users.length === 0) {
-    tbody.innerHTML = `<table><td colspan="4" style="text-align:center">No hay usuarios registrados</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center">No hay usuarios registrados</td></tr>`;
     return;
   }
 
-  // Eliminar duplicados por uid (por si acaso)
   const uniqueUsers = [];
   const seen = new Set();
   for (const user of users) {
@@ -120,10 +141,17 @@ async function deactivateUser(uid) {
     showLoading();
     await userService.deactivateUser(uid);
     showNotification("Usuario inactivado", "success");
-    await loadUsers();
+    // Recargar
+    currentUsers = await userService.getAllUsers(false);
+    if (pagination) {
+      pagination.setItems(currentUsers);
+    } else {
+      renderUserTable(currentUsers);
+      updateUserCount(currentUsers.length);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -133,10 +161,16 @@ async function activateUser(uid) {
     showLoading();
     await userService.activateUser(uid);
     showNotification("Usuario activado", "success");
-    await loadUsers();
+    currentUsers = await userService.getAllUsers(false);
+    if (pagination) {
+      pagination.setItems(currentUsers);
+    } else {
+      renderUserTable(currentUsers);
+      updateUserCount(currentUsers.length);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -177,8 +211,12 @@ function filterUsers() {
   if (statusFilter !== "all")
     filtered = filtered.filter((u) => u.activo === (statusFilter === "active"));
 
-  renderUserTable(filtered);
-  updateUserCount(filtered.length);
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderUserTable(filtered);
+    updateUserCount(filtered.length);
+  }
 }
 
 function escapeHtml(str) {

@@ -8,9 +8,11 @@ import {
   hideLoading,
   showNotification,
 } from "/src/modules/utils/uiHelpers.js";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let carouselService = null;
 let currentCarousels = [];
+let pagination = null;
 
 export function initCarouselsListController() {
   carouselService = new CarouselService();
@@ -23,13 +25,25 @@ async function loadCarousels() {
   try {
     showLoading();
     currentCarousels = await carouselService.getAllCarousels();
-    renderCarouselTable(currentCarousels);
+    initPaginationForCarousels(currentCarousels);
     hideLoading();
   } catch (error) {
     console.error("Error cargando carruseles:", error);
     showNotification(error.message, "error");
     hideLoading();
   }
+}
+
+function initPaginationForCarousels(carousels) {
+  const container = document.getElementById("paginationControls");
+  if (!container) {
+    renderCarouselTable(carousels);
+    return;
+  }
+
+  pagination = initPagination(container, carousels, 10, (pageItems) => {
+    renderCarouselTable(pageItems);
+  });
 }
 
 function renderCarouselTable(carousels) {
@@ -98,10 +112,16 @@ async function handleSetActive(e) {
     showLoading();
     await carouselService.setActiveCarousel(id);
     showNotification("Carrusel activado correctamente", "success");
-    await loadCarousels();
+    // Recargar
+    currentCarousels = await carouselService.getAllCarousels();
+    if (pagination) {
+      pagination.setItems(currentCarousels);
+    } else {
+      renderCarouselTable(currentCarousels);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -114,10 +134,15 @@ async function handleDelete(e) {
     showLoading();
     await carouselService.deleteCarousel(id);
     showNotification("Carrusel eliminado", "success");
-    await loadCarousels();
+    currentCarousels = await carouselService.getAllCarousels();
+    if (pagination) {
+      pagination.setItems(currentCarousels);
+    } else {
+      renderCarouselTable(currentCarousels);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -133,13 +158,21 @@ function bindEvents() {
 
 function filterCarousels(term) {
   if (!term.trim()) {
-    renderCarouselTable(currentCarousels);
+    if (pagination) {
+      pagination.setItems(currentCarousels);
+    } else {
+      renderCarouselTable(currentCarousels);
+    }
     return;
   }
   const filtered = currentCarousels.filter((c) =>
     c.nombre.toLowerCase().includes(term.toLowerCase()),
   );
-  renderCarouselTable(filtered);
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderCarouselTable(filtered);
+  }
 }
 
 function formatDate(timestamp) {

@@ -8,9 +8,11 @@ import {
   hideLoading,
   showNotification,
 } from "/src/modules/utils/uiHelpers.js";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let categoryService = null;
 let currentCategories = [];
+let pagination = null;
 
 export function initCategoriesListController() {
   categoryService = new CategoryService();
@@ -23,14 +25,36 @@ async function loadCategories() {
   try {
     showLoading();
     currentCategories = await categoryService.getAllCategories(false);
-    renderCategoriesTable(currentCategories);
-    updateCategoriesCount(currentCategories.length);
+    initPaginationForCategories(currentCategories);
     hideLoading();
   } catch (error) {
     console.error("Error cargando categorías:", error);
     showNotification(error.message, "error");
     hideLoading();
   }
+}
+
+function initPaginationForCategories(categories) {
+  const container = document.getElementById("paginationControls");
+  if (!container) {
+    // Si no hay contenedor de paginación, renderizar todo sin paginar
+    renderCategoriesTable(categories);
+    updateCategoriesCount(categories.length);
+    return;
+  }
+
+  pagination = initPagination(
+    container,
+    categories,
+    10, // 10 por página
+    (pageItems, totalItems) => {
+      renderCategoriesTable(pageItems);
+      updateCategoriesCount(totalItems);
+    },
+    {
+      onTotalUpdate: (total) => updateCategoriesCount(total),
+    },
+  );
 }
 
 function renderCategoriesTable(categories) {
@@ -94,10 +118,17 @@ async function deleteCategory(id) {
     showLoading();
     await categoryService.deleteCategory(id);
     showNotification("Categoría eliminada exitosamente", "success");
-    await loadCategories();
+    // Recargar datos
+    currentCategories = await categoryService.getAllCategories(false);
+    if (pagination) {
+      pagination.setItems(currentCategories);
+    } else {
+      renderCategoriesTable(currentCategories);
+      updateCategoriesCount(currentCategories.length);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -122,6 +153,10 @@ function filterCategories() {
   const filtered = currentCategories.filter((cat) =>
     cat.nombre.toLowerCase().includes(searchTerm),
   );
-  renderCategoriesTable(filtered);
-  updateCategoriesCount(filtered.length);
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderCategoriesTable(filtered);
+    updateCategoriesCount(filtered.length);
+  }
 }

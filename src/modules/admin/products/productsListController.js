@@ -8,12 +8,14 @@ import {
   showLoading,
   hideLoading,
   showNotification,
-} from "/src/modules/utils/uiHelpers";
+} from "/src/modules/utils/uiHelpers.js";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let productService = null;
 let categoryService = null;
 let currentProducts = [];
 let categoriesMap = new Map();
+let pagination = null;
 
 export function initProductsListController() {
   productService = new ProductService();
@@ -38,14 +40,35 @@ async function loadProducts() {
   try {
     showLoading();
     currentProducts = await productService.getAllProducts();
-    renderProductTable(currentProducts);
-    updateProductCount(currentProducts.length);
+    initPaginationForProducts(currentProducts);
     hideLoading();
   } catch (error) {
     console.error("Error cargando productos:", error);
     showNotification(error.message, "error");
     hideLoading();
   }
+}
+
+function initPaginationForProducts(products) {
+  const container = document.getElementById("paginationControls");
+  if (!container) {
+    renderProductTable(products);
+    updateProductCount(products.length);
+    return;
+  }
+
+  pagination = initPagination(
+    container,
+    products,
+    10, // 10 por página
+    (pageItems, totalItems) => {
+      renderProductTable(pageItems);
+      updateProductCount(totalItems);
+    },
+    {
+      onTotalUpdate: (total) => updateProductCount(total),
+    },
+  );
 }
 
 function getCategoriaNombre(categoriaId) {
@@ -120,10 +143,17 @@ async function deleteProduct(id) {
     showLoading();
     await productService.deleteProduct(id);
     showNotification("Producto eliminado exitosamente", "success");
-    await loadProducts();
+    // Recargar datos
+    currentProducts = await productService.getAllProducts();
+    if (pagination) {
+      pagination.setItems(currentProducts);
+    } else {
+      renderProductTable(currentProducts);
+      updateProductCount(currentProducts.length);
+    }
+    hideLoading();
   } catch (error) {
     showNotification(error.message, "error");
-  } finally {
     hideLoading();
   }
 }
@@ -144,8 +174,12 @@ async function filterProducts() {
   try {
     showLoading();
     const filtered = await productService.searchProducts(searchTerm);
-    renderProductTable(filtered);
-    updateProductCount(filtered.length);
+    if (pagination) {
+      pagination.setItems(filtered);
+    } else {
+      renderProductTable(filtered);
+      updateProductCount(filtered.length);
+    }
     hideLoading();
   } catch (error) {
     showNotification(error.message, "error");

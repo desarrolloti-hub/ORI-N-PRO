@@ -4,12 +4,14 @@
 
 import { ProductService } from "/src/services/productService";
 import { CategoryService } from "/src/services/categoryService";
+import { initPagination } from "/src/modules/utils/pagination.js";
 
 let productService = null;
 let categoryService = null;
 let allProducts = [];
 let allCategories = [];
 let currentSort = "default";
+let pagination = null;
 
 export function initProductsVisitorController() {
   productService = new ProductService();
@@ -38,8 +40,27 @@ async function loadData() {
       filtered = filtered.filter((p) => p.enOferta === true);
     }
 
-    renderProducts(filtered);
-    updateProductsCount(filtered.length);
+    // Inicializar paginación con 9 productos por página
+    const container = document.getElementById("paginationControls");
+    if (container) {
+      pagination = initPagination(
+        container,
+        filtered,
+        9,
+        (pageItems, totalItems) => {
+          renderProducts(pageItems);
+          updateProductsCount(totalItems);
+        },
+        {
+          onTotalUpdate: (total) => updateProductsCount(total),
+        },
+      );
+    } else {
+      // Si no hay contenedor, renderizar todo
+      renderProducts(filtered);
+      updateProductsCount(filtered.length);
+    }
+
     renderCategoryFilters(urlCategory, ofertaParam);
     hideLoading();
   } catch (error) {
@@ -104,7 +125,6 @@ function renderCategoryFilters(activeCategory = null, ofertaActiva = false) {
         .querySelectorAll(".orien-category-tab")
         .forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
-      // Desmarcar checkboxes del sidebar
       document
         .querySelectorAll(".filter-category")
         .forEach((cb) => (cb.checked = false));
@@ -141,13 +161,18 @@ function handleCategoryTabClick(e) {
   document
     .querySelectorAll(".filter-category")
     .forEach((cb) => (cb.checked = false));
+
   let filtered = [...allProducts];
   if (categoryId !== "all")
     filtered = filtered.filter((p) => p.categoriaId === categoryId);
   filtered = sortProducts(filtered, currentSort);
-  renderProducts(filtered);
-  updateProductsCount(filtered.length);
-  // Actualizar URL sin recargar
+
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderProducts(filtered);
+    updateProductsCount(filtered.length);
+  }
   updateURL({ categoria: categoryId !== "all" ? categoryId : null });
 }
 
@@ -174,8 +199,13 @@ function filterProducts() {
     filtered = filtered.filter((p) => p.enOferta === true);
   }
   filtered = sortProducts(filtered, currentSort);
-  renderProducts(filtered);
-  updateProductsCount(filtered.length);
+
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderProducts(filtered);
+    updateProductsCount(filtered.length);
+  }
 
   // Sincronizar tabs con filtros
   const hasFilters =
@@ -189,7 +219,6 @@ function filterProducts() {
     );
     if (allTab) allTab.classList.add("active");
   }
-  // Actualizar URL (solo categorías, no tipo ni oferta para no complicar)
   if (selectedCategories.length === 1) {
     updateURL({ categoria: selectedCategories[0] });
   } else if (selectedCategories.length === 0) {
@@ -281,8 +310,14 @@ function handleClearFilters(e) {
     '.orien-category-tab[data-category="all"]',
   );
   if (allTab) allTab.classList.add("active");
-  renderProducts(allProducts);
-  updateProductsCount(allProducts.length);
+
+  const filtered = sortProducts([...allProducts], currentSort);
+  if (pagination) {
+    pagination.setItems(filtered);
+  } else {
+    renderProducts(filtered);
+    updateProductsCount(filtered.length);
+  }
   updateURL({ categoria: null, oferta: false });
 }
 
