@@ -155,9 +155,8 @@ async function toggleServiceStatus(id) {
   }
 }
 
-// ===== Función para eliminar =====
+// ===== Función para eliminar (SIN CONFIRMACIÓN) =====
 async function deleteService(id) {
-  if (!confirm("¿Eliminar este servicio?")) return;
   try {
     showLoading();
     await serviceService.deleteService(id);
