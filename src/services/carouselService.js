@@ -99,4 +99,10 @@ export class CarouselService {
     if (!id) throw new Error("ID de carrusel no proporcionado");
     await this.repository.setActive(id);
   }
+
+  // Desactivar un carrusel (poner activo = false)
+  async deactivateCarousel(id) {
+    if (!id) throw new Error("ID de carrusel no proporcionado");
+    await this.repository.update(id, { activo: false });
+  }
 }

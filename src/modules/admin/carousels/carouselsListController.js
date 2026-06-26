@@ -83,9 +83,15 @@ function renderCarouselTable(carousels) {
           <a href="/carouselsEdit/${carousel.id}" class="orien-btn orien-btn-sm orien-btn-outline" title="Editar">
             <i class="fas fa-edit"></i>
           </a>
-          <button class="orien-btn orien-btn-sm orien-btn-outline set-active-btn" data-id="${carousel.id}" title="Activar" style="color:#28a745; border-color:#28a745;">
-            <i class="fas fa-check-circle"></i>
-          </button>
+          ${
+            carousel.activo
+              ? `<button class="orien-btn orien-btn-sm orien-btn-outline deactivate-carousel" data-id="${carousel.id}" title="Desactivar" style="color:#dc3545; border-color:#dc3545;">
+                  <i class="fas fa-toggle-off"></i>
+                </button>`
+              : `<button class="orien-btn orien-btn-sm orien-btn-outline set-active-btn" data-id="${carousel.id}" title="Activar" style="color:#28a745; border-color:#28a745;">
+                  <i class="fas fa-check-circle"></i>
+                </button>`
+          }
           <button class="orien-btn orien-btn-sm orien-btn-outline delete-carousel" data-id="${carousel.id}" title="Eliminar" style="color:#dc3545; border-color:#dc3545;">
             <i class="fas fa-trash"></i>
           </button>
@@ -96,9 +102,14 @@ function renderCarouselTable(carousels) {
     )
     .join("");
 
+  // Asignar eventos a los botones
   document.querySelectorAll(".set-active-btn").forEach((btn) => {
     btn.removeEventListener("click", handleSetActive);
     btn.addEventListener("click", handleSetActive);
+  });
+  document.querySelectorAll(".deactivate-carousel").forEach((btn) => {
+    btn.removeEventListener("click", handleDeactivate);
+    btn.addEventListener("click", handleDeactivate);
   });
   document.querySelectorAll(".delete-carousel").forEach((btn) => {
     btn.removeEventListener("click", handleDelete);
@@ -112,6 +123,26 @@ async function handleSetActive(e) {
     showLoading();
     await carouselService.setActiveCarousel(id);
     showNotification("Carrusel activado correctamente", "success");
+    // Recargar
+    currentCarousels = await carouselService.getAllCarousels();
+    if (pagination) {
+      pagination.setItems(currentCarousels);
+    } else {
+      renderCarouselTable(currentCarousels);
+    }
+    hideLoading();
+  } catch (error) {
+    showNotification(error.message, "error");
+    hideLoading();
+  }
+}
+
+async function handleDeactivate(e) {
+  const id = e.currentTarget.dataset.id;
+  try {
+    showLoading();
+    await carouselService.deactivateCarousel(id);
+    showNotification("Carrusel desactivado correctamente", "success");
     // Recargar
     currentCarousels = await carouselService.getAllCarousels();
     if (pagination) {
