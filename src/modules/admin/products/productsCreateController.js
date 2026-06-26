@@ -1,6 +1,6 @@
 /* ========================================
    PRODUCTS CREATE CONTROLLER - Orién Pro
-   Con límite de caracteres
+   Con compresión agresiva de imágenes (50KB)
    ======================================== */
 
 import { ProductService } from "/src/services/productService.js";
@@ -21,6 +21,8 @@ const LIMITS = {
   nombre: 80,
   caracteristicas: 500,
   precio: 12, // dígitos
+  maxImages: 10,
+  maxImageSizeKB: 50, // COMPRESIÓN A 50KB
 };
 
 export function initProductsCreateController() {
@@ -112,24 +114,92 @@ function bindImageUpload() {
   });
 }
 
-function handleFiles(files) {
-  const remainingSlots = 10 - currentImagenes.length;
+/**
+ * Comprime una imagen agresivamente a ~50KB (misma función que en carruseles)
+ */
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        const MAX_DIMENSION = 800;
+        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+          const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.85;
+        let result = canvas.toDataURL("image/jpeg", quality);
+
+        let attempts = 0;
+        while (
+          result.length > LIMITS.maxImageSizeKB * 1024 &&
+          quality > 0.1 &&
+          attempts < 20
+        ) {
+          quality -= 0.05;
+          result = canvas.toDataURL("image/jpeg", quality);
+          attempts++;
+        }
+
+        if (result.length > LIMITS.maxImageSizeKB * 1024) {
+          const canvas2 = document.createElement("canvas");
+          canvas2.width = Math.round(width * 0.5);
+          canvas2.height = Math.round(height * 0.5);
+          const ctx2 = canvas2.getContext("2d");
+          ctx2.drawImage(canvas, 0, 0, canvas2.width, canvas2.height);
+          result = canvas2.toDataURL("image/jpeg", 0.5);
+        }
+
+        resolve(result);
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+}
+
+async function handleFiles(files) {
+  const remainingSlots = LIMITS.maxImages - currentImagenes.length;
   const filesToProcess = files.slice(0, remainingSlots);
   if (files.length > remainingSlots) {
     showNotification(
-      `Solo se pueden agregar ${remainingSlots} imágenes más. Máximo 10.`,
+      `Solo se pueden agregar ${remainingSlots} imágenes más. Máximo ${LIMITS.maxImages}.`,
       "warning",
     );
   }
-  filesToProcess.forEach((file) => {
-    if (!file.type.match("image.*")) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      currentImagenes.push(event.target.result);
-      renderImagePreview();
-    };
-    reader.readAsDataURL(file);
-  });
+
+  for (const file of filesToProcess) {
+    if (!file.type.match("image.*")) continue;
+    try {
+      const compressedImage = await compressImage(file);
+      const sizeKB = Math.round(compressedImage.length / 1024);
+      if (sizeKB > LIMITS.maxImageSizeKB) {
+        showNotification(
+          `Imagen comprimida a ${sizeKB}KB (recomendado < ${LIMITS.maxImageSizeKB}KB)`,
+          "warning",
+        );
+      }
+      currentImagenes.push(compressedImage);
+    } catch (error) {
+      console.error("Error comprimiendo imagen:", error);
+      showNotification("Error al procesar la imagen", "error");
+    }
+  }
+  renderImagePreview();
 }
 
 function removeImage(index) {
@@ -228,6 +298,16 @@ async function handleSubmit(event) {
   }
   if (currentImagenes.length === 0) {
     showNotification("Debe subir al menos una imagen", "error");
+    return;
+  }
+
+  // Verificar tamaño total de imágenes (límite 850 KB)
+  const totalSize = currentImagenes.reduce((sum, img) => sum + img.length, 0);
+  if (totalSize > 850 * 1024) {
+    showNotification(
+      `El tamaño total de las imágenes (${Math.round(totalSize / 1024)} KB) excede el límite de 850 KB. Por favor, reduce la cantidad de imágenes o comprime más.`,
+      "error",
+    );
     return;
   }
 
