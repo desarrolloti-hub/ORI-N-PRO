@@ -49,7 +49,7 @@ export const routes = {
       }
     },
   },
-  "/servicios": {
+  "/services": {
     view: "/modules/visitor/services/services.html",
     controller: initServicesController,
   },
