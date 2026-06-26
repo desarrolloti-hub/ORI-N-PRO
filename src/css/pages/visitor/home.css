@@ -86,8 +86,8 @@
   pointer-events: none;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .orien-slide-text h2 {
@@ -98,7 +98,8 @@
   line-height: 1.1;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  word-break: break-word;
+  word-break: keep-all;
+  hyphens: none;
   max-width: 100%;
 }
 
@@ -111,7 +112,8 @@
   margin: 0 auto;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  word-break: break-word;
+  word-break: keep-all;
+  hyphens: none;
   max-width: 100%;
 }
 
