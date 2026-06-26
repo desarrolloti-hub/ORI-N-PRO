@@ -90,7 +90,7 @@ function renderUserTable(users) {
     .map((user) => {
       const isOwnProfile = loggedUser.uid === user.uid;
       const canEdit = isAdmin() || isOwnProfile;
-      const canActivate = isAdmin();
+      const canToggle = isAdmin() && user.uid !== loggedUser.uid; // No permitir que un admin se inhabilite a sí mismo
 
       return `
         <tr data-uid="${user.uid}">
@@ -118,8 +118,13 @@ function renderUserTable(users) {
           <td data-label="Acciones">
             <div class="orien-table-actions">
               ${canEdit ? `<a href="/usersEdit/${user.uid}" class="orien-btn orien-btn-sm orien-btn-outline" title="Editar"><i class="fas fa-edit"></i></a>` : ""}
-              ${canActivate && user.activo ? `<button class="orien-btn orien-btn-sm orien-btn-outline deactivate-user" data-uid="${user.uid}" style="color:#dc3545; border-color:#dc3545;" title="Inactivar"><i class="fas fa-ban"></i></button>` : ""}
-              ${canActivate && !user.activo ? `<button class="orien-btn orien-btn-sm orien-btn-outline activate-user" data-uid="${user.uid}" style="color:#28a745; border-color:#28a745;" title="Activar"><i class="fas fa-check-circle"></i></button>` : ""}
+              ${
+                canToggle
+                  ? `<button class="orien-btn orien-btn-sm orien-btn-outline toggle-user" data-uid="${user.uid}" style="border-color:${user.activo ? "#dc3545" : "#28a745"}; color:${user.activo ? "#dc3545" : "#28a745"};" title="${user.activo ? "Inactivar" : "Activar"}">
+                <i class="fas ${user.activo ? "fa-toggle-on" : "fa-toggle-off"}"></i>
+              </button>`
+                  : ""
+              }
             </div>
           </td>
         </tr>
@@ -127,40 +132,40 @@ function renderUserTable(users) {
     })
     .join("");
 
-  document.querySelectorAll(".deactivate-user").forEach((btn) => {
-    btn.addEventListener("click", (e) => deactivateUser(btn.dataset.uid));
-  });
-  document.querySelectorAll(".activate-user").forEach((btn) => {
-    btn.addEventListener("click", (e) => activateUser(btn.dataset.uid));
+  // Asignar eventos a los botones toggle
+  document.querySelectorAll(".toggle-user").forEach((btn) => {
+    btn.removeEventListener("click", toggleHandler);
+    btn.addEventListener("click", toggleHandler);
   });
 }
 
-async function deactivateUser(uid) {
-  if (!confirm("¿Inactivar este usuario?")) return;
+// Manejador para toggle
+function toggleHandler(e) {
+  const uid = e.currentTarget.dataset.uid;
+  toggleUserStatus(uid);
+}
+
+// Función para cambiar estado (activo/inactivo) sin confirmación
+async function toggleUserStatus(uid) {
   try {
     showLoading();
-    await userService.deactivateUser(uid);
-    showNotification("Usuario inactivado", "success");
-    // Recargar
-    currentUsers = await userService.getAllUsers(false);
-    if (pagination) {
-      pagination.setItems(currentUsers);
-    } else {
-      renderUserTable(currentUsers);
-      updateUserCount(currentUsers.length);
+    // Obtener usuario actual para saber su estado
+    const user = currentUsers.find((u) => u.uid === uid);
+    if (!user) {
+      showNotification("Usuario no encontrado", "error");
+      hideLoading();
+      return;
     }
-    hideLoading();
-  } catch (error) {
-    showNotification(error.message, "error");
-    hideLoading();
-  }
-}
 
-async function activateUser(uid) {
-  try {
-    showLoading();
-    await userService.activateUser(uid);
-    showNotification("Usuario activado", "success");
+    if (user.activo) {
+      await userService.deactivateUser(uid);
+      showNotification("Usuario inactivado", "success");
+    } else {
+      await userService.activateUser(uid);
+      showNotification("Usuario activado", "success");
+    }
+
+    // Recargar lista
     currentUsers = await userService.getAllUsers(false);
     if (pagination) {
       pagination.setItems(currentUsers);
