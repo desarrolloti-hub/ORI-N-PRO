@@ -25,6 +25,7 @@
 /*Utils*/
 @import './utils/animations.css';
 @import './utils/responsive.css';
+@import './utils/whatsappButton.css';
 
 /*Shared*/
 @import './pages/shared/legal/termsAndConditions.css';
