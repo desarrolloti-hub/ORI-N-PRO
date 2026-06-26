@@ -66,6 +66,9 @@ function renderServicesTable(services) {
       <td data-label="Acciones">
         <div class="orien-table-actions">
           <a href="/servicesEdit/${service.id}" class="orien-btn orien-btn-sm orien-btn-outline" title="Editar"><i class="fas fa-edit"></i></a>
+          <button class="orien-btn orien-btn-sm orien-btn-outline toggle-status" data-id="${service.id}" style="border-color:${service.activo ? "#28a745" : "#dc3545"}; color:${service.activo ? "#28a745" : "#dc3545"};" title="${service.activo ? "Inactivar" : "Activar"}">
+            <i class="fas ${service.activo ? "fa-toggle-on" : "fa-toggle-off"}"></i>
+          </button>
           <button class="orien-btn orien-btn-sm orien-btn-outline delete-service" data-id="${service.id}" style="color:#dc3545; border-color:#dc3545;" title="Eliminar"><i class="fas fa-trash"></i></button>
         </div>
       </td>
@@ -73,11 +76,86 @@ function renderServicesTable(services) {
   `,
     )
     .join("");
+
+  // Asignar eventos a los botones
+  document.querySelectorAll(".toggle-status").forEach((btn) => {
+    btn.removeEventListener("click", toggleHandler);
+    btn.addEventListener("click", toggleHandler);
+  });
   document.querySelectorAll(".delete-service").forEach((btn) => {
-    btn.addEventListener("click", () => deleteService(btn.dataset.id));
+    btn.removeEventListener("click", deleteHandler);
+    btn.addEventListener("click", deleteHandler);
   });
 }
 
+// ===== Manejadores de eventos =====
+function toggleHandler(e) {
+  const id = e.currentTarget.dataset.id;
+  toggleServiceStatus(id);
+}
+
+function deleteHandler(e) {
+  const id = e.currentTarget.dataset.id;
+  deleteService(id);
+}
+
+// ===== Función para cambiar estado (Activar/Inactivar) =====
+async function toggleServiceStatus(id) {
+  try {
+    showLoading();
+
+    // Obtener el servicio completo
+    const service = await serviceService.getServiceById(id);
+    if (!service) {
+      showNotification("Servicio no encontrado", "error");
+      hideLoading();
+      return;
+    }
+
+    // Construir FormData con todos los campos actuales
+    const formData = new FormData();
+    formData.append("titulo", service.titulo || "");
+    formData.append("youtubeUrl", service.youtubeUrl || "");
+    formData.append("orden", service.orden || 0);
+    formData.append("status", service.activo ? "inactive" : "active");
+    formData.append("alternar", service.alternar ? "true" : "false");
+    formData.append(
+      "carouselEnabled",
+      service.carouselEnabled ? "true" : "false",
+    );
+
+    // Si NO tiene carrusel, debe enviar descripcion
+    if (!service.carouselEnabled) {
+      formData.append("descripcion", service.descripcion || "");
+    }
+
+    // Los items del carrusel (si existen)
+    const carouselItems = service.carouselItems || [];
+
+    // Llamar al servicio de actualización
+    await serviceService.updateService(id, formData, carouselItems);
+
+    showNotification(
+      `Servicio ${service.activo ? "inactivado" : "activado"} correctamente`,
+      "success",
+    );
+
+    // Recargar la lista
+    currentServices = await serviceService.getAllServices(false);
+    if (pagination) {
+      pagination.setItems(currentServices);
+    } else {
+      renderServicesTable(currentServices);
+    }
+
+    hideLoading();
+  } catch (error) {
+    showNotification(error.message, "error");
+    hideLoading();
+  }
+}
+
+// ===== Función para eliminar =====
 async function deleteService(id) {
   if (!confirm("¿Eliminar este servicio?")) return;
   try {
@@ -98,6 +176,7 @@ async function deleteService(id) {
   }
 }
 
+// ===== Búsqueda =====
 function bindEvents() {
   const searchInput = document.getElementById("searchServices");
   if (searchInput) {
@@ -128,6 +207,7 @@ function filterServices(term) {
   }
 }
 
+// ===== Utilidad =====
 function escapeHtml(str) {
   if (!str) return "";
   return str.replace(/[&<>]/g, (m) => {
