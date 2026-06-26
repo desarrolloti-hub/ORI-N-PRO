@@ -60,7 +60,7 @@ function initPaginationForProducts(products) {
   pagination = initPagination(
     container,
     products,
-    10, // 10 por página
+    10,
     (pageItems, totalItems) => {
       renderProductTable(pageItems);
       updateProductCount(totalItems);
@@ -138,7 +138,7 @@ async function handleDeleteClick(e) {
 }
 
 async function deleteProduct(id) {
-  if (!confirm("¿Está seguro de que desea eliminar este producto?")) return;
+  // Eliminamos el confirm para borrar directamente
   try {
     showLoading();
     await productService.deleteProduct(id);
