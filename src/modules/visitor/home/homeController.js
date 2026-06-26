@@ -410,12 +410,9 @@ function handleScroll() {
   if (!elements.heroSection) return;
   const scrollY = window.scrollY;
   document.querySelectorAll(".orien-slide-image").forEach((slide) => {
-    if (slide) {
-      const currentTransform = slide.style.transform || "";
-      if (!currentTransform.includes("translateX")) {
-        slide.style.transform = `translateY(${scrollY * 0.3}px)`;
-      }
-    }
+    // Si la imagen está dentro del hero slider, NO aplicar parallax
+    if (slide.closest(".orien-hero-slider")) return;
+    slide.style.transform = `translateY(${scrollY * 0.3}px)`;
   });
 }
 
