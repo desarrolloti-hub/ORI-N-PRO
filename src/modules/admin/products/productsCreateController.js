@@ -34,7 +34,6 @@ export function initProductsCreateController() {
   bindFormSubmit();
   bindImageUpload();
   bindPasteImage();
-  console.log("✅ Products Create Controller inicializado");
 }
 
 async function loadCategories() {

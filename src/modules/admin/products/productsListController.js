@@ -23,7 +23,6 @@ export function initProductsListController() {
   loadCategories();
   loadProducts();
   bindEvents();
-  console.log("✅ Products List Controller inicializado");
 }
 
 async function loadCategories() {

@@ -18,7 +18,6 @@ export function initCategoriesListController() {
   categoryService = new CategoryService();
   loadCategories();
   bindEvents();
-  console.log("✅ Categories List Controller inicializado");
 }
 
 async function loadCategories() {

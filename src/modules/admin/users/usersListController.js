@@ -30,8 +30,6 @@ export function initUsersListController() {
 
   const addBtn = document.getElementById("addUserBtn");
   if (addBtn) addBtn.style.display = isAdmin() ? "inline-flex" : "none";
-
-  console.log("✅ Users List Controller inicializado");
 }
 
 async function loadUsers() {

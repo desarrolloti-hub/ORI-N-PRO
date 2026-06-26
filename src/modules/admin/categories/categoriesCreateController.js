@@ -23,7 +23,6 @@ export function initCategoriesCreateController() {
   initialized = true;
   categoryService = new CategoryService();
   bindFormSubmit();
-  console.log("✅ Categories Create Controller inicializado");
 }
 
 export function destroyCategoriesCreateController() {

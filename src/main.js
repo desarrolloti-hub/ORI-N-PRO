@@ -16,9 +16,7 @@ async function initApp() {
         initFooterController();
         
         // 3. Inicializar router
-        initRouter();
-        
-        console.log('✅ Orién Pro - Aplicación inicializada correctamente');
+        initRouter();       
     } catch (error) {
         console.error('❌ Error inicializando aplicación:', error);
     }

@@ -22,7 +22,6 @@ export async function initNavbarController() {
   setActiveLink();
   handleScroll();
   await loadCategoriesToDropdown();
-  console.log("✅ Navbar Controller - Orién Pro inicializado");
   return {
     closeMenu,
     setActiveLink,

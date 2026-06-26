@@ -20,7 +20,6 @@ export function initLoginController() {
   }
 
   bindFormSubmit();
-  console.log("✅ Login Controller inicializado");
 }
 
 function bindFormSubmit() {

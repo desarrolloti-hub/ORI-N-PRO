@@ -26,7 +26,6 @@ export function initServicesCreateController() {
   bindYoutubePreview();
   bindContentTypeToggle();
   bindCarouselEvents();
-  console.log("✅ Services Create Controller inicializado");
 }
 
 function bindFormSubmit() {

@@ -18,7 +18,6 @@ export function initProductsVisitorController() {
   categoryService = new CategoryService();
   loadData();
   bindEvents();
-  console.log("✅ Products Visitor Controller inicializado");
 }
 
 async function loadData() {

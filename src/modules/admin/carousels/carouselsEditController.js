@@ -35,7 +35,6 @@ export function initCarouselsEditController(id) {
   bindFormSubmit();
   bindAddSlide();
   bindDeleteButton();
-  console.log("✅ Carousels Edit Controller inicializado para id:", id);
 }
 
 async function loadCarouselData() {

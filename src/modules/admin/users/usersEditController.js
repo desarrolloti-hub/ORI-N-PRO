@@ -53,7 +53,6 @@ export function initUsersEditController(uid) {
   loadUserData();
   bindFormSubmit();
   bindAvatarUpload();
-  console.log("✅ Users Edit Controller inicializado para uid:", uid);
 }
 
 export function destroyUsersEditController() {

@@ -66,7 +66,6 @@ async function initialize() {
   attemptAutoPlay();
 
   state.isInitialized = true;
-  console.log("✅ Home Controller inicializado con carrusel dinámico");
 }
 
 function cacheElements() {
@@ -326,7 +325,6 @@ function attemptAutoPlay() {
   const playPromise = audioInstance.play();
   if (playPromise !== undefined) {
     playPromise.catch((error) => {
-      console.log("Reproducción automática bloqueada:", error.name);
       waitForUserInteraction();
       showMusicActivationHint();
     });
@@ -458,5 +456,4 @@ function destroy() {
   }
   elements = {};
   state.isInitialized = false;
-  console.log("🗑️ Home Controller destruido");
 }

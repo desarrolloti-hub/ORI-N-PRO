@@ -18,7 +18,6 @@ export function initCarouselsListController() {
   carouselService = new CarouselService();
   loadCarousels();
   bindEvents();
-  console.log("✅ Carousels List Controller inicializado");
 }
 
 async function loadCarousels() {

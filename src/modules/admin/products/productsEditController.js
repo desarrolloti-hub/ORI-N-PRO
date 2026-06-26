@@ -39,7 +39,6 @@ export function initProductsEditController(id) {
   bindPasteImage();
   bindDeleteButton();
   bindOfertaCheckbox();
-  console.log("✅ Products Edit Controller inicializado para id:", id);
 }
 
 async function loadCategories() {

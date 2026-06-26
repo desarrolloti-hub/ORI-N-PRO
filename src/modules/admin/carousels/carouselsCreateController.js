@@ -34,7 +34,6 @@ export function initCarouselsCreateController() {
   if (document.getElementById("slidesContainer")?.children.length === 0) {
     addSlide();
   }
-  console.log("✅ Carousels Create Controller inicializado");
 }
 
 function bindFormSubmit() {

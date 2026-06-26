@@ -30,8 +30,6 @@ export function initCategoriesEditController(id) {
   loadCategoryData();
   bindFormSubmit();
   bindDeleteButton();
-
-  console.log("✅ Categories Edit Controller inicializado para id:", id);
 }
 
 export function destroyCategoriesEditController() {

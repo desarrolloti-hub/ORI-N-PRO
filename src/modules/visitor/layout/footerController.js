@@ -16,7 +16,6 @@ export function initFooterController() {
   initSocialLinks(); // Ahora no bloquea
   initFooterLinks(); // También puede ajustarse si es necesario
 
-  console.log("✅ Footer Controller - Orién Pro inicializado");
 }
 
 /**
@@ -67,7 +66,6 @@ function initSocialLinks() {
       e.preventDefault();
       const socialNetworks = ["facebook", "instagram", "twitter", "linkedin"];
       const network = socialNetworks.find((n) => href?.includes(n)) || "social";
-      console.log(`🔗 Click en ${network}`);
       showSocialAlert(network);
     });
   });

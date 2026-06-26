@@ -37,7 +37,6 @@ export async function initAdminDashboardController() {
     });
   }
 
-  console.log("✅ Admin Dashboard Controller inicializado");
 }
 
 async function loadStats() {

@@ -31,7 +31,6 @@ export function initUsersCreateController() {
   userService = new UserService();
   bindFormSubmit();
   bindAvatarUpload();
-  console.log("✅ Users Create Controller inicializado");
 }
 
 export function destroyUsersCreateController() {

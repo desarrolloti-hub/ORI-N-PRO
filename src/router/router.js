@@ -55,8 +55,6 @@ export function initRouter() {
   });
 
   handleRoute();
-
-  console.log("✅ Router inicializado");
 }
 
 /**
